@@ -10,6 +10,7 @@
 #include "FiresThousandSunsGameMode.generated.h"
 
 #define PARAMS_CATEGORY	"GameSettings"
+
 UENUM(BlueprintType)
 enum class Side : uint8 {
 	left = 0 UMETA(DisplayName = "left"),
@@ -44,6 +45,8 @@ public:
 	TSubclassOf<ASun>  SunActorClass;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
 	AFiresThousandSunsCharacter* Player;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	UWorld*	World = nullptr;
 
 protected:
 	virtual void BeginPlay();

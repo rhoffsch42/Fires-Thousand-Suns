@@ -7,6 +7,8 @@
 #include "UObject/ConstructorHelpers.h"
 #include "EngineUtils.h"
 
+#include "Buffs/BuffMoltenShell.h"
+
 AFiresThousandSunsGameMode::AFiresThousandSunsGameMode() {
 	// use our custom PlayerController class
 	PlayerControllerClass = AFiresThousandSunsPlayerController::StaticClass();
@@ -22,6 +24,8 @@ AFiresThousandSunsGameMode::AFiresThousandSunsGameMode() {
 	if(PlayerControllerBPClass.Class != NULL) {
 		PlayerControllerClass = PlayerControllerBPClass.Class;
 	}
+
+	this->World = this->GetWorld();
 }
 
 void AFiresThousandSunsGameMode::BeginPlay() {
@@ -91,9 +95,18 @@ void	AFiresThousandSunsGameMode::CheckSunExplosion(FVector location, double dama
 	if (diff.Length() <= radius) {
 		//GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Yellow, FString::Printf(TEXT("[max: %lf] diff with player : %lf"), radius, diff.Length()));
 		damage = tmp_applyMitigation(damage);
-		double MSbefore = this->Player->MoltenShell->HealthManager->GetHP();
-		this->Player->MoltenShell->HealthManager->RemoveHP(damage * this->Player->MoltenShell->ShellAbsorbtion);
-		damage -= (MSbefore - this->Player->MoltenShell->HealthManager->GetHP());
+		
+		// molten shell
+		UBuffManager* bm = this->Player->GetComponentByClass<UBuffManager>();
+		if (bm) {
+			ABuffMoltenShell* ms = Cast<ABuffMoltenShell>(bm->GetBuff(EBuffType::MoltenShell)); // should be GetBuff<ABuffMoltenShell>()
+			if (ms) {
+				double MSbefore = ms->HealthManager->GetHP();
+				ms->HealthManager->RemoveHP(damage * ms->ShellAbsorption);
+				damage -= (MSbefore - ms->HealthManager->GetHP());
+			}
+		} else { /* should not happen */ }
+
 		this->Player->HealthManager->RemoveHP(damage);
 		this->Player->HealthManager->CheckForDeath();
 	}

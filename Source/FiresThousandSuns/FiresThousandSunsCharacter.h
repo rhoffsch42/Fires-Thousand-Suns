@@ -8,6 +8,7 @@
 #include "Systems/HealthManager.h"
 #include "Abilitys/AbilityFlameDash.h"
 #include "Abilitys/AbilityMoltenShell.h"
+#include "Buffs/BuffManager.h"
 
 #include "FiresThousandSunsCharacter.generated.h"
 
@@ -34,14 +35,18 @@ public:
 	void	Die();
 
 	// HealtManager
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Default")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	UHealthManager* HealthManager;
 
 	// Skills
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Default")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	UAbilityFlameDash*		FlameDash;
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Default")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	UAbilityMoltenShell*	MoltenShell;
+
+	// Buffs component
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	UBuffManager*	BuffManager;
 
 private:
 	/** Top down camera */

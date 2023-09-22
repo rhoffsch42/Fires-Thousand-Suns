@@ -1,8 +1,10 @@
-// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "HealthManager.h"
 
 UHealthManager::UHealthManager() {
+}
+
+UHealthManager::UHealthManager(double HP) : _maxhp(std::max(1.0, HP)), _hp(_maxhp) {
 }
 
 void	UHealthManager::CheckForDeath() {
@@ -11,6 +13,7 @@ void	UHealthManager::CheckForDeath() {
 		this->OnNoHP();
 	}
 }
+
 void	UHealthManager::OnNoHP() {
 	this->HpEmpty.Broadcast();
 }

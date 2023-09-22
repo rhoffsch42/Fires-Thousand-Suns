@@ -6,7 +6,14 @@
 #include "GameFramework/Actor.h"
 #include "Buff.generated.h"
 
-#define BUFF_DEFAULT_DURATION	50.0
+#define BUFF_DEFAULT_DURATION	0.0
+
+UENUM(BlueprintType)
+enum class EBuffType : uint8 {
+	None = 0 UMETA(DisplayName = "None"),
+	MoltenShell = 0 UMETA(DisplayName = "MoltenShell"),
+	VaalMoltenShell UMETA(DisplayName = "VaalMoltenShell")
+};
 
 UCLASS(Blueprintable)
 class FIRESTHOUSANDSUNS_API ABuff : public AActor
@@ -18,9 +25,9 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	UFUNCTION(BlueprintCallable)
-	void	ApplyTo(AActor* Target);
+	virtual void	ApplyTo(AActor* Target);
 	UFUNCTION(BlueprintCallable)
-	void	Remove();
+	virtual void	Remove();
 	UFUNCTION(BlueprintCallable)
 	void	SetBaseDuration(double NewDuration);
 	UFUNCTION(BlueprintCallable)
@@ -34,16 +41,17 @@ public:
 	double	GetRemainingDuration() const;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	bool	bIsDebuff = false;
+	bool		bIsDebuff = false;
+	EBuffType	BuffType = EBuffType::None;
 
 protected:
 	virtual void BeginPlay() override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 	void	_UpdateDuration(double Duration);
 
-private:	
-	TObjectPtr<USceneComponent> _DefaultSceneRoot;
-
 	AActor* _target = nullptr;
+	TObjectPtr<USceneComponent> _DefaultSceneRoot;
+private:
+
 	double	_baseDuration = BUFF_DEFAULT_DURATION;
 };

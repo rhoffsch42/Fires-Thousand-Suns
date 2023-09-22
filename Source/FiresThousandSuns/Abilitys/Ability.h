@@ -16,6 +16,8 @@ struct FEffectParameters
 	GENERATED_BODY()
 //public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	UWorld*		World = nullptr;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	AActor*		ActorInstigator = nullptr;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	FVector		SpawnLocationOrSocket;

@@ -59,6 +59,10 @@ AFiresThousandSunsCharacter::AFiresThousandSunsCharacter()
 	this->FlameDash->Cooldown->World = this->GetWorld();
 	this->MoltenShell = NewObject<UAbilityMoltenShell>();
 	this->MoltenShell->Cooldown->World = this->GetWorld();
+
+	// Buffs
+	this->BuffManager = CreateDefaultSubobject<UBuffManager>(TEXT("BuffManager"));
+	this->BuffManager->RegisterComponent();
 }
 
 void	AFiresThousandSunsCharacter::Die() {

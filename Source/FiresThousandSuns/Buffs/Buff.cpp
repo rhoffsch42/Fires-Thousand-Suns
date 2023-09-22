@@ -1,10 +1,10 @@
 
 #include "Buff.h"
+#include "BuffManager.h"
 #include "Engine/EngineTypes.h"
 
 ABuff::ABuff() {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
 	this->_DefaultSceneRoot = CreateDefaultSubobject<USceneComponent>(TEXT("Default"));
 	this->SetRootComponent(this->_DefaultSceneRoot);
@@ -16,8 +16,8 @@ void	ABuff::BeginPlay() {
 }
 void	ABuff::EndPlay(const EEndPlayReason::Type EndPlayReason) {
 	Super::EndPlay(EndPlayReason);
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("endplay: %d"), (int32)EndPlayReason));
 	this->Remove();
+	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("ABuff::EndPlay():%d. Removed buff."), (int32)EndPlayReason));
 }
 
 void	ABuff::Tick(float DeltaTime) {
@@ -26,11 +26,27 @@ void	ABuff::Tick(float DeltaTime) {
 
 void	ABuff::ApplyTo(AActor* Target) {
 	this->_target = Target;
+	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT(">>> ABuff::ApplyTo(AActor* Target) _target : %d "), this->_target));
+	UBuffManager* bm = this->_target->GetComponentByClass<UBuffManager>();// not mandatory
+	if (bm) {
+		bm->AddBuff(this);
+	}
+	//else {
+	//	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString("ABuff::Remove() error: target has no BuffManager Component."));
+	//}
+	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT(">>> ABuff::ApplyTo(AActor* Target) setLifeSpan(_baseDuration) : %f "), this->_baseDuration));
 	this->SetLifeSpan(this->_baseDuration);
 }
 
 void	ABuff::Remove() {
-	// Child class will define it
+	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT(">>> ABuff::Remove() _target : %d "), this->_target));
+	UBuffManager* bm = this->_target->GetComponentByClass<UBuffManager>();// not mandatory
+	if (bm) {
+		bm->RemoveBuff(this);
+	}
+	//else {
+	//	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString("ABuff::Remove() error: target has no BuffManager Component."));
+	//}
 }
 
 void	ABuff::SetBaseDuration(double NewDuration) {

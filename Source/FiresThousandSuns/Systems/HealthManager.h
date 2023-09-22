@@ -19,6 +19,7 @@ class FIRESTHOUSANDSUNS_API UHealthManager : public UObject
 
 public:	
 	UHealthManager();
+	UHealthManager(double HP);
 
 	/* Do not call this with negative Value, there is no check for resulting negative HP. Use RemoveHP() for damaging */
 	UFUNCTION(BlueprintCallable)

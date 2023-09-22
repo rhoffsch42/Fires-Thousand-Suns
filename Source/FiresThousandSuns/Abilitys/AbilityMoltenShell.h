@@ -20,11 +20,8 @@ public:
 	UAbilityMoltenShell();
 	void	Activate(FEffectParameters Parameters);
 
-	// HealtManager
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Default")
-	UHealthManager* HealthManager;
-
 	double	ShellHP = 5000.0;
 	double	ShellAbsorbtion = 0.75;
+	double	ShellDuration = 3.0;
 private:
 };
