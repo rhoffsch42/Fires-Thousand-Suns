@@ -43,6 +43,8 @@ public:
 	UAbilityFlameDash*		FlameDash;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	UAbilityMoltenShell*	MoltenShell;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	UAbilityMoltenShell*	VaalMoltenShell;
 
 	// Buffs component
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)

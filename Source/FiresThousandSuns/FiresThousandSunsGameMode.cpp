@@ -57,8 +57,20 @@ bool	AFiresThousandSunsGameMode::IsInitDone() const {
 	return this->_isInit;
 }
 
+void	AFiresThousandSunsGameMode::SpawnSunsRegular() {
+	if (this->_spawnSunsCounter == 0) {
+		this->SpawnSunsSides(Side::left, Side::right);
+	} else if (this->_spawnSunsCounter == 1) {
+		this->SpawnSunsSides(Side::right, Side::left);
+	} else if (this->_spawnSunsCounter == 2) {
+		this->SpawnSunsSides(Side::top, Side::bottom);
+	} else if (this->_spawnSunsCounter == 3) {
+		this->SpawnSunsSides(Side::bottom, Side::top);
+	}
+	this->_spawnSunsCounter = (this->_spawnSunsCounter + 1) % 4;
+}
 
-void	AFiresThousandSunsGameMode::SpawnSuns(Side Start, Side End) {
+void	AFiresThousandSunsGameMode::SpawnSunsSides(Side Start, Side End) {
 	if (!this->_isInit) {
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Cyan, TEXT("Spawn positions are not initialized. Aborting."));
 	} else {
@@ -96,14 +108,17 @@ void	AFiresThousandSunsGameMode::CheckSunExplosion(FVector location, double dama
 		//GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Yellow, FString::Printf(TEXT("[max: %lf] diff with player : %lf"), radius, diff.Length()));
 		damage = tmp_applyMitigation(damage);
 		
-		// molten shell
+		// molten shell(s)
 		UBuffManager* bm = this->Player->GetComponentByClass<UBuffManager>();
 		if (bm) {
-			ABuffMoltenShell* ms = Cast<ABuffMoltenShell>(bm->GetBuff(EBuffType::MoltenShell)); // should be GetBuff<ABuffMoltenShell>()
-			if (ms) {
-				double MSbefore = ms->HealthManager->GetHP();
-				ms->HealthManager->RemoveHP(damage * ms->ShellAbsorption);
-				damage -= (MSbefore - ms->HealthManager->GetHP());
+			EBuffType types[2] = { EBuffType::VaalMoltenShell, EBuffType::MoltenShell };
+			for (int32 t = 0; t < 2; t++) {
+				ABuffMoltenShell* ms = Cast<ABuffMoltenShell>(bm->GetBuff(types[t])); // should be GetBuff<ABuffMoltenShell>()
+				if (ms) {
+					double MSbefore = ms->HealthManager->GetHP();
+					ms->HealthManager->RemoveHP(damage * ms->ShellAbsorption);
+					damage -= (MSbefore - ms->HealthManager->GetHP());
+				}
 			}
 		} else { /* should not happen */ }
 

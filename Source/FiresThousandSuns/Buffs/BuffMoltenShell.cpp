@@ -22,7 +22,3 @@ ABuffMoltenShell::ABuffMoltenShell(double HP) {
 	this->HealthManager->SetMaxHP(HP);
 	this->HealthManager->SetHP(HP);
 }
-
-void	ABuffMoltenShell::Tick(float DeltaTime) {
-	Super::Tick(DeltaTime);
-}

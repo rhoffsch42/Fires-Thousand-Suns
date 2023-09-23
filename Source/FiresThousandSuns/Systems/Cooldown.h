@@ -38,6 +38,8 @@ public:
 	void	SetMaxUses(const int32 Uses);
 	UFUNCTION(BlueprintCallable)
 	void	SetDuration(const double Duration);
+	UFUNCTION(BlueprintCallable)
+	double	GetDuration() const;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Default", meta = (ExposeOnSpawn = "true"))
 	UObject* World = nullptr;

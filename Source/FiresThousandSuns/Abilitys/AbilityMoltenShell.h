@@ -22,6 +22,6 @@ public:
 
 	double	ShellHP = 5000.0;
 	double	ShellAbsorbtion = 0.75;
-	double	ShellDuration = 3.0;
+	double	ShellDuration = 3.6;
 private:
 };

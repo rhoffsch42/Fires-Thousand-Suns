@@ -70,6 +70,10 @@ void	UCooldown::SetDuration(const double Duration) {
 	this->_duration = std::max(0.0, Duration);
 }
 
+double	UCooldown::GetDuration() const {
+	return this->_duration;
+}
+
 
 double	UCooldown::_safeGetTimeSeconds() const {
 	if (!this->World) {

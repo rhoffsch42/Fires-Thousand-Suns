@@ -57,8 +57,16 @@ AFiresThousandSunsCharacter::AFiresThousandSunsCharacter()
 	// Skills
 	this->FlameDash = NewObject<UAbilityFlameDash>();
 	this->FlameDash->Cooldown->World = this->GetWorld();
+	
 	this->MoltenShell = NewObject<UAbilityMoltenShell>();
 	this->MoltenShell->Cooldown->World = this->GetWorld();
+	
+	this->VaalMoltenShell = NewObject<UAbilityMoltenShell>();
+	this->VaalMoltenShell->ShellHP = 10000.0;
+	this->VaalMoltenShell->ShellDuration = 10.8;
+	this->VaalMoltenShell->ShellAbsorbtion = 0.39;
+	this->VaalMoltenShell->Cooldown->World = this->GetWorld();
+	this->VaalMoltenShell->Cooldown->SetDuration(60.0);
 
 	// Buffs
 	this->BuffManager = CreateDefaultSubobject<UBuffManager>(TEXT("BuffManager"));

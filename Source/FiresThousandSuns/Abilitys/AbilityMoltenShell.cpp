@@ -2,34 +2,33 @@
 #include "AbilityMoltenShell.h"
 //#include "../FiresThousandSunsCharacter.h"
 #include "../Buffs/BuffMoltenShell.h"
+#include "../FuncLib.h"
 
-#define SHELL_DURATION		3.6
 #define CD_MAXUSES			1
 #define CD_DURATION			4.0
-#define SHELL_HP			5000.0 // max 5000
-#define SHELL_ABSORBTION	0.75
+
+
+// explicit instanciation
+template ABuffMoltenShell* UFuncLib::SafeSpawnActor<ABuffMoltenShell>(
+	UWorld* TheWorld,
+	UClass* ActorClass,
+	const FVector& Loc,
+	const FRotator& Rot,
+	//const bool      bNoCollisionFail,
+	AActor* Owner,
+	APawn* Instigator
+);
 
 UAbilityMoltenShell::UAbilityMoltenShell() {
 	this->Cooldown->SetMaxUses(CD_MAXUSES);
-	this->Cooldown->SetDuration(CD_DURATION + SHELL_DURATION); // This Skill's Cooldown does not recover during its effect
+	this->Cooldown->SetDuration(CD_DURATION + this->ShellDuration); // This Skill's Cooldown does not recover during its effect
 	this->Cooldown->Reset();
 }
 
 void	UAbilityMoltenShell::Activate(FEffectParameters Parameters) {
-	if (!Parameters.World) {
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString("UAbilityMoltenShell::Activate() error : Parameters.World is null"));
-		return;
-	}
-	FActorSpawnParameters spawnInfo;
-	AActor* spawnedActor = Parameters.World->SpawnActor<AActor>(ABuffMoltenShell::StaticClass(), spawnInfo);
-	if (!spawnedActor) {
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString("UAbilityMoltenShell::Activate() error : SpawnActor<>() failed"));
-		return;
-	}
-	ABuffMoltenShell* buff = Cast<ABuffMoltenShell>(spawnedActor);
-	if (!buff) {
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString("UAbilityMoltenShell::Activate() error : Cast<>() failed"));
-		return;
+	ABuffMoltenShell* buff = UFuncLib::SafeSpawnActor<ABuffMoltenShell>(Parameters.World, ABuffMoltenShell::StaticClass());
+	if (this->ShellHP > 9000) { // ugly hardcode to differenciate from simple MoltenShell
+		buff->BuffType = EBuffType::VaalMoltenShell;
 	}
 	buff->AttachToActor(Parameters.ActorInstigator, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, false));
 	buff->HealthManager->SetMaxHP(this->ShellHP);

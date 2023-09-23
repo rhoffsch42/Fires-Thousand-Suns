@@ -30,7 +30,9 @@ public:
 	AFiresThousandSunsGameMode();
 
 	UFUNCTION(BlueprintCallable)
-	void	SpawnSuns(Side Start, Side End);
+	void	SpawnSunsRegular();
+	UFUNCTION(BlueprintCallable)
+	void	SpawnSunsSides(Side Start, Side End);
 	UFUNCTION(BlueprintCallable)
 	void	Init(TSubclassOf<AActor> ActorClass, FVector MinPosition, FVector MaxPosition, AFiresThousandSunsCharacter* PlayerCharacter);
 	UFUNCTION(BlueprintCallable)
@@ -59,6 +61,8 @@ private:
 	UFUNCTION(BlueprintCallable)
 	void	CheckSunExplosion(FVector location, double damage, double radius) const;
 	double	tmp_applyMitigation(double damage) const;
+
+	uint8	_spawnSunsCounter = 0;
 };
 
 

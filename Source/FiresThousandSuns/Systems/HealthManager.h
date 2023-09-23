@@ -48,7 +48,6 @@ public:
 	FHpEmpty	HpEmpty;
 
 private:
-	double	_hp = 100.0;
 	double	_maxhp = 100.0;
-		
+	double	_hp = 100.0;
 };

@@ -17,6 +17,6 @@ public:
 	UAbilityFlameDash();
 	void	Activate(FEffectParameters Parameters);
 private:
-	double	range = 600.0;
-
+	double	_range = 600.0;
+	double	_lockMovementDuration = 0.12;
 };

@@ -17,12 +17,11 @@ class FIRESTHOUSANDSUNS_API ABuffMoltenShell : public ABuff
 public:
 	ABuffMoltenShell();
 	ABuffMoltenShell(double HP);
-	virtual void Tick(float DeltaTime) override;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	UHealthManager* HealthManager = nullptr;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	double	ShellAbsorption = 0.75;//d
+	double	ShellAbsorption = 0.75;
 private:
 
 };

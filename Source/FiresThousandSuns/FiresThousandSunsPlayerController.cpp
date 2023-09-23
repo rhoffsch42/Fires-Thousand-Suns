@@ -12,16 +12,14 @@
 
 #include "GenericPlatform/GenericPlatformMath.h"
 
-AFiresThousandSunsPlayerController::AFiresThousandSunsPlayerController()
-{
+AFiresThousandSunsPlayerController::AFiresThousandSunsPlayerController() {
 	bShowMouseCursor = true;
 	DefaultMouseCursor = EMouseCursor::Default;
 	CachedDestination = FVector::ZeroVector;
 	FollowTime = 0.f;
 }
 
-void AFiresThousandSunsPlayerController::BeginPlay()
-{
+void AFiresThousandSunsPlayerController::BeginPlay() {
 	// Call the base class  
 	Super::BeginPlay();
 
@@ -32,8 +30,7 @@ void AFiresThousandSunsPlayerController::BeginPlay()
 	}
 }
 
-void AFiresThousandSunsPlayerController::SetupInputComponent()
-{
+void AFiresThousandSunsPlayerController::SetupInputComponent() {
 	// set up gameplay key bindings
 	Super::SetupInputComponent();
 
@@ -54,15 +51,15 @@ void AFiresThousandSunsPlayerController::SetupInputComponent()
 	}
 }
 
-void AFiresThousandSunsPlayerController::OnInputStarted()
-{
+void AFiresThousandSunsPlayerController::OnInputStarted() {
 	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("OnImputStarted() %f"), GetWorld()->TimeSeconds));
 	StopMovement();
 }
 
 // Triggered every frame when the input is held down
-void AFiresThousandSunsPlayerController::OnSetDestinationTriggered()
-{
+void AFiresThousandSunsPlayerController::OnSetDestinationTriggered() {
+	if (this->bBlockInput) { return; }
+
 	// We flag that the input is being pressed
 	FollowTime += GetWorld()->GetDeltaSeconds();
 	
@@ -97,8 +94,9 @@ void AFiresThousandSunsPlayerController::OnSetDestinationTriggered()
 	}
 }
 
-void AFiresThousandSunsPlayerController::OnSetDestinationReleased()
-{
+void AFiresThousandSunsPlayerController::OnSetDestinationReleased() {
+	if (this->bBlockInput) { return; }
+
 	// If it was a short press
 	//if (FollowTime <= ShortPressThreshold)
 	//{
@@ -110,14 +108,12 @@ void AFiresThousandSunsPlayerController::OnSetDestinationReleased()
 }
 
 // Triggered every frame when the input is held down
-void AFiresThousandSunsPlayerController::OnTouchTriggered()
-{
+void AFiresThousandSunsPlayerController::OnTouchTriggered() {
 	bIsTouch = true;
 	OnSetDestinationTriggered();
 }
 
-void AFiresThousandSunsPlayerController::OnTouchReleased()
-{
+void AFiresThousandSunsPlayerController::OnTouchReleased() {
 	bIsTouch = false;
 	OnSetDestinationReleased();
 }
