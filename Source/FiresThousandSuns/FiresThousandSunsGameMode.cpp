@@ -6,6 +6,7 @@
 #include "FiresThousandSunsCharacter.h"
 #include "UObject/ConstructorHelpers.h"
 #include "EngineUtils.h"
+#include "Math/RandomStream.h"
 
 #include "Buffs/BuffMoltenShell.h"
 
@@ -58,6 +59,10 @@ bool	AFiresThousandSunsGameMode::IsInitDone() const {
 }
 
 void	AFiresThousandSunsGameMode::SpawnSunsRegular() {
+	int32	r = std::rand() % 4;
+	if (r == this->_spawnSunsCounter) {
+		r = (r + 5) % 4;
+	}
 	if (this->_spawnSunsCounter == 0) {
 		this->SpawnSunsSides(Side::left, Side::right);
 	} else if (this->_spawnSunsCounter == 1) {
@@ -67,23 +72,33 @@ void	AFiresThousandSunsGameMode::SpawnSunsRegular() {
 	} else if (this->_spawnSunsCounter == 3) {
 		this->SpawnSunsSides(Side::bottom, Side::top);
 	}
-	this->_spawnSunsCounter = (this->_spawnSunsCounter + 1) % 4;
+	this->_spawnSunsCounter = r;
 }
 
+
+constexpr static int SideConvToInt(Side side)  { return CAST_NUM(side); }
+
+#define OFFSET 5.0f
 void	AFiresThousandSunsGameMode::SpawnSunsSides(Side Start, Side End) {
 	if (!this->_isInit) {
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Cyan, TEXT("Spawn positions are not initialized. Aborting."));
-	} else {
-		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Cyan, this->_sidePos1[CAST_NUM(Start)].ToString());
-		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Cyan, this->_sidePos2[CAST_NUM(Start)].ToString());
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Cyan, TEXT("[Fires..GameMode] Spawn positions are not initialized. Aborting."));
 	}
-
-	FVector spawn1 = this->_sidePos1[CAST_NUM(Start)];
-	FVector spawn2 = this->_sidePos2[CAST_NUM(Start)];
+	FVector offsets[4] = {// a little offsets to avoid perfect mirrors suns, leading to disturbing effects for the player
+		FVector(0, -OFFSET, 0),
+		FVector(0, OFFSET, 0),
+		FVector(-OFFSET, 0, 0),
+		FVector(OFFSET, 0, 0),
+	};
+	int32 s = CAST_NUM(Start);
+	int32 e = CAST_NUM(End);
+	FVector spawn1 = this->_sidePos1[s] + offsets[s];
+	FVector spawn2 = this->_sidePos2[s] + offsets[s];
 	FVector sideVecSpawn = spawn2 - spawn1;
-	FVector dest1 = this->_sidePos1[CAST_NUM(End)];
-	FVector dest2 = this->_sidePos2[CAST_NUM(End)];
+	FVector dest1 = this->_sidePos1[e] + offsets[s];
+	FVector dest2 = this->_sidePos2[e] + offsets[s];
 	FVector sideVecDest = dest2 - dest1;
+	TArray<ASun*>	wave;
+	wave.Reserve(this->_sunsPerSide);
 
 	FActorSpawnParameters spawnInfo;
 	FRotator rotation(0.0f, 0.0f, 0.0f);
@@ -92,14 +107,32 @@ void	AFiresThousandSunsGameMode::SpawnSunsSides(Side Start, Side End) {
 		FVector destPos = dest1 + sideVecDest * (i / (double)(this->_sunsPerSide - 1));// -1 because we will have suns-1 "segments" with 1 sun on each sides, starting at 0
 		ASun* sun = Cast<ASun>(this->GetWorld()->SpawnActor<AActor>(this->SunActorClass, spawnPos, rotation, spawnInfo));
 		if (sun->IsValidLowLevel()) {
+			sun->SetDamage(this->bIsUber ? this->UberDamage : this->Normaldamage);
+			wave.Add(sun);
 			sun->SetDestination(destPos);
 			sun->bIsMoving = true;
 			FScriptDelegate delegateScript;
 			delegateScript.BindUFunction(this, "CheckSunExplosion");
 			sun->SunExploded.Add(delegateScript);
-		}
+		} else { GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("[Fires..GameMode] Failed to spawn ASun %d"), (int)i)); }
 	}
+	this->_selectSunsForMavenCancellation(&wave);
 	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("Spawned %d Suns"), this->_sunsPerSide));
+}
+
+void	AFiresThousandSunsGameMode::_selectSunsForMavenCancellation(TArray<ASun*>* wave) const {
+	FRandomStream RandomStream;
+	RandomStream.GenerateNewSeed();
+	int32 maxIdx = wave->Num() - 1;
+	for (int32 i = 0; i < this->MavenCancelledSuns; ++i)	{
+		int32 SwapIdx = RandomStream.RandRange(i, maxIdx);
+		wave->Swap(i, SwapIdx);
+	}
+	// important to do it after all the swaps to not have duplicates
+	for (int32 i = 0; i < this->MavenCancelledSuns; ++i) {
+		(*wave)[i]->bMavenCancelled = true;
+		(*wave)[i]->SetMavenCancellationDistanceThreshold(double(i)*0.02 + (*wave)[i]->GetMavenCancellationDistanceThreshold());
+	}
 }
 
 void	AFiresThousandSunsGameMode::CheckSunExplosion(FVector location, double damage, double radius) const {

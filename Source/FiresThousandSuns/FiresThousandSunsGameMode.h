@@ -40,7 +40,19 @@ public:
 
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
-	int Waves = 5;
+	bool bIsUber = true;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
+	double WavesDelayNormal = 1.5;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
+	double WavesDelayUber = 1.0;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
+	double	UberDamage = 17355.0;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
+	double	Normaldamage = 16557.0;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
+	int Waves = 17;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
+	int MavenCancelledSuns = 7;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
 	uint8	_sunsPerSide = 20;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
@@ -61,6 +73,7 @@ private:
 	UFUNCTION(BlueprintCallable)
 	void	CheckSunExplosion(FVector location, double damage, double radius) const;
 	double	tmp_applyMitigation(double damage) const;
+	void	_selectSunsForMavenCancellation(TArray<ASun*>* wave) const;
 
 	uint8	_spawnSunsCounter = 0;
 };

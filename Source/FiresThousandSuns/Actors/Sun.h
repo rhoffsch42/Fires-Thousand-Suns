@@ -25,7 +25,16 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void	Move(float DeltaTime);
 	UFUNCTION(BlueprintCallable)
-	void	explode();
+	void	Explode();
+	UFUNCTION(BlueprintCallable)
+	bool	IsInRangeForMavenCancellation() const;
+	UFUNCTION(BlueprintCallable)
+	void	SetMavenCancellationDistanceThreshold(double Value); // range is [0:1]
+	double	GetMavenCancellationDistanceThreshold() const;
+	UFUNCTION(BlueprintCallable)
+	void	SetDamage(double Value);
+	UFUNCTION(BlueprintCallable)
+	double	GetDamage(double Value) const;
 
 	// Delegate / event dispatcher
 	UPROPERTY(BlueprintAssignable, EditDefaultsOnly)
@@ -33,19 +42,20 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	bool	bIsMoving = false;
-
+	bool	bMavenCancelled = false;
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 private:
 	//UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
 	TObjectPtr<USceneComponent> _DefaultSceneRoot;
+	FVector	_spawnLocation;
 	FVector	_destination;
+	double	_totalTravelDistance = 1.0;
 	double	_speed = 300.0;
-	//double	_damage = 16557.0;//normal
-	double	_damage = 17355.0;//uber
+	double	_damage = 17355.0;//uber //16557.0 normal
 	double	_explosionRadius = 400.0;
+	double	_mavenCancellationDistanceThreshold = 0.15; // relative proportion of _travelDistance [0:1]
 
 	void	_initComponents();
 };

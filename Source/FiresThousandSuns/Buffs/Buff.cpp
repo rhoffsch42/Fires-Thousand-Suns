@@ -65,7 +65,8 @@ void	ABuff::RemoveDuration(double Duration) {
 		this->_UpdateDuration(this->GetLifeSpan() - Duration);
 	} else { // puting negative value will set no/infinite lifespan, we don't want that.
 		// this->_UpdateDuration(0.001);
-		this->EndPlay(EEndPlayReason::Destroyed);
+		//this->EndPlay(EEndPlayReason::Destroyed);
+		this->Destroy();
 	}
 }
 

@@ -2,6 +2,7 @@
 
 
 #include "Sun.h"
+#include "../FiresThousandSunsGameMode.h"
 #include "Kismet/KismetMathLibrary.h"
 
 // Sets default values
@@ -13,6 +14,7 @@ ASun::ASun() {
 	this->SetRootComponent(this->_DefaultSceneRoot);
 	//this->_initComponents();
 }
+
 void	ASun::_initComponents() {
 	/*
 		static ConstructorHelpers::FObjectFinder<UStaticMesh>	mesh(TEXT("/Engine/EditorMeshes/EditorSphere.EditorSphere"));
@@ -57,6 +59,7 @@ void	ASun::_initComponents() {
 // Called when the game starts or when spawned
 void	ASun::BeginPlay() {
 	Super::BeginPlay();
+	this->_spawnLocation = this->GetTargetLocation();
 }
 
 // Called every frame
@@ -64,7 +67,11 @@ void	ASun::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 	if (this->bIsMoving) {
 		this->Move(DeltaTime);
-
+		if (this->bMavenCancelled && this->IsInRangeForMavenCancellation()) {
+			//GEngine->AddOnScreenDebugMessage(1, 15.0f, FColor::Yellow, FString::Printf(TEXT("Sun cencelled %p"), this));
+			this->Destroy();
+			//this->EndPlay(EEndPlayReason::Destroyed);
+		}
 	}
 }
 
@@ -75,7 +82,7 @@ void	ASun::Move(float DeltaTime) {
 	if (diff.Length() <= (DeltaTime * this->_speed)) {
 		this->_DefaultSceneRoot->SetWorldLocation(this->_destination);
 		this->bIsMoving = false;
-		this->explode();
+		this->Explode();
 	} else {
 		diff.Normalize();
 		diff = diff * DeltaTime * this->_speed;
@@ -85,12 +92,30 @@ void	ASun::Move(float DeltaTime) {
 
 void	ASun::SetDestination(FVector Desto) {
 	this->_destination = Desto;
+	this->_totalTravelDistance = (Desto - this->_spawnLocation).Length();
 	FRotator rot = UKismetMathLibrary::FindLookAtRotation(this->_DefaultSceneRoot->GetComponentLocation(), this->_destination);
 	this->_DefaultSceneRoot->SetWorldRotation(rot);
 }
 
-void	ASun::explode() {
+void	ASun::Explode() {
 	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString("Boom"));
 	this->SunExploded.Broadcast(this->_DefaultSceneRoot->GetComponentLocation(), this->_damage, this->_explosionRadius);
 	this->Destroy();
 }
+
+bool	ASun::IsInRangeForMavenCancellation() const {
+	double distanceTravelled = (this->GetActorLocation() - this->_spawnLocation).Length();
+	//GEngine->AddOnScreenDebugMessage(2222, 15.0f, FColor::Yellow, FString::Printf(TEXT("travel progress: %lf"), (distanceTravelled / this->_totalTravelDistance)));
+	return ((distanceTravelled / this->_totalTravelDistance) >= this->_mavenCancellationDistanceThreshold);
+}
+
+void	ASun::SetMavenCancellationDistanceThreshold(double Value) {
+	this->_mavenCancellationDistanceThreshold = std::min(1.0, std::max(0.0, Value));
+}
+
+void	ASun::SetDamage(double Value) {
+	this->_damage = std::max(0.0, Value);
+}
+
+double	ASun::GetDamage(double Value) const { return this->_damage; }
+double	ASun::GetMavenCancellationDistanceThreshold() const { return this->_mavenCancellationDistanceThreshold; }

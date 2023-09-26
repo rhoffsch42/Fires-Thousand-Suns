@@ -15,7 +15,7 @@ AFiresThousandSunsCharacter::AFiresThousandSunsCharacter()
 {
 	// Set size for player capsule, and change collision preset
 	UCapsuleComponent* capsule = GetCapsuleComponent();
-	capsule->InitCapsuleSize(42.f, 96.0f);
+	capsule->InitCapsuleSize(30.f, 96.0f);
 	//capsule->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
 
 	// Don't rotate character to camera direction
@@ -67,17 +67,24 @@ AFiresThousandSunsCharacter::AFiresThousandSunsCharacter()
 	this->VaalMoltenShell->ShellAbsorbtion = 0.39;
 	this->VaalMoltenShell->Cooldown->World = this->GetWorld();
 	this->VaalMoltenShell->Cooldown->SetDuration(60.0);
-
+	
 	// Buffs
-	this->BuffManager = CreateDefaultSubobject<UBuffManager>(TEXT("BuffManager"));
-	this->BuffManager->RegisterComponent();
+	this->BuffManager = CreateDefaultSubobject<UBuffManager>(TEXT("BuffManager"));//must be built in the constructor, has to be done in a valid world (when the owner has a world)
+}
+
+void	AFiresThousandSunsCharacter::BeginPlay() {
+	Super::BeginPlay();
+	// Buffs
+	//this->BuffManager = CreateDefaultSubobject<UBuffManager>(TEXT("BuffManager"));//has to be done in a valid world (so when the actor has a world)
+	this->AddOwnedComponent(this->BuffManager);
+	//this->BuffManager->RegisterComponent();
+}
+
+void AFiresThousandSunsCharacter::Tick(float DeltaSeconds) {
+    Super::Tick(DeltaSeconds);
+
 }
 
 void	AFiresThousandSunsCharacter::Die() {
 	this->Destroy();
-}
-
-void AFiresThousandSunsCharacter::Tick(float DeltaSeconds)
-{
-    Super::Tick(DeltaSeconds);
 }

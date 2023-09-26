@@ -23,7 +23,6 @@ class AFiresThousandSunsCharacter : public ACharacter
 public:
 	AFiresThousandSunsCharacter();
 
-	// Called every frame.
 	virtual void Tick(float DeltaSeconds) override;
 
 	/** Returns TopDownCameraComponent subobject **/
@@ -36,20 +35,21 @@ public:
 
 	// HealtManager
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	UHealthManager* HealthManager;
+	UHealthManager* HealthManager = nullptr;
 
 	// Skills
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	UAbilityFlameDash*		FlameDash;
+	UAbilityFlameDash*		FlameDash = nullptr;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	UAbilityMoltenShell*	MoltenShell;
+	UAbilityMoltenShell*	MoltenShell = nullptr;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	UAbilityMoltenShell*	VaalMoltenShell;
+	UAbilityMoltenShell*	VaalMoltenShell = nullptr;
 
 	// Buffs component
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	UBuffManager*	BuffManager;
-
+	UBuffManager*	BuffManager = nullptr;
+protected:
+	virtual void BeginPlay() override;
 private:
 	/** Top down camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
