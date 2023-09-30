@@ -50,4 +50,8 @@ public:
 
 		return actor;
 	}
+
+	UFUNCTION(BlueprintCallable)
+	static bool	CheckObject(UObject* obj, FString ErrorMsg);
+
 };

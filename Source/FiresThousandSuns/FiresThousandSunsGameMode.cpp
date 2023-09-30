@@ -4,6 +4,7 @@
 #include "FiresThousandSunsGameMode.h"
 #include "FiresThousandSunsPlayerController.h"
 #include "FiresThousandSunsCharacter.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "UObject/ConstructorHelpers.h"
 #include "EngineUtils.h"
 #include "Math/RandomStream.h"
@@ -22,7 +23,7 @@ AFiresThousandSunsGameMode::AFiresThousandSunsGameMode() {
 
 	// set default controller to our Blueprinted controller
 	static ConstructorHelpers::FClassFinder<APlayerController> PlayerControllerBPClass(TEXT("/Game/TopDown/Blueprints/BP_TopDownPlayerController"));
-	if(PlayerControllerBPClass.Class != NULL) {
+	if (PlayerControllerBPClass.Class != NULL) {
 		PlayerControllerClass = PlayerControllerBPClass.Class;
 	}
 
@@ -51,6 +52,9 @@ void	AFiresThousandSunsGameMode::Init(TSubclassOf<AActor> ActorClass, FVector Mi
 	this->_sidePos1[CAST_NUM(Side::bottom)] = bottomLeft;
 	this->_sidePos2[CAST_NUM(Side::bottom)] = bottomRight;
 	
+	this->Player->GetCharacterMovement()->MaxWalkSpeed = 375.0 * (1.0 + this->MovementSpeedBonus);
+	this->Player->GetCharacterMovement()->MinAnalogWalkSpeed = 375.0 * (1.0 + this->MovementSpeedBonus);
+
 	this->_isInit = true;
 }
 
@@ -110,7 +114,7 @@ void	AFiresThousandSunsGameMode::SpawnSunsSides(Side Start, Side End) {
 			sun->SetDamage(this->bIsUber ? this->UberDamage : this->Normaldamage);
 			wave.Add(sun);
 			sun->SetDestination(destPos);
-			sun->bIsMoving = true;
+			sun->bIsMoving = false;
 			FScriptDelegate delegateScript;
 			delegateScript.BindUFunction(this, "CheckSunExplosion");
 			sun->SunExploded.Add(delegateScript);

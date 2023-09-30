@@ -40,6 +40,8 @@ public:
 
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
+	double MovementSpeedBonus = 0.38;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
 	bool bIsUber = true;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
 	double WavesDelayNormal = 1.5;

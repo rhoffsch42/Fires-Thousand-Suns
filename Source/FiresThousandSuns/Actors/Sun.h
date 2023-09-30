@@ -52,7 +52,8 @@ private:
 	FVector	_spawnLocation;
 	FVector	_destination;
 	double	_totalTravelDistance = 1.0;
-	double	_speed = 300.0;
+	double	_timeBeforeMoving = 2.0;
+	double	_speed = 360.0;
 	double	_damage = 17355.0;//uber //16557.0 normal
 	double	_explosionRadius = 400.0;
 	double	_mavenCancellationDistanceThreshold = 0.15; // relative proportion of _travelDistance [0:1]

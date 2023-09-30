@@ -65,12 +65,13 @@ void	ASun::BeginPlay() {
 // Called every frame
 void	ASun::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
+	if (this->GetGameTimeSinceCreation() >= this->_timeBeforeMoving) {
+		this->bIsMoving = true;
+	}
 	if (this->bIsMoving) {
 		this->Move(DeltaTime);
 		if (this->bMavenCancelled && this->IsInRangeForMavenCancellation()) {
-			//GEngine->AddOnScreenDebugMessage(1, 15.0f, FColor::Yellow, FString::Printf(TEXT("Sun cencelled %p"), this));
 			this->Destroy();
-			//this->EndPlay(EEndPlayReason::Destroyed);
 		}
 	}
 }
