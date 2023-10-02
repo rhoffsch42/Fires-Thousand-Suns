@@ -70,7 +70,7 @@ void	UMenuContent::AddButtonOnly(UMenuContentButton* Button) {
 			this->MenuWidget->AddChild(Button);
 			UVerticalBoxSlot* slot = Cast<UVerticalBoxSlot>(Button->Slot);//tmp UVerticalBox is hardcoded (MenuWidget is UPanelWidget
 			if (UFuncLib::CheckObject(slot, FString("Button slot is null"))) {
-				slot->SetSize(ESlateSizeRule::Type::Fill);
+				slot->SetSize(ESlateSizeRule::Type::Automatic);
 				slot->SetHorizontalAlignment(EHorizontalAlignment::HAlign_Fill);
 				slot->SetVerticalAlignment(EVerticalAlignment::VAlign_Top);
 			}
@@ -87,6 +87,7 @@ void	UMenuContent::AddContentOnly(UUserWidget* Content) {
 			if (UFuncLib::CheckObject(slot, FString("Content slot is null"))) {
 				slot->SetHorizontalAlignment(EHorizontalAlignment::HAlign_Fill);
 				slot->SetVerticalAlignment(EVerticalAlignment::VAlign_Fill);
+				//slot->SetPadding
 			}
 			GEngine->AddOnScreenDebugMessage(-1, DBUG_L, FColor::Orange, FString("added Content"));
 		}

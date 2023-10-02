@@ -1,8 +1,8 @@
 
 #include "BuffManager.h"
+#include "../FuncLib.h"
 
-#define UNREAL_ENUM_MAX_MEMBER_COUNT	256
-#define CAST_NUM(x)	static_cast<int32>(x)
+constexpr int32 UNREAL_ENUM_MAX_MEMBER_COUNT = 256;
 
 UBuffManager::UBuffManager() {
 	PrimaryComponentTick.bCanEverTick = false;

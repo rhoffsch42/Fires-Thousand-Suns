@@ -6,6 +6,8 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "FuncLib.generated.h"
 
+#define CAST_NUM(x)	static_cast<int>(x)
+
 /**
  * 
  */
@@ -15,6 +17,9 @@ class FIRESTHOUSANDSUNS_API UFuncLib : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 public:
 	//UFUNCTION(BlueprintCallable)
+
+	UFUNCTION(BlueprintCallable)
+	static bool	CheckObject(UObject* obj, FString ErrorMsg);
 
 	// https://docs.oracle.com/cd/E19205-01/819-5267/6n7c46du6/index.html
 	// https ://nerivec.github.io/old-ue4-wiki/pages/templates-in-c.html
@@ -50,8 +55,5 @@ public:
 
 		return actor;
 	}
-
-	UFUNCTION(BlueprintCallable)
-	static bool	CheckObject(UObject* obj, FString ErrorMsg);
 
 };

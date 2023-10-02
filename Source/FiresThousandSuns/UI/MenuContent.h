@@ -10,6 +10,7 @@
 #include "Components/WidgetSwitcher.h"
 #include "Components/CanvasPanel.h"
 #include "Components/TextBlock.h"
+#include "Internationalization/Text.h"
 
 #include "MenuContent.generated.h"
 
@@ -24,9 +25,9 @@ public:
 	UUserWidget*	Content;
 	FMenuContentButtonOnClicked OnClickedDelegate;
 
-	UPROPERTY(meta = (BindWidget))
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
 	UButton* Button;
-	UPROPERTY(meta = (BindWidget))
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
 	UTextBlock* ButtonText;
 protected:
 	virtual void NativeConstruct() override;

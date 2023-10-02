@@ -4,9 +4,8 @@
 #include "../Buffs/BuffMoltenShell.h"
 #include "../FuncLib.h"
 
-#define CD_MAXUSES			1
-#define CD_DURATION			4.0
-
+constexpr int32 CD_MAXUSES = 1;
+constexpr double CD_DURATION = 4.0;
 
 // explicit instanciation
 template ABuffMoltenShell* UFuncLib::SafeSpawnActor<ABuffMoltenShell>(

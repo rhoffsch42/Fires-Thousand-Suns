@@ -8,12 +8,15 @@
 #include "UObject/ConstructorHelpers.h"
 #include "EngineUtils.h"
 #include "Math/RandomStream.h"
+#include "FuncLib.h"
+#include "FiresThousandSunsPlayerState.h"
 
 #include "Buffs/BuffMoltenShell.h"
 
 AFiresThousandSunsGameMode::AFiresThousandSunsGameMode() {
-	// use our custom PlayerController class
+	// use our custom classes
 	PlayerControllerClass = AFiresThousandSunsPlayerController::StaticClass();
+	PlayerStateClass = AFiresThousandSunsPlayerState::StaticClass();
 
 	// set default pawn class to our Blueprinted character
 	static ConstructorHelpers::FClassFinder<APawn> PlayerPawnBPClass(TEXT("/Game/TopDown/Blueprints/BP_TopDownCharacter"));
@@ -144,7 +147,7 @@ void	AFiresThousandSunsGameMode::CheckSunExplosion(FVector location, double dama
 	if (diff.Length() <= radius) {
 		//GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Yellow, FString::Printf(TEXT("[max: %lf] diff with player : %lf"), radius, diff.Length()));
 		damage = tmp_applyMitigation(damage);
-		
+
 		// molten shell(s)
 		UBuffManager* bm = this->Player->GetComponentByClass<UBuffManager>();
 		if (bm) {
@@ -159,15 +162,32 @@ void	AFiresThousandSunsGameMode::CheckSunExplosion(FVector location, double dama
 			}
 		} else { /* should not happen */ }
 
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, FString::Printf(TEXT("Taking damage : %lf"), damage));
 		this->Player->HealthManager->RemoveHP(damage);
 		this->Player->HealthManager->CheckForDeath();
 	}
 }
 
 double	AFiresThousandSunsGameMode::tmp_applyMitigation(double damage) const {
-	double FireResistance = 0.80;
-	double SunFirePenetration = 0.00;
+	APlayerState* ps = this->Player->GetPlayerState();
+	UFuncLib::CheckObject(ps, "AFiresThousandSunsGameMode::tmp_applyMitigation() GetPlayerState() returned nullptr");
+	AFiresThousandSunsPlayerState* State = Cast<AFiresThousandSunsPlayerState>(ps);
+	if (!UFuncLib::CheckObject(State, "AFiresThousandSunsGameMode::tmp_applyMitigation() failed to Cast PlayerState")) {
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString::Printf(TEXT("ps: %p"), ps));
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString::Printf(TEXT("cu: %p"), this->Player->CustomPlayerState));
+		return 0;
+	}
+	FPlayerStats	Stats = State->PlayerStats;
 	double RubyFlask = 0.20;
+	double SunFirePenetration = 0.00;
+	return damage
+		* (1.0 - Stats.FireResistance + SunFirePenetration)
+		* (1.0 - RubyFlask)
+		* (1.0 - Stats.SpellSuppressionEffect)
+		* (1.0 - Stats.FortifyStacks)
+		* (1.0 - Stats.CustomLessDamage)
+		;
+	double FireResistance = 0.75;
 	double SuppressionPrevention = 0.53;
 	double Fortify = 0.20;
 	double GlobalMitigation = 0.0;

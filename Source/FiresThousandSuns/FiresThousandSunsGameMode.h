@@ -18,8 +18,6 @@ enum class Side : uint8 {
 	bottom UMETA(DisplayName = "bottom"),
 	top UMETA(DisplayName = "top")
 };
-#define CAST_NUM(x)	static_cast<int>(x)
-
 
 UCLASS(minimalapi)
 class AFiresThousandSunsGameMode : public AGameModeBase

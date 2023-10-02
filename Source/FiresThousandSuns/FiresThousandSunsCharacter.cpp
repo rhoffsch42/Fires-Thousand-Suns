@@ -12,6 +12,9 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Materials/Material.h"
 #include "Engine/World.h"
+#include "FuncLib.h"
+
+constexpr double DEFAULT_PLAYER_HP = 60000.0;
 
 AFiresThousandSunsCharacter::AFiresThousandSunsCharacter()
 {
@@ -59,19 +62,25 @@ AFiresThousandSunsCharacter::AFiresThousandSunsCharacter()
 	// Skills
 	this->FlameDash = NewObject<UAbilityFlameDash>();
 	this->FlameDash->Cooldown->World = this->GetWorld();
-	
+
 	this->MoltenShell = NewObject<UAbilityMoltenShell>();
 	this->MoltenShell->Cooldown->World = this->GetWorld();
-	
+
 	this->VaalMoltenShell = NewObject<UAbilityMoltenShell>();
 	this->VaalMoltenShell->ShellHP = 10000.0;
 	this->VaalMoltenShell->ShellDuration = 10.8;
 	this->VaalMoltenShell->ShellAbsorbtion = 0.39;
 	this->VaalMoltenShell->Cooldown->World = this->GetWorld();
 	this->VaalMoltenShell->Cooldown->SetDuration(60.0);
-	
+
 	// Buffs
 	this->BuffManager = CreateDefaultSubobject<UBuffManager>(TEXT("BuffManager"));//must be built in the constructor, has to be done in a valid world (when the owner has a world)
+
+	// PlayerState
+	this->CustomPlayerState = NewObject<AFiresThousandSunsPlayerState>();
+	if (UFuncLib::CheckObject(this->CustomPlayerState, "AFiresThousandSunsCharacter() NewObject<Fires..PlayerState>() returned nullptr")) {
+		this->SetPlayerState(this->CustomPlayerState);
+	}
 }
 
 void	AFiresThousandSunsCharacter::BeginPlay() {

@@ -9,11 +9,9 @@
 #include "Abilitys/AbilityFlameDash.h"
 #include "Abilitys/AbilityMoltenShell.h"
 #include "Buffs/BuffManager.h"
+#include "FiresThousandSunsPlayerState.h"
 
 #include "FiresThousandSunsCharacter.generated.h"
-
-#define DEFAULT_PLAYER_HP	6000.0
-
 
 UCLASS(Blueprintable)
 class AFiresThousandSunsCharacter : public ACharacter
@@ -48,6 +46,10 @@ public:
 	// Buffs component
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	UBuffManager*	BuffManager = nullptr;
+
+	// Custom PlayerState
+	AFiresThousandSunsPlayerState* CustomPlayerState;
+
 protected:
 	virtual void BeginPlay() override;
 private:
