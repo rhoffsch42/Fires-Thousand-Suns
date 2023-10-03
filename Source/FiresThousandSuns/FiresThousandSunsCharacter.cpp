@@ -13,8 +13,7 @@
 #include "Materials/Material.h"
 #include "Engine/World.h"
 #include "FuncLib.h"
-
-constexpr double DEFAULT_PLAYER_HP = 60000.0;
+#include "FiresThousandSunsGameInstance.h"
 
 AFiresThousandSunsCharacter::AFiresThousandSunsCharacter()
 {
@@ -51,10 +50,17 @@ AFiresThousandSunsCharacter::AFiresThousandSunsCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 	PrimaryActorTick.bStartWithTickEnabled = true;
 
+	// Required (or can be) in Ctor 
+	this->_InitPreBeginPlay();
+}
+
+void	AFiresThousandSunsCharacter::_InitPreBeginPlay() {
 	// HealthManager
 	this->HealthManager = NewObject<UHealthManager>();
-	this->HealthManager->SetMaxHP(DEFAULT_PLAYER_HP);
-	this->HealthManager->SetHP(DEFAULT_PLAYER_HP);
+	if (this->CustomPlayerState) {
+		this->HealthManager->SetMaxHP(this->CustomPlayerState->PlayerStats.Life);
+		this->HealthManager->SetHP(this->CustomPlayerState->PlayerStats.Life);
+	}
 	FScriptDelegate delegateScript;
 	delegateScript.BindUFunction(this, "Die");
 	this->HealthManager->HpEmpty.Add(delegateScript);
@@ -75,25 +81,57 @@ AFiresThousandSunsCharacter::AFiresThousandSunsCharacter()
 
 	// Buffs
 	this->BuffManager = CreateDefaultSubobject<UBuffManager>(TEXT("BuffManager"));//must be built in the constructor, has to be done in a valid world (when the owner has a world)
-
-	// PlayerState
-	this->CustomPlayerState = NewObject<AFiresThousandSunsPlayerState>();
-	if (UFuncLib::CheckObject(this->CustomPlayerState, "AFiresThousandSunsCharacter() NewObject<Fires..PlayerState>() returned nullptr")) {
-		this->SetPlayerState(this->CustomPlayerState);
-	}
 }
 
-void	AFiresThousandSunsCharacter::BeginPlay() {
-	Super::BeginPlay();
+void	AFiresThousandSunsCharacter::_InitPostBeginPlay() {
+	// PlayerState
+	this->CustomPlayerState = this->GetWorld()->SpawnActor<AFiresThousandSunsPlayerState>(AFiresThousandSunsPlayerState::StaticClass()); // NewObject<AFiresThousandSunsPlayerState>();
+	if (UFuncLib::CheckObject(this->CustomPlayerState, "AFiresThousandSunsCharacter() NewObject<Fires..PlayerState>() returned nullptr")) {
+		this->SetPlayerState(this->CustomPlayerState);
+
+		UFiresThousandSunsGameInstance* FiresGI = Cast<UFiresThousandSunsGameInstance>(this->GetGameInstance());
+		if (UFuncLib::CheckObject(FiresGI, "AFiresThousandSunsCharacter  GetGameInstance() or Cast<>() failed")) {
+			this->UpdateStats(FiresGI->BaseStats);
+		}
+	}
+
 	// Buffs
 	//this->BuffManager = CreateDefaultSubobject<UBuffManager>(TEXT("BuffManager"));//has to be done in a valid world (so when the actor has a world)
 	this->AddOwnedComponent(this->BuffManager);
 	//this->BuffManager->RegisterComponent();
 }
 
+void	AFiresThousandSunsCharacter::BeginPlay() {
+	Super::BeginPlay();
+
+	this->_InitPostBeginPlay();
+}
+
 void AFiresThousandSunsCharacter::Tick(float DeltaSeconds) {
     Super::Tick(DeltaSeconds);
 
+}
+
+void	AFiresThousandSunsCharacter::UpdateStats(const FPlayerStats& NewStats) {
+	//AFiresThousandSunsPlayerState* state = Cast<AFiresThousandSunsPlayerState>(this->GetPlayerState());
+	if (!UFuncLib::CheckObject(this->CustomPlayerState, "AFiresThousandSunsCharacter UpdateStats() CustomPlayerState is nullptr")) {
+		return;
+	}
+	this->CustomPlayerState->PlayerStats = NewStats;
+	//UFuncLib::PrintStats(NewStats);
+	//UFuncLib::PrintStats(this->CustomPlayerState->PlayerStats);
+	UCharacterMovementComponent* movcomp = this->GetCharacterMovement();
+	if (UFuncLib::CheckObject(movcomp, "AFiresThousandSunsCharacter GetCharacterMovement() returned nullptr")) {
+		movcomp->MaxWalkSpeed = 375.0 * (1.0 + NewStats.MovementSpeed);
+		movcomp->MinAnalogWalkSpeed = 375.0 * (1.0 + NewStats.MovementSpeed);
+	}
+	this->HealthManager->SetMaxHP(this->CustomPlayerState->PlayerStats.Life);
+	this->HealthManager->SetHP(this->CustomPlayerState->PlayerStats.Life);
+}
+
+void	AFiresThousandSunsCharacter::ApplyLifeRegen(float DeltaSeconds) {
+	//this->HealthManager->AddHP(50.0f * DeltaSeconds);
+	this->HealthManager->AddHP(this->CustomPlayerState->PlayerStats.LifeRegeneration * DeltaSeconds);
 }
 
 void	AFiresThousandSunsCharacter::Die() {

@@ -29,6 +29,10 @@ public:
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 
 	UFUNCTION(BlueprintCallable)
+	void	UpdateStats(const FPlayerStats& NewStats);
+	UFUNCTION(BlueprintCallable)
+	void	ApplyLifeRegen(float DeltaSeconds);
+	UFUNCTION(BlueprintCallable)
 	void	Die();
 
 	// HealtManager
@@ -48,10 +52,13 @@ public:
 	UBuffManager*	BuffManager = nullptr;
 
 	// Custom PlayerState
-	AFiresThousandSunsPlayerState* CustomPlayerState;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	AFiresThousandSunsPlayerState* CustomPlayerState = nullptr;
 
 protected:
 	virtual void BeginPlay() override;
+	void	_InitPostBeginPlay();
+	void	_InitPreBeginPlay();
 private:
 	/** Top down camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))

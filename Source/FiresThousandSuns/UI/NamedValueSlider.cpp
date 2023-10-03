@@ -16,7 +16,7 @@ void	UNamedValueSlider::_LinkSliderToFunc(USlider* Slider, const FName& FuncName
 	Slider->OnValueChanged.Add(script);
 }
 
-void	UNamedValueSlider::SetNameAndRange(FText Text, float MinValue, float MaxValue) {
+void	UNamedValueSlider::SetTitleAndRange(FText Text, float MinValue, float MaxValue) {
 	this->TextTitle->SetText(Text);
 	this->Min = MinValue;
 	this->Max = MaxValue;
@@ -42,4 +42,8 @@ void	UNamedValueSlider::UpdateWithPercent(float Value) const {
 	//FText::Format(NSLOCTEXT("Solus", "Solus", "HP "), FText::AsNumber(4));
 	//FText::Format(NSLOCTEXT("Solus", "DayFmt", "{0} {1}"), NSLOCTEXT("Solus", "Solus", "Day"), FText::AsNumber(4)); // takes both as arguments
 	//FText::Format(NSLOCTEXT("Solus", "Solus", "Day {0}"), FText::AsNumber(5)); // takes just the day number and formats it into the Day string
+}
+
+double	UNamedValueSlider::GetValue() const {
+	return this->SliderValueToRange(this->SliderWidget->GetValue());
 }

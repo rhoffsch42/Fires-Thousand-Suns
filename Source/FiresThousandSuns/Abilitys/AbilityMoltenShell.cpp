@@ -4,7 +4,7 @@
 #include "../Buffs/BuffMoltenShell.h"
 #include "../FuncLib.h"
 
-constexpr int32 CD_MAXUSES = 1;
+constexpr int CD_MAXUSES = 1;
 constexpr double CD_DURATION = 4.0;
 
 // explicit instanciation

@@ -32,7 +32,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void	SpawnSunsSides(Side Start, Side End);
 	UFUNCTION(BlueprintCallable)
-	void	Init(TSubclassOf<AActor> ActorClass, FVector MinPosition, FVector MaxPosition, AFiresThousandSunsCharacter* PlayerCharacter);
+	void	Init(TSubclassOf<AActor> ActorClass, FVector MinPosition, FVector MaxPosition, UPARAM(ref) AFiresThousandSunsCharacter* PlayerCharacter);
 	UFUNCTION(BlueprintCallable)
 	bool	IsInitDone() const;
 

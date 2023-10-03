@@ -10,7 +10,6 @@
 #include "Math/RandomStream.h"
 #include "FuncLib.h"
 #include "FiresThousandSunsPlayerState.h"
-
 #include "Buffs/BuffMoltenShell.h"
 
 AFiresThousandSunsGameMode::AFiresThousandSunsGameMode() {
@@ -37,7 +36,7 @@ void AFiresThousandSunsGameMode::BeginPlay() {
 	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Yellow, FString::Printf(TEXT("AFiresThousandSunsGameMode::BeginPlay()")));
 }
 
-void	AFiresThousandSunsGameMode::Init(TSubclassOf<AActor> ActorClass, FVector MinPosition, FVector MaxPosition, AFiresThousandSunsCharacter* PlayerCharacter) {
+void	AFiresThousandSunsGameMode::Init(TSubclassOf<AActor> ActorClass, FVector MinPosition, FVector MaxPosition, UPARAM(ref) AFiresThousandSunsCharacter* PlayerCharacter) {
 	this->Player = PlayerCharacter;
 	this->SunActorClass = ActorClass;
 	
@@ -55,9 +54,6 @@ void	AFiresThousandSunsGameMode::Init(TSubclassOf<AActor> ActorClass, FVector Mi
 	this->_sidePos1[CAST_NUM(Side::bottom)] = bottomLeft;
 	this->_sidePos2[CAST_NUM(Side::bottom)] = bottomRight;
 	
-	this->Player->GetCharacterMovement()->MaxWalkSpeed = 375.0 * (1.0 + this->MovementSpeedBonus);
-	this->Player->GetCharacterMovement()->MinAnalogWalkSpeed = 375.0 * (1.0 + this->MovementSpeedBonus);
-
 	this->_isInit = true;
 }
 
@@ -143,6 +139,7 @@ void	AFiresThousandSunsGameMode::_selectSunsForMavenCancellation(TArray<ASun*>* 
 }
 
 void	AFiresThousandSunsGameMode::CheckSunExplosion(FVector location, double damage, double radius) const {
+	if (!this->Player->IsValidLowLevel()) { return; }
 	FVector diff = location - this->Player->GetActorLocation();
 	if (diff.Length() <= radius) {
 		//GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Yellow, FString::Printf(TEXT("[max: %lf] diff with player : %lf"), radius, diff.Length()));
@@ -177,9 +174,10 @@ double	AFiresThousandSunsGameMode::tmp_applyMitigation(double damage) const {
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString::Printf(TEXT("cu: %p"), this->Player->CustomPlayerState));
 		return 0;
 	}
-	FPlayerStats	Stats = State->PlayerStats;
 	double RubyFlask = 0.20;
 	double SunFirePenetration = 0.00;
+	FPlayerStats	Stats = State->PlayerStats;
+	Stats = this->Player->CustomPlayerState->PlayerStats;
 	return damage
 		* (1.0 - Stats.FireResistance + SunFirePenetration)
 		* (1.0 - RubyFlask)

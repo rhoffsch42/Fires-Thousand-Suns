@@ -20,6 +20,8 @@ struct FPlayerStats
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	double	FireResistance = 0.75;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	double	SpellSuppressionChance = 1;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	double	SpellSuppressionEffect = 0.5;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	double	FortifyStacks = 0.0;
@@ -37,9 +39,9 @@ class FIRESTHOUSANDSUNS_API AFiresThousandSunsPlayerState : public APlayerState
 	GENERATED_BODY()
 public:
 	AFiresThousandSunsPlayerState();
-	UFUNCTION(BlueprintCallable)
-	void	PrintPlayerStats() const;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	FPlayerStats	PlayerStats;
+//protected:
+	//virtual void BeginPlay();
 };

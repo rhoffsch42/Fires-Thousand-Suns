@@ -1,9 +1,10 @@
-// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
+#include "FiresThousandSunsPlayerState.h"
+
 #include "FuncLib.generated.h"
 
 #define CAST_NUM(x)	static_cast<int>(x)
@@ -20,6 +21,8 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	static bool	CheckObject(UObject* obj, FString ErrorMsg);
+	UFUNCTION(BlueprintCallable)
+	static void	PrintStats(const FPlayerStats& Stats);
 
 	// https://docs.oracle.com/cd/E19205-01/819-5267/6n7c46du6/index.html
 	// https ://nerivec.github.io/old-ue4-wiki/pages/templates-in-c.html
