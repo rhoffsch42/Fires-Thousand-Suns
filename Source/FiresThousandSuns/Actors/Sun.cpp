@@ -71,6 +71,7 @@ void	ASun::Tick(float DeltaTime) {
 	if (this->bIsMoving) {
 		this->Move(DeltaTime);
 		if (this->bMavenCancelled && this->IsInRangeForMavenCancellation()) {
+			this->SunMavenCancelled.Broadcast();
 			this->Destroy();
 		}
 	}

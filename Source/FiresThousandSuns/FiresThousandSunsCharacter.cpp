@@ -135,5 +135,6 @@ void	AFiresThousandSunsCharacter::ApplyLifeRegen(float DeltaSeconds) {
 }
 
 void	AFiresThousandSunsCharacter::Die() {
+	this->PlayerDied.Broadcast();
 	this->Destroy();
 }

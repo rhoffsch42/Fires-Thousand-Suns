@@ -10,6 +10,8 @@
 
 UDELEGATE(BlueprintCallable)
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FSunExploded, FVector, SunLocation, double, Damage, double, ExplosionRadius);
+UDELEGATE(BlueprintCallable)
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FSunMavenCancelled);
 
 UCLASS(Blueprintable)
 class FIRESTHOUSANDSUNS_API ASun : public AActor
@@ -39,6 +41,8 @@ public:
 	// Delegate / event dispatcher
 	UPROPERTY(BlueprintAssignable, EditDefaultsOnly)
 	FSunExploded SunExploded;
+	UPROPERTY(BlueprintAssignable, EditDefaultsOnly)
+	FSunMavenCancelled SunMavenCancelled;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	bool	bIsMoving = false;

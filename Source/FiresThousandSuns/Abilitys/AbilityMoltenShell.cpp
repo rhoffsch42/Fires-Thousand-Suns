@@ -4,8 +4,8 @@
 #include "../Buffs/BuffMoltenShell.h"
 #include "../FuncLib.h"
 
-constexpr int CD_MAXUSES = 1;
-constexpr double CD_DURATION = 4.0;
+constexpr int MOLTEN_SHELL_CD_MAXUSES = 1;
+constexpr double MOLTEN_SHELL_CD_DURATION = 4.0;
 
 // explicit instanciation
 template ABuffMoltenShell* UFuncLib::SafeSpawnActor<ABuffMoltenShell>(
@@ -19,8 +19,8 @@ template ABuffMoltenShell* UFuncLib::SafeSpawnActor<ABuffMoltenShell>(
 );
 
 UAbilityMoltenShell::UAbilityMoltenShell() {
-	this->Cooldown->SetMaxUses(CD_MAXUSES);
-	this->Cooldown->SetDuration(CD_DURATION + this->ShellDuration); // This Skill's Cooldown does not recover during its effect
+	this->Cooldown->SetMaxUses(MOLTEN_SHELL_CD_MAXUSES);
+	this->Cooldown->SetDuration(MOLTEN_SHELL_CD_DURATION + this->ShellDuration); // This Skill's Cooldown does not recover during its effect
 	this->Cooldown->Reset();
 }
 

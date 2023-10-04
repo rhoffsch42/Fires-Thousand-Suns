@@ -13,6 +13,9 @@
 
 #include "FiresThousandSunsCharacter.generated.h"
 
+UDELEGATE(BlueprintCallable)
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FPlayerDied);
+
 UCLASS(Blueprintable)
 class AFiresThousandSunsCharacter : public ACharacter
 {
@@ -54,6 +57,9 @@ public:
 	// Custom PlayerState
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	AFiresThousandSunsPlayerState* CustomPlayerState = nullptr;
+
+	UPROPERTY(BlueprintAssignable, EditDefaultsOnly, Category = "Default")
+	FPlayerDied	PlayerDied;
 
 protected:
 	virtual void BeginPlay() override;

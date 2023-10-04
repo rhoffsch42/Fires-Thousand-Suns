@@ -7,15 +7,11 @@ UHealthManager::UHealthManager() {
 UHealthManager::UHealthManager(double HP) : _maxhp(std::max(1.0, HP)), _hp(_maxhp) {
 }
 
-void	UHealthManager::CheckForDeath() {
+void	UHealthManager::CheckEmptyHP() const {
 	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("[HealthManager] Player HP : %lf"), this->_hp));
 	if (this->_hp <= 0) {
-		this->OnNoHP();
+		this->HpEmpty.Broadcast();
 	}
-}
-
-void	UHealthManager::OnNoHP() {
-	this->HpEmpty.Broadcast();
 }
 
 void	UHealthManager::AddHP(double Value) {
@@ -25,10 +21,12 @@ void	UHealthManager::AddHP(double Value) {
 void	UHealthManager::RemoveHP(double Value) {
 	this->_hp = std::max(this->_hp - Value, 0.0);
 	this->HpChanged.Broadcast();
+	this->CheckEmptyHP();
 }
 void	UHealthManager::SetHP(double Value) {
 	this->_hp = std::min(Value, this->_maxhp);
 	this->HpChanged.Broadcast();
+	this->CheckEmptyHP();
 }
 void	UHealthManager::SetMaxHP(double Value) {
 	this->_maxhp = Value;

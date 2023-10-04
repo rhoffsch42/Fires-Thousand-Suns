@@ -32,9 +32,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void	SetMaxHP(double Value);
 	UFUNCTION(BlueprintCallable)
-	void	CheckForDeath();
-	UFUNCTION(BlueprintCallable)
-	void	OnNoHP();
+	void	CheckEmptyHP() const;
 
 	UFUNCTION(BlueprintCallable)
 	double	GetHP() const;

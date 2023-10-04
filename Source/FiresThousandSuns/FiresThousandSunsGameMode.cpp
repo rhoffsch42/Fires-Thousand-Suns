@@ -8,6 +8,7 @@
 #include "UObject/ConstructorHelpers.h"
 #include "EngineUtils.h"
 #include "Math/RandomStream.h"
+#include "Math/UnrealMathUtility.h"
 #include "FuncLib.h"
 #include "FiresThousandSunsPlayerState.h"
 #include "Buffs/BuffMoltenShell.h"
@@ -159,9 +160,8 @@ void	AFiresThousandSunsGameMode::CheckSunExplosion(FVector location, double dama
 			}
 		} else { /* should not happen */ }
 
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, FString::Printf(TEXT("Taking damage : %lf"), damage));
+		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, FString::Printf(TEXT("Taking damage : %lf"), damage));
 		this->Player->HealthManager->RemoveHP(damage);
-		this->Player->HealthManager->CheckForDeath();
 	}
 }
 
@@ -174,28 +174,35 @@ double	AFiresThousandSunsGameMode::tmp_applyMitigation(double damage) const {
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString::Printf(TEXT("cu: %p"), this->Player->CustomPlayerState));
 		return 0;
 	}
+
+	FRandomStream RandomStream;
+	RandomStream.GenerateNewSeed();
+	double suppRand = FMath::RandRange(0.0f, 1.0f);
+	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, FString::FormatAsNumber(suppRand*100));
+
+	FPlayerStats	Stats = State->PlayerStats;
+	//Stats = this->Player->CustomPlayerState->PlayerStats;
 	double RubyFlask = 0.20;
 	double SunFirePenetration = 0.00;
-	FPlayerStats	Stats = State->PlayerStats;
-	Stats = this->Player->CustomPlayerState->PlayerStats;
 	return damage
 		* (1.0 - Stats.FireResistance + SunFirePenetration)
 		* (1.0 - RubyFlask)
-		* (1.0 - Stats.SpellSuppressionEffect)
-		* (1.0 - Stats.FortifyStacks)
+		* (1.0 - (suppRand <= Stats.SpellSuppressionChance ? 1.0 : 0.0) * Stats.SpellSuppressionEffect) 
+		* (1.0 - Stats.FortifyEffect)
 		* (1.0 - Stats.CustomLessDamage)
 		;
-	double FireResistance = 0.75;
-	double SuppressionPrevention = 0.53;
-	double Fortify = 0.20;
-	double GlobalMitigation = 0.0;
-	return damage
-		* (1.0 - FireResistance + SunFirePenetration)
-		* (1.0 - RubyFlask)
-		* (1.0 - SuppressionPrevention)
-		* (1.0 - Fortify)
-		* (1.0 - GlobalMitigation)
-		;
+	//double FireResistance = 0.75;
+	//double SpellSuppressionChance = 1.0;
+	//double SpellSuppressionEffect = 0.53;
+	//double Fortify = 0.20;
+	//double GlobalMitigation = 0.0;
+	//return damage
+	//	* (1.0 - FireResistance + SunFirePenetration)
+	//	* (1.0 - RubyFlask)
+	//	* (1.0 - (suppRand <= SpellSuppressionChance ? 1.0 : 0.0) * SpellSuppressionEffect)
+	//	* (1.0 - Fortify)
+	//	* (1.0 - GlobalMitigation)
+	//	;
 }
 
  void	AFiresThousandSunsGameMode::GrabActorsWithTags() const {

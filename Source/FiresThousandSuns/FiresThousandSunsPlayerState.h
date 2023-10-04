@@ -24,7 +24,7 @@ struct FPlayerStats
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	double	SpellSuppressionEffect = 0.5;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	double	FortifyStacks = 0.0;
+	double	FortifyEffect = 0.0;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	double	CustomLessDamage = 0.0;
 };

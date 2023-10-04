@@ -13,7 +13,7 @@ bool	UFuncLib::CheckObject(UObject* obj, FString ErrorMsg) {
 
 void	UFuncLib::PrintStats(const FPlayerStats& Stats) {
 	GEngine->AddOnScreenDebugMessage(-1, D_LEN, FColor::Cyan, FString::Printf(TEXT("Less Damage Taken       : %lf"), Stats.CustomLessDamage));
-	GEngine->AddOnScreenDebugMessage(-1, D_LEN, FColor::Cyan, FString::Printf(TEXT("Fortify Stacks          : %lf"), Stats.FortifyStacks));
+	GEngine->AddOnScreenDebugMessage(-1, D_LEN, FColor::Cyan, FString::Printf(TEXT("Fortify Stacks          : %lf"), Stats.FortifyEffect));
 	GEngine->AddOnScreenDebugMessage(-1, D_LEN, FColor::Cyan, FString::Printf(TEXT("Spell Supression Effect : %lf"), Stats.SpellSuppressionEffect));
 	GEngine->AddOnScreenDebugMessage(-1, D_LEN, FColor::Cyan, FString::Printf(TEXT("Spell Supression Chance : %lf"), Stats.SpellSuppressionChance));
 	GEngine->AddOnScreenDebugMessage(-1, D_LEN, FColor::Cyan, FString::Printf(TEXT("Fire Resistance         : %lf"), Stats.FireResistance));
