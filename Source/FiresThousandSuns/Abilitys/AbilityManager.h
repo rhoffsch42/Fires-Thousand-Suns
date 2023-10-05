@@ -9,10 +9,12 @@
 
 #include "AbilityManager.generated.h"
 
-#define DEFAULT_SLOTS_AMOUNT	5
 
+/*
+	Ability container with a desired size
+*/
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class FIRESTHOUSANDSUNS_API UAbilityManager : public UActorComponent
+class FIRESTHOUSANDSUNS_API UAbilityManager : public UObject
 {
 	GENERATED_BODY()
 
@@ -23,16 +25,17 @@ public:
 	//virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	UFUNCTION(BlueprintCallable)
-	void	SetSlotsAmount(int Amount);
+	void		SetSlotsAmount(int Amount);
 	UFUNCTION(BlueprintCallable)
-	bool	SetAbility(int Index, UAbility* Ability);
+	bool		SetAbility(int Index, UAbility* Ability);
 	UFUNCTION(BlueprintCallable)
-	int		GetSlotsAmount() const;
+	UAbility*	GetAbility(int Index) const;
+	UFUNCTION(BlueprintCallable)
+	UAbility*	GetAbilityByClass(const TSubclassOf<UAbility> AbilityClass) const;
+	UFUNCTION(BlueprintCallable)
+	int			GetSlotsAmount() const;
 
 protected:
-	// Called when the game starts
-	virtual void BeginPlay() override;
-
+	std::vector<UAbility*>	_Slots;
 private:
-	std::vector<UAbility*>	_slots;
 };

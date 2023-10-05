@@ -1,42 +1,55 @@
 #include "AbilityManager.h"
 
+constexpr int32	DEFAULT_SLOTS_AMOUNT = 5;
+
 UAbilityManager::UAbilityManager() {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.
-	// You can turn these features off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = false;
-
-	this->_slots.resize(DEFAULT_SLOTS_AMOUNT, nullptr);
-}
-
-
-// Called when the game starts
-void UAbilityManager::BeginPlay() {
-	Super::BeginPlay();
+	this->_Slots.resize(DEFAULT_SLOTS_AMOUNT, nullptr);
 }
 
 void	UAbilityManager::SetSlotsAmount(int Amount) {
-	this->_slots.resize(std::max(0, Amount));
+	this->_Slots.resize(std::max(0, Amount));
 }
 
 bool	UAbilityManager::SetAbility(int Index, UAbility* Ability) {
-	if (Index < this->_slots.size()) {
-		this->_slots[Index] = Ability;
+	if (Index < this->_Slots.size()) {
+		this->_Slots[Index] = Ability;
 		return true;
 	} else {
 		return false;
 	}
 }
 
-int		UAbilityManager::GetSlotsAmount() const {
-	return this->_slots.size();
+UAbility* UAbilityManager::GetAbility(int Index) const {
+	if (Index < this->_Slots.size()) {
+		return this->_Slots[Index];
+	} else {
+		return nullptr;
+	}
 }
 
-
-// Called every frame
-//void UAbilityManager::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-//{
-//	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-//
-//	// ...
+//template <class T>
+//UAbility* UAbilityManager::GetAbility() const {
+//	for (auto ability : this->_Slots) {
+//		T* spe = Cast<T>(ability);
+//		if (spe) {
+//			return spe;
+//		}
+//	}
+//	return nullptr;
 //}
 
+UAbility*	UAbilityManager::GetAbilityByClass(const TSubclassOf<UAbility> AbilityClass) const {
+	UAbility* FoundAbility = nullptr;
+
+	if (UClass* TargetClass = AbilityClass.Get()) {
+		for (UAbility* Ability : this->_Slots) {
+			if (Ability && Ability->IsA(TargetClass)) {
+				return Ability;
+			}
+		}
+	}
+
+	return FoundAbility;
+}
+
+int		UAbilityManager::GetSlotsAmount() const { return this->_Slots.size(); }

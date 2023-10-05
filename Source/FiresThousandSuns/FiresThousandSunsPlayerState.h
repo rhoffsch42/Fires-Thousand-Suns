@@ -3,6 +3,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerState.h"
+#include "Systems/HealthManager.h"
+#include "Abilitys/AbilityFlameDash.h"
+#include "Abilitys/AbilityMoltenShell.h"
+#include "Buffs/BuffManager.h"
+
 #include "FiresThousandSunsPlayerState.generated.h"
 
 
@@ -42,6 +47,24 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	FPlayerStats	PlayerStats;
-//protected:
-	//virtual void BeginPlay();
+
+	// HealtManager
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	UHealthManager* HealthManager = nullptr;
+
+	// Skills
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	UAbilityFlameDash* FlameDash = nullptr;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	UAbilityMoltenShell* MoltenShell = nullptr;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	UAbilityMoltenShell* VaalMoltenShell = nullptr;
+
+	// Buffs component
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	UBuffManager* BuffManager = nullptr;
+
+protected:
+	void	_Init();
+	virtual void BeginPlay();
 };

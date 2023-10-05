@@ -29,6 +29,8 @@ public:
 	bool	IsReady();
 	UFUNCTION(BlueprintCallable)
 	double	Remaining();
+	UFUNCTION(BlueprintCallable)
+	double	RemainingRelative();
 
 	UFUNCTION(BlueprintCallable)
 	int32	GetAvailableUses();

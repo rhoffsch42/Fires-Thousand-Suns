@@ -38,7 +38,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	double	GetDamage(double Value) const;
 
-	// Delegate / event dispatcher
+	// Delegates / events dispatcher
 	UPROPERTY(BlueprintAssignable, EditDefaultsOnly)
 	FSunExploded SunExploded;
 	UPROPERTY(BlueprintAssignable, EditDefaultsOnly)

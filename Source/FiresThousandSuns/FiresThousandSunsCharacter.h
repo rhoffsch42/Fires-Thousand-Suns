@@ -4,11 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-
-#include "Systems/HealthManager.h"
-#include "Abilitys/AbilityFlameDash.h"
-#include "Abilitys/AbilityMoltenShell.h"
-#include "Buffs/BuffManager.h"
 #include "FiresThousandSunsPlayerState.h"
 
 #include "FiresThousandSunsCharacter.generated.h"
@@ -32,27 +27,13 @@ public:
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 
 	UFUNCTION(BlueprintCallable)
+	void	Debug_PlayerState();
+	UFUNCTION(BlueprintCallable)
 	void	UpdateStats(const FPlayerStats& NewStats);
 	UFUNCTION(BlueprintCallable)
 	void	ApplyLifeRegen(float DeltaSeconds);
 	UFUNCTION(BlueprintCallable)
 	void	Die();
-
-	// HealtManager
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	UHealthManager* HealthManager = nullptr;
-
-	// Skills
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	UAbilityFlameDash*		FlameDash = nullptr;
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	UAbilityMoltenShell*	MoltenShell = nullptr;
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	UAbilityMoltenShell*	VaalMoltenShell = nullptr;
-
-	// Buffs component
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	UBuffManager*	BuffManager = nullptr;
 
 	// Custom PlayerState
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
@@ -73,6 +54,5 @@ private:
 	/** Camera boom positioning the camera above the character */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class USpringArmComponent* CameraBoom;
-
 };
 

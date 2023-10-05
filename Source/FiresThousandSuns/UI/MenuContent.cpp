@@ -16,6 +16,8 @@
 
 
 void UMenuContentButton::NativeConstruct() {
+	this->bHasScriptImplementedTick = false;
+	Super::NativeConstruct();//new
 	FScriptDelegate script;
 	script.BindUFunction(this, "OnButtonClicked");
 	this->Button->OnClicked.Add(script);
@@ -31,7 +33,7 @@ void UMenuContent::NativeConstruct() {
 }
 
 void	UMenuContent::Tick(FGeometry MyGeometry, float InDeltaTime) {
-	GEngine->AddOnScreenDebugMessage(-1, DBUG_L, FColor::Orange, FString::Printf(TEXT("UMenuContent::tick()  GetRootWidget : %p"), this->GetRootWidget()));
+	//GEngine->AddOnScreenDebugMessage(-1, DBUG_L, FColor::Orange, FString::Printf(TEXT("UMenuContent::tick()  GetRootWidget : %p"), this->GetRootWidget()));
 }
 
 void	UMenuContent::SetMenuWidget(UPanelWidget* Widget) {

@@ -25,15 +25,17 @@ UAbilityMoltenShell::UAbilityMoltenShell() {
 }
 
 void	UAbilityMoltenShell::Activate(FEffectParameters Parameters) {
-	ABuffMoltenShell* buff = UFuncLib::SafeSpawnActor<ABuffMoltenShell>(Parameters.World, ABuffMoltenShell::StaticClass());
-	if (this->ShellHP > 9000) { // ugly hardcode to differenciate from simple MoltenShell
-		buff->BuffType = EBuffType::VaalMoltenShell;
+	for (auto target : Parameters.Targets) {
+		ABuffMoltenShell* buff = UFuncLib::SafeSpawnActor<ABuffMoltenShell>(Parameters.World, ABuffMoltenShell::StaticClass());
+		if (this->ShellHP > 9000) { // ugly hardcode to differenciate from simple MoltenShell
+			buff->BuffType = EBuffType::VaalMoltenShell;
+		}
+		buff->AttachToActor(Parameters.ActorInstigator, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, false));
+		buff->HealthManager->SetMaxHP(this->ShellHP);
+		buff->HealthManager->SetHP(this->ShellHP);
+		buff->SetBaseDuration(this->ShellDuration);
+		buff->ApplyTo(target);
 	}
-	buff->AttachToActor(Parameters.ActorInstigator, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, false));
-	buff->HealthManager->SetMaxHP(this->ShellHP);
-	buff->HealthManager->SetHP(this->ShellHP);
-	buff->SetBaseDuration(this->ShellDuration);
-	buff->ApplyTo(Parameters.ActorInstigator);
 
 	this->UAbility::Activate(Parameters);
 }

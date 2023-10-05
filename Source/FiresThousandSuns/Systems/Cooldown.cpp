@@ -49,9 +49,15 @@ bool	UCooldown::IsReady() {
 	return (this->_availableUses > 0);
 }
 
+// seconds
 double	UCooldown::Remaining() {
 	this->_update();
-	return this->_duration - (this->_safeGetTimeSeconds() - this->_lastUse);
+	return std::max(0.0, this->_duration - (this->_safeGetTimeSeconds() - this->_lastUse));
+}
+
+// percent normalized [0:1]
+double	UCooldown::RemainingRelative() {
+	return (this->Remaining() / this->_duration);
 }
 
 int32	UCooldown::GetAvailableUses() {

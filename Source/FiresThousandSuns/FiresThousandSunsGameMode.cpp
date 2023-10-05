@@ -147,7 +147,7 @@ void	AFiresThousandSunsGameMode::CheckSunExplosion(FVector location, double dama
 		damage = tmp_applyMitigation(damage);
 
 		// molten shell(s)
-		UBuffManager* bm = this->Player->GetComponentByClass<UBuffManager>();
+		UBuffManager* bm = this->Player->CustomPlayerState->GetComponentByClass<UBuffManager>();
 		if (bm) {
 			EBuffType types[2] = { EBuffType::VaalMoltenShell, EBuffType::MoltenShell };
 			for (int32 t = 0; t < 2; t++) {
@@ -161,7 +161,7 @@ void	AFiresThousandSunsGameMode::CheckSunExplosion(FVector location, double dama
 		} else { /* should not happen */ }
 
 		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, FString::Printf(TEXT("Taking damage : %lf"), damage));
-		this->Player->HealthManager->RemoveHP(damage);
+		this->Player->CustomPlayerState->HealthManager->RemoveHP(damage);
 	}
 }
 
