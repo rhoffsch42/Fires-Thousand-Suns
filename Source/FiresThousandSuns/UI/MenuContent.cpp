@@ -29,7 +29,7 @@ void UMenuContentButton::OnButtonClicked() {
 
 void UMenuContent::NativeConstruct() {
 	Super::NativeConstruct();
-	GEngine->AddOnScreenDebugMessage(-1, DBUG_L, FColor::Orange, FString::Printf(TEXT("NativeConstruct() %p"), this));
+	//GEngine->AddOnScreenDebugMessage(-1, DBUG_L, FColor::Yellow, FString::Printf(TEXT("UMenuContent::NativeConstruct() %p"), this));
 }
 
 void	UMenuContent::Tick(FGeometry MyGeometry, float InDeltaTime) {
@@ -55,7 +55,7 @@ void	UMenuContent::AddMenuContent(UUserWidget* Content, FString Title) {
 }
 
 void	UMenuContent::AddContentAndButton(UUserWidget* Content, UMenuContentButton* Button) {
-	GEngine->AddOnScreenDebugMessage(-1, DBUG_L, FColor::Orange, FString::Printf(TEXT("AddContentCustomButton() %p"), this));
+	//GEngine->AddOnScreenDebugMessage(-1, DBUG_L, FColor::Orange, FString::Printf(TEXT("AddContentCustomButton() %p"), this));
 	//this->_debugWidgets();
 	if (!Button) {
 		this->AddMenuContent(Content, FString("-"));
@@ -76,7 +76,7 @@ void	UMenuContent::AddButtonOnly(UMenuContentButton* Button) {
 				slot->SetHorizontalAlignment(EHorizontalAlignment::HAlign_Fill);
 				slot->SetVerticalAlignment(EVerticalAlignment::VAlign_Top);
 			}
-			GEngine->AddOnScreenDebugMessage(-1, DBUG_L, FColor::Orange, FString("added Button"));
+			//GEngine->AddOnScreenDebugMessage(-1, DBUG_L, FColor::Orange, FString("added Button"));
 		}
 	}
 }
@@ -91,7 +91,7 @@ void	UMenuContent::AddContentOnly(UUserWidget* Content) {
 				slot->SetVerticalAlignment(EVerticalAlignment::VAlign_Fill);
 				//slot->SetPadding
 			}
-			GEngine->AddOnScreenDebugMessage(-1, DBUG_L, FColor::Orange, FString("added Content"));
+			//GEngine->AddOnScreenDebugMessage(-1, DBUG_L, FColor::Orange, FString("added Content"));
 		}
 	}
 }

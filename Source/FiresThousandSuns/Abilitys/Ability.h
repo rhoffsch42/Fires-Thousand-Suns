@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
-
+#include "Materials/Material.h"
 #include "../Systems/Cooldown.h"
 typedef int32* EffectClassPtr;
 
@@ -43,7 +43,8 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	UCooldown*	Cooldown = nullptr;
-	//FMaterial	IconMaterial;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	UMaterial*	IconMaterial = nullptr;
 	//SoundCue	SoundCue;
 private:
 };

@@ -2,13 +2,13 @@
 
 UAbility::UAbility() {
 	this->Cooldown = NewObject<UCooldown>();
+	this->Cooldown->World = this->GetWorld();
 }
 
 void	UAbility::TryActivate(FEffectParameters Parameters) {
 	if (this->Cooldown->IsReady()) {
 		this->Activate(Parameters);
-	}
-	else {
+	} else {
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Orange, FString::Printf(TEXT("[Ability] failed to used, remaining : %lf sec"), this->Cooldown->Remaining()));
 	}
 }

@@ -13,7 +13,7 @@
 /*
 	Ability container with a desired size
 */
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS(Blueprintable)
 class FIRESTHOUSANDSUNS_API UAbilityManager : public UObject
 {
 	GENERATED_BODY()
@@ -25,7 +25,7 @@ public:
 	//virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	UFUNCTION(BlueprintCallable)
-	void		SetSlotsAmount(int Amount);
+	void		SetAbilityAmount(int Amount);
 	UFUNCTION(BlueprintCallable)
 	bool		SetAbility(int Index, UAbility* Ability);
 	UFUNCTION(BlueprintCallable)
@@ -33,9 +33,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	UAbility*	GetAbilityByClass(const TSubclassOf<UAbility> AbilityClass) const;
 	UFUNCTION(BlueprintCallable)
-	int			GetSlotsAmount() const;
+	int32		GetAbilityAmount() const;
 
 protected:
-	std::vector<UAbility*>	_Slots;
+	TArray<UAbility*>	_Abilitys;
 private:
 };

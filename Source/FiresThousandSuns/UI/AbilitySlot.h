@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "Components/Button.h"
-#include "Components/Slider.h"
+#include "Components/ProgressBar.h"
 #include "Components/Image.h"
 #include "../Abilitys/Ability.h"
 
@@ -28,13 +28,15 @@ public:
 	void	LinkAbility(UAbility* Ability);
 	UFUNCTION(BlueprintCallable)
 	void	UnLinkAbility();
+	UFUNCTION(BlueprintCallable)
+	void	OnSlotClicked();
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
-	UButton*	Button;
+	UButton*		Button;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
-	USlider*	CooldownSlider;
+	UProgressBar*	CooldownBar;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
-	UImage*		Image;
+	UImage*			Image;
 
 	FAbilitySlotClicked	AbilitySlotClicked;
 protected:

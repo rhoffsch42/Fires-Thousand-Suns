@@ -8,6 +8,8 @@
 #include "FuncLib.generated.h"
 
 #define CAST_NUM(x)	static_cast<int>(x)
+//#define LOG(msg) UE_LOG(LogTemp, Warning, TEXT("[%s@line: %d] - %s"), TEXT(__FUNCTION__), __LINE__, *FString(msg))
+#define LOG(func, msg) UE_LOG(LogTemp, Warning, TEXT("[%s@line: %d] %s"), *FString(func), __LINE__, *FString(msg))
 
 /**
  * 
