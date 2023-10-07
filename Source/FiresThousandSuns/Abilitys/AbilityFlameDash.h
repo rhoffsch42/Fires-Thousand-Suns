@@ -4,6 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "Ability.h"
+#include "NiagaraFunctionLibrary.h"
+#include "NiagaraComponent.h"
+#include "NiagaraSystem.h"
+
 #include "AbilityFlameDash.generated.h"
 
 /**
@@ -16,7 +20,10 @@ class FIRESTHOUSANDSUNS_API UAbilityFlameDash : public UAbility
 public:
 	UAbilityFlameDash();
 	void	Activate(FEffectParameters Parameters);
-private:
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	UNiagaraSystem* NiagaraSystem = nullptr;
+protected:
 	double	_maxRange = 600.0;
 	double	_minRange = 250.0;
 	double	_lockMovementDuration = 0.12;
