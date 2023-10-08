@@ -6,6 +6,10 @@ UAbilityManager::UAbilityManager() {
 	this->_Abilitys.SetNum(DEFAULT_SLOTS_AMOUNT);
 }
 
+void	UAbilityManager::AddAbility(UAbility* NewAbility) {
+	this->_Abilitys.Push(NewAbility);
+}
+
 void	UAbilityManager::SetAbilityAmount(int Amount) {
 	this->_Abilitys.SetNum(std::max(0, Amount));
 }

@@ -23,6 +23,7 @@ UAbilityFlameDash::UAbilityFlameDash() : UAbility() {
 	this->Cooldown->SetMaxUses(CD_MAXUSES);
 	this->Cooldown->SetDuration(CD_DURATION);
 	this->Cooldown->Reset();
+	this->SetNewMaterial(this->GetWorld(), FString("/Game/LevelPrototyping/Materials/fire-dash_UIMat.fire-dash_UIMat"));
 }
 
 void	UAbilityFlameDash::Activate(FEffectParameters Parameters) {

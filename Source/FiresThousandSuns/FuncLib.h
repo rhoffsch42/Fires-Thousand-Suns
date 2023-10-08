@@ -62,3 +62,5 @@ public:
 	}
 
 };
+
+//[CHECK] every overriding func has the override specifier

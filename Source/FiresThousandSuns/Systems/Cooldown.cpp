@@ -52,7 +52,11 @@ bool	UCooldown::IsReady() {
 // seconds
 double	UCooldown::Remaining() {
 	this->_update();
-	return std::max(0.0, this->_duration - (this->_safeGetTimeSeconds() - this->_lastUse));
+	if (this->_availableUses < this->_maxUses) {
+		return std::max(0.0, this->_duration - (this->_safeGetTimeSeconds() - this->_lastUse));
+	} else {
+		return 0.0;
+	}
 }
 
 // percent normalized [0:1]

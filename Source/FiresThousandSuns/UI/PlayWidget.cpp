@@ -19,11 +19,11 @@ void	UPlayWidget::InitSliders() {
 	this->NVSlider_Fortify->SetTitleAndRange(			NSLOCTEXT("Fires", "NVSlider_Fortify_Name",			"Fortify Stacks"),				0.0f, 30.0f);
 	this->NVSlider_LessDamage->SetTitleAndRange(		NSLOCTEXT("Fires", "NVSlider_LessDamage_Name",		"Less Damage"),					0.0f, 90.0f);
 
-	this->NVSlider_MovSpeed->SetSliderValue(0.3f);
+	this->NVSlider_MovSpeed->SetSliderValue(0.4f);
 	this->NVSlider_Life->SetSliderValue(0.25f);
 	this->NVSlider_LifeRegen->SetSliderValue(0.1f);
 	this->NVSlider_FireRes->SetSliderValue(0.84f);
-	this->NVSlider_SpellSuppChance->SetSliderValue(0.40f);
+	this->NVSlider_SpellSuppChance->SetSliderValue(1.0f);
 	this->NVSlider_SpellSuppEffect->SetSliderValue(0.2f);
 	this->NVSlider_Fortify->SetSliderValue(0.0f);
 	this->NVSlider_LessDamage->SetSliderValue(0.0f);

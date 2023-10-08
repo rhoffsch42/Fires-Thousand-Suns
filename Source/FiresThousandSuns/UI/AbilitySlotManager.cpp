@@ -2,6 +2,7 @@
 #include "AbilitySlotManager.h"
 #include "../FuncLib.h"
 #include "Components/HorizontalBoxSlot.h"
+#include "Components/PanelSlot.h"
 
 void	UAbilitySlotManager::NativeConstruct() {
 	Super::NativeConstruct();
@@ -13,27 +14,37 @@ void	UAbilitySlotManager::NativeOnInitialized() {
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString("UAbilitySlotManager::NativeOnInitialized()"));
 }
 
-void	UAbilitySlotManager::SetSlotClass(TSubclassOf<UAbilitySlot> Class) {
-	this->_SlotClass = Class;
-}
-
 void	UAbilitySlotManager::Tick(FGeometry MyGeometry, float InDeltaTime) {
 	Super::Tick(MyGeometry, InDeltaTime);
+}
+
+void	UAbilitySlotManager::SetSlotClass(TSubclassOf<UAbilitySlot> Class) {
+	this->_SlotClass = Class;
 }
 
 void	UAbilitySlotManager::LinkAbilityManager(UAbilityManager* InManager) {
 	this->_Manager = InManager;
 	int32 amount = this->_Manager->GetAbilityAmount();
 	this->_Slots.Empty();
-	this->ContainerHBox->ClearChildren();
+	this->ClearContainer();
 	this->_Slots.SetNum(amount);
 	
-	for(int32 index = 0; index < amount; index++) {
+	for (int32 index = 0; index < amount; index++) {
 		if (!this->_Slots[index]) {
 			this->_Slots[index] = this->CreateNewSlot();
 			this->AddSlot(this->_Slots[index]);
 		}
-		this->_Slots[index]->LinkAbility(this->_Manager->GetAbility(index));
+		if (this->_Slots[index]) {
+			this->_Slots[index]->LinkAbility(this->_Manager->GetAbility(index));
+		}
+	}
+}
+
+void	UAbilitySlotManager::ClearContainer() const {
+	if (!this->ContainerPanel) {
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString("IAbilitySlotManager::ClearContainer() ContainerPanel is nullptr"));
+	} else {
+		this->ContainerPanel->ClearChildren();
 	}
 }
 
@@ -46,19 +57,49 @@ UAbilitySlot* UAbilitySlotManager::CreateNewSlot() {
 	return slot;
 }
 
-void	UAbilitySlotManager::AddSlot(UAbilitySlot* NewSlot) {
-	if (!UFuncLib::CheckObject(NewSlot, "UAbilitySlotManager::AddSlot() arg is null")) {
-		return;
+UPanelSlot*	UAbilitySlotManager::AddSlot(UAbilitySlot* NewSlot) {
+	if (!UFuncLib::CheckObject(NewSlot, "UAbilitySlotManagerHBox::AddSlot() arg is null")) {
+		return nullptr;
 	}
-	//UPanelSlot* slot = this->ContainerHBox->AddChild(NewSlot);
-	UHorizontalBoxSlot* slot = Cast<UHorizontalBoxSlot>(this->ContainerHBox->AddChild(NewSlot));
-	slot->SetSize(ESlateSizeRule::Type::Automatic);
 	NewSlot->SetDesiredSizeInViewport(FVector2D(100.0f, 100.0f));
-	slot->SetHorizontalAlignment(EHorizontalAlignment::HAlign_Left);
-	slot->SetVerticalAlignment(EVerticalAlignment::VAlign_Top);
+	return this->ContainerPanel->AddChild(NewSlot);
 }
 
+UAbilityManager* UAbilitySlotManager::GetLinkedAbilityManager() const { return this->_Manager; }
 
+//////////////////////////////////////////////////////////////////////////////////
+//////////////////////   UAbilitySlotManagerHBox   ///////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
+
+void	UAbilitySlotManagerHBox::NativeConstruct() {
+	Super::NativeConstruct();
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString("UAbilitySlotManagerHBox::NativeConstruct()"));
+	//this->ContainerPanel = this->ContainerHBox;
+}
+
+void	UAbilitySlotManagerHBox::NativeOnInitialized() {
+	Super::NativeOnInitialized();
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString("UAbilitySlotManagerHBox::NativeOnInitialized()"));
+}
+
+void	UAbilitySlotManagerHBox::Tick(FGeometry MyGeometry, float InDeltaTime) {
+	Super::Tick(MyGeometry, InDeltaTime);
+}
+
+UPanelSlot* UAbilitySlotManagerHBox::AddSlot(UAbilitySlot* NewSlot) {
+	UHorizontalBoxSlot* slot = Cast<UHorizontalBoxSlot>(Super::AddSlot(NewSlot));
+	if (UFuncLib::CheckObject(slot, "UHorizontalBoxSlot::AddSlot() Containeris not a UHorizontalBox")) {
+		slot->SetSize(ESlateSizeRule::Type::Automatic);
+		slot->SetHorizontalAlignment(EHorizontalAlignment::HAlign_Left);
+		slot->SetVerticalAlignment(EVerticalAlignment::VAlign_Top);
+	}
+	return slot;
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+//////////////////////   TESTS IAbilitySlotManager ///////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
+#ifdef TESTS_IABILITYMANAGER
 #include "Components/CanvasPanel.h"
 #include "Components/CanvasPanelSlot.h"
 #include "Engine/Texture2D.h"
@@ -81,7 +122,7 @@ static void f() {
 	Object path:		/Game/LevelPrototyping/Textures/Default.Default
 	Object system path:	C:/_dev/Content/LevelPrototyping/Textures/Default.uasset
 */
-void	UAbilitySlotManager::TEST_ReplaceRoot() {
+void	IAbilitySlotManager::TEST_ReplaceRoot() {
 	const FString tempIconPath = "/Game/LevelPrototyping/Textures/FireShield_01_50x50.FireShield_01_50x50";
 	UTexture2D* tempTexture = LoadObject<UTexture2D>(this->GetWorld(), *tempIconPath);
 	if (!UFuncLib::CheckObject(tempTexture, "LoadObject<UTexture2D> failed")) {
@@ -113,10 +154,11 @@ void	UAbilitySlotManager::TEST_ReplaceRoot() {
 	return;
 }
 
-void UAbilitySlotManager::DebugRoot() {
+void IAbilitySlotManager::DebugRoot() {
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString::Printf(TEXT("GetRootWidget() : %p"), this->GetRootWidget()));
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString::Printf(TEXT("WidgetTree      : %p"), this->WidgetTree));
 	TArray<UWidget*>	arr;
 	this->WidgetTree->GetChildWidgets(this, arr);
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString::Printf(TEXT("this->GetChildWidgets() Num() : %d"), arr.Num()));
 }
+#endif

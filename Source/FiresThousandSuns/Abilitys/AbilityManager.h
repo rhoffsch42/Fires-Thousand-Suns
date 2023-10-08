@@ -25,6 +25,8 @@ public:
 	//virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	UFUNCTION(BlueprintCallable)
+	void		AddAbility(UAbility* NewAbility);
+	UFUNCTION(BlueprintCallable)
 	void		SetAbilityAmount(int Amount);
 	UFUNCTION(BlueprintCallable)
 	bool		SetAbility(int Index, UAbility* Ability);

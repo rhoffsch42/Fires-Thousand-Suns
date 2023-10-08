@@ -27,6 +27,13 @@ void	AFiresThousandSunsPlayerState::_Init() {
 	this->VaalMoltenShell->ShellAbsorbtion = 0.39;
 	this->VaalMoltenShell->Cooldown->World = this->GetWorld();
 	this->VaalMoltenShell->Cooldown->SetDuration(50.0);
+	this->VaalMoltenShell->SetNewMaterial(this->GetWorld(), FString("/Script/Engine.Material'/Game/LevelPrototyping/Materials/FireShield_red_01_50x50_UIMat.FireShield_red_01_50x50_UIMat'"));
+
+	this->AbilityManager = NewObject<UAbilityManager>();
+	this->AbilityManager->SetAbilityAmount(5);
+	this->AbilityManager->SetAbility(1, this->FlameDash);
+	this->AbilityManager->SetAbility(3, this->MoltenShell);
+	this->AbilityManager->SetAbility(4, this->VaalMoltenShell);
 
 	// Buffs
 	this->BuffManager = CreateDefaultSubobject<UBuffManager>(TEXT("BuffManager"));//must be built in the constructor, has to be done in a valid world (when the owner has a world)

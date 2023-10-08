@@ -10,7 +10,7 @@ void	UAbilitySlot::NativeConstruct() {
 	this->AbilitySlotClicked.Add(script);
 }
 
-void	UAbilitySlot::Tick(FGeometry MyGeometry, float InDeltaTime) {
+void	UAbilitySlot::NativeTick(const FGeometry & MyGeometry, float InDeltaTime) {
 	Super::Tick(MyGeometry, InDeltaTime);
 
 	this->UpdateWidget();
@@ -18,15 +18,23 @@ void	UAbilitySlot::Tick(FGeometry MyGeometry, float InDeltaTime) {
 
 void	UAbilitySlot::UpdateWidget() {
 	if (this->_Ability) {
+		//GEngine->AddOnScreenDebugMessage((int32)(int64)this, 5.0f, FColor::Yellow, FString::Printf(
+		//	TEXT("UAbilitySlot::UpdateWidget() %d / %d | %f"),
+		//	this->_Ability->Cooldown->GetAvailableUses(),
+		//	this->_Ability->Cooldown->GetMaxUses(),
+		//	this->_Ability->Cooldown->Remaining()
+		//));
 		this->CooldownBar->SetPercent(this->_Ability->Cooldown->RemainingRelative());
 	}
 }
 
 void	UAbilitySlot::LinkAbility(UAbility* Ability) {
 	this->_Ability = Ability;
-	if (Ability->IconMaterial) {
-		//UMaterialInstanceDynamic* MaterialInstance = UMaterialInstanceDynamic::Create(Ability->IconMaterial->GetMaterialInterface(), Ability->IconMaterial->GetMaterialInterface());
-		if (this->Image) { this->Image->SetBrushFromMaterial(Ability->IconMaterial); }
+	if (Ability) {
+		if (Ability->IconMaterial) {
+			//UMaterialInstanceDynamic* MaterialInstance = UMaterialInstanceDynamic::Create(Ability->IconMaterial->GetMaterialInterface(), Ability->IconMaterial->GetMaterialInterface());
+			if (this->Image) { this->Image->SetBrushFromMaterial(Ability->IconMaterial); }
+		}
 	}
 	this->UpdateWidget();
 }

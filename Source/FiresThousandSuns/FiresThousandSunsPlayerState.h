@@ -6,6 +6,7 @@
 #include "Systems/HealthManager.h"
 #include "Abilitys/AbilityFlameDash.h"
 #include "Abilitys/AbilityMoltenShell.h"
+#include "Abilitys/AbilityManager.h"
 #include "Buffs/BuffManager.h"
 
 #include "FiresThousandSunsPlayerState.generated.h"
@@ -59,6 +60,9 @@ public:
 	UAbilityMoltenShell* MoltenShell = nullptr;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	UAbilityMoltenShell* VaalMoltenShell = nullptr;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	UAbilityManager*	AbilityManager = nullptr;
 
 	// Buffs component
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)

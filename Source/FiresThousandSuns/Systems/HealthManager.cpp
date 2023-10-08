@@ -16,21 +16,21 @@ void	UHealthManager::CheckEmptyHP() const {
 
 void	UHealthManager::AddHP(double Value) {
 	this->_hp = std::min(this->_hp + Value, this->_maxhp);
-	this->HpChanged.Broadcast();
+	this->HpChanged.Broadcast(this->_hp, this->_maxhp);
 }
 void	UHealthManager::RemoveHP(double Value) {
 	this->_hp = std::max(this->_hp - Value, 0.0);
-	this->HpChanged.Broadcast();
+	this->HpChanged.Broadcast(this->_hp, this->_maxhp);
 	this->CheckEmptyHP();
 }
 void	UHealthManager::SetHP(double Value) {
 	this->_hp = std::min(Value, this->_maxhp);
-	this->HpChanged.Broadcast();
+	this->HpChanged.Broadcast(this->_hp, this->_maxhp);
 	this->CheckEmptyHP();
 }
 void	UHealthManager::SetMaxHP(double Value) {
 	this->_maxhp = Value;
-	this->HpChanged.Broadcast();
+	this->HpChanged.Broadcast(this->_hp, this->_maxhp);
 }
 
 double	UHealthManager::GetHP() const { return this->_hp; }

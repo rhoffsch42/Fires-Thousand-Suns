@@ -1,4 +1,5 @@
 #include "Ability.h"
+#include "../Funclib.h"
 
 UAbility::UAbility() {
 	this->Cooldown = NewObject<UCooldown>();
@@ -17,4 +18,10 @@ void	UAbility::Activate(FEffectParameters Parameters) {
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Orange, FString::Printf(TEXT("[Ability] used ! CD:%d "), this->Cooldown->GetAvailableUses())
 	);
 	this->Cooldown->Use();
+}
+
+void	UAbility::SetNewMaterial(UObject* Outer, const FString MatPath) {
+	this->IconMaterial = LoadObject<UMaterial>(this->GetWorld(), *MatPath);
+	UFuncLib::CheckObject(this->IconMaterial, FString("LoadObject<UMaterial>() failed : ").Append(MatPath));
+	//tmpImage->SetBrush(UWidgetBlueprintLibrary::MakeBrushFromTexture(tempTexture));
 }

@@ -41,7 +41,7 @@ public:
 	FAbilitySlotClicked	AbilitySlotClicked;
 protected:
 	virtual void NativeConstruct() override;
-	virtual void Tick(FGeometry MyGeometry, float InDeltaTime);
+	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 
 	UAbility* _Ability = nullptr;
 };

@@ -22,6 +22,7 @@ UAbilityMoltenShell::UAbilityMoltenShell() {
 	this->Cooldown->SetMaxUses(MOLTEN_SHELL_CD_MAXUSES);
 	this->Cooldown->SetDuration(MOLTEN_SHELL_CD_DURATION + this->ShellDuration); // This Skill's Cooldown does not recover during its effect
 	this->Cooldown->Reset();
+	this->SetNewMaterial(this->GetWorld(), FString("/Game/LevelPrototyping/Materials/FireShield_01_50x50_UIMat.FireShield_01_50x50_UIMat"));
 }
 
 void	UAbilityMoltenShell::Activate(FEffectParameters Parameters) {

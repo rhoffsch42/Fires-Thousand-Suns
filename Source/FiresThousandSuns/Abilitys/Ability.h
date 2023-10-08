@@ -39,7 +39,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void	TryActivate(FEffectParameters Parameters);
+	UFUNCTION(BlueprintCallable)
 	virtual void	Activate(FEffectParameters Parameters);
+	void	SetNewMaterial(UObject* Outer, const FString MatPath);
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	UCooldown*	Cooldown = nullptr;
