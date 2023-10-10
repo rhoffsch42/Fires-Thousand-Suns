@@ -7,6 +7,8 @@
 #include "NamedValueSlider.h"
 #include "Components/Button.h"
 #include "../FiresThousandSunsPlayerState.h"
+#include "../Abilitys/AbilityManager.h"
+#include "AbilitySlotManager.h"
 
 #include "PlayWidget.generated.h"
 
@@ -22,6 +24,10 @@ public:
 	FPlayerStats	GeneratePlayerStats() const;
 	UFUNCTION(BlueprintCallable)
 	void	InitSliders();
+	void	InitAbilitys();
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
+	UButton* EnterArenaButton;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
 	UNamedValueSlider*	NVSlider_MovSpeed;
@@ -41,7 +47,12 @@ public:
 	UNamedValueSlider*	NVSlider_LessDamage;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
-	UButton* EnterArenaButton;
+	UAbilitySlotManager* UI_AbilityManager;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
+	UAbilitySlotManager* UI_AbilityManager_Picker;
+
+	UPROPERTY(BlueprintReadWrite)
+	UAbilityManager* AbilityManager = nullptr;
 protected:
 	virtual void NativeConstruct() override;
 };

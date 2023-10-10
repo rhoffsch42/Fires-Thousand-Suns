@@ -28,8 +28,12 @@ UAbilityMoltenShell::UAbilityMoltenShell() {
 void	UAbilityMoltenShell::Activate(FEffectParameters Parameters) {
 	for (auto target : Parameters.Targets) {
 		ABuffMoltenShell* buff = UFuncLib::SafeSpawnActor<ABuffMoltenShell>(Parameters.World, ABuffMoltenShell::StaticClass());
-		if (this->ShellHP > 9000) { // ugly hardcode to differenciate from simple MoltenShell
+		if (this->ShellHP > 9000.0) { // ugly hardcode to differenciate from simple MoltenShell
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString("UAbilityMoltenShell::Activate() EBuffType::VaalMoltenShell"));
 			buff->BuffType = EBuffType::VaalMoltenShell;
+		} else if (this->ShellHP < 3000.0) {// ugly hardcode to differenciate from simple MoltenShell
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString("UAbilityMoltenShell::Activate() EBuffType::SteelSkin"));
+			buff->BuffType = EBuffType::Steelskin;
 		}
 		buff->AttachToActor(Parameters.ActorInstigator, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, false));
 		buff->HealthManager->SetMaxHP(this->ShellHP);

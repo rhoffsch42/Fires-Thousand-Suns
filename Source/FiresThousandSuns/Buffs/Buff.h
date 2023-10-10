@@ -11,8 +11,9 @@
 UENUM(BlueprintType)
 enum class EBuffType : uint8 {
 	None = 0 UMETA(DisplayName = "None"),
-	MoltenShell = 0 UMETA(DisplayName = "MoltenShell"),
+	MoltenShell UMETA(DisplayName = "MoltenShell"),
 	VaalMoltenShell UMETA(DisplayName = "VaalMoltenShell"),
+	Steelskin UMETA(DisplayName = "SteelSkin"),
 	DebuffLockedMovement UMETA(DisplayName = "DebuffLockedMovement"),
 };
 

@@ -1,11 +1,9 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 
 #include "Sun.h"
 #include "../FiresThousandSunsGameMode.h"
 #include "Kismet/KismetMathLibrary.h"
 
-// Sets default values
+
 ASun::ASun() {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -35,8 +33,7 @@ void	ASun::_initComponents() {
 		if (material.Succeeded()) {
 			this->_storedMaterial = material.Object;
 		}
-	}
-	else {
+	} else {
 		this->_DefaultSceneRoot = Cast<USceneComponent>(this->AddComponentByClass(USceneComponent::StaticClass(), true, this->GetTransform(), false));
 		this->CollisionSphere = Cast<USphereComponent>(this->AddComponentByClass(USphereComponent::StaticClass(), true, this->GetTransform(), false));
 		this->SphereMesh = Cast<UStaticMeshComponent>(this->AddComponentByClass(UStaticMeshComponent::StaticClass(), true, this->GetTransform(), false));

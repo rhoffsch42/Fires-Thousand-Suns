@@ -38,10 +38,13 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
 	UImage*			Image;
 
+	UPROPERTY(BlueprintAssignable, EditDefaultsOnly)
 	FAbilitySlotClicked	AbilitySlotClicked;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	UAbility* _Ability = nullptr;
 protected:
 	virtual void NativeConstruct() override;
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 
-	UAbility* _Ability = nullptr;
 };

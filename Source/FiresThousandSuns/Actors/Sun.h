@@ -1,4 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -13,13 +12,18 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FSunExploded, FVector, SunLocatio
 UDELEGATE(BlueprintCallable)
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FSunMavenCancelled);
 
+
+/*
+	sphere collision radius 45,0
+	sphere mesh scale 1,2275
+	ratation rate Y -137,5
+*/
 UCLASS(Blueprintable)
 class FIRESTHOUSANDSUNS_API ASun : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
-	// Sets default values for this actor's properties
 	ASun();
 	virtual void Tick(float DeltaTime) override;
 	UFUNCTION(BlueprintCallable)

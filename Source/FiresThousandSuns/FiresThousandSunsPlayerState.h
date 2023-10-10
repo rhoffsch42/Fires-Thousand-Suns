@@ -53,14 +53,7 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	UHealthManager* HealthManager = nullptr;
 
-	// Skills
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	UAbilityFlameDash* FlameDash = nullptr;
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	UAbilityMoltenShell* MoltenShell = nullptr;
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	UAbilityMoltenShell* VaalMoltenShell = nullptr;
-
+	// Abilitys
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	UAbilityManager*	AbilityManager = nullptr;
 
@@ -69,6 +62,12 @@ public:
 	UBuffManager* BuffManager = nullptr;
 
 protected:
-	void	_Init();
+	void	_InitPreBeginPlay();
+	void	_InitPostBeginPlay();
 	virtual void BeginPlay();
+private:
+	UAbilityFlameDash*		_FlameDash = nullptr;
+	UAbilityMoltenShell*	_MoltenShell = nullptr;
+	UAbilityMoltenShell*	_VaalMoltenShell = nullptr;
+	UAbilityMoltenShell*	_Steelskin = nullptr;
 };

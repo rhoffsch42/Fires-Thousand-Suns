@@ -1,4 +1,6 @@
 
 #include "FiresThousandSunsGameInstance.h"
 
-UFiresThousandSunsGameInstance::UFiresThousandSunsGameInstance() {}
+UFiresThousandSunsGameInstance::UFiresThousandSunsGameInstance() {
+
+}

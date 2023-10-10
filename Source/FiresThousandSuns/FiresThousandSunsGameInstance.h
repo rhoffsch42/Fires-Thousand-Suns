@@ -22,5 +22,4 @@ public:
 	UUserWidget*	SettingsWidget;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	FPlayerStats	BaseStats;
-
 };

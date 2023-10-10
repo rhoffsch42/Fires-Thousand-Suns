@@ -155,8 +155,8 @@ void	AFiresThousandSunsGameMode::CheckSunExplosion(FVector location, double dama
 		// molten shell(s)
 		UBuffManager* bm = this->Player->CustomPlayerState->GetComponentByClass<UBuffManager>();
 		if (bm) {
-			EBuffType types[2] = { EBuffType::VaalMoltenShell, EBuffType::MoltenShell };
-			for (int32 t = 0; t < 2; t++) {
+			EBuffType types[3] = { EBuffType::VaalMoltenShell, EBuffType::MoltenShell, EBuffType::Steelskin };
+			for (int32 t = 0; t < 3; t++) {
 				ABuffMoltenShell* ms = Cast<ABuffMoltenShell>(bm->GetBuff(types[t])); // should be GetBuff<ABuffMoltenShell>()
 				if (ms) {
 					double MSbefore = ms->HealthManager->GetHP();

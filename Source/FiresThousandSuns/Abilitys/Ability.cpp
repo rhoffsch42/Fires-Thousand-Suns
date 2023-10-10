@@ -3,7 +3,10 @@
 
 UAbility::UAbility() {
 	this->Cooldown = NewObject<UCooldown>();
-	this->Cooldown->World = this->GetWorld();
+	if (UFuncLib::CheckObject(this->Cooldown, FString("UAbility() NewObject<UCooldown>() failed : "))) {
+		this->Cooldown->World = this->GetWorld();
+		UFuncLib::CheckObject(this->Cooldown->World, FString("UAbility() GetWorld() failed "));
+	}
 }
 
 void	UAbility::TryActivate(FEffectParameters Parameters) {

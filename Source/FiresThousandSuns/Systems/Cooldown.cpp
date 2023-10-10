@@ -9,8 +9,7 @@ bool	UCooldown::TryUse() {
 	if (this->_availableUses > 0) {
 		this->Use();
 		return true;
-	}
-	else {
+	} else {
 		return false;
 	}
 }
@@ -61,7 +60,11 @@ double	UCooldown::Remaining() {
 
 // percent normalized [0:1]
 double	UCooldown::RemainingRelative() {
-	return (this->Remaining() / this->_duration);
+	if (this->_duration == 0.0) {
+		return 0.0;
+	} else {
+		return (this->Remaining() / this->_duration);
+	}
 }
 
 int32	UCooldown::GetAvailableUses() {
@@ -84,11 +87,10 @@ double	UCooldown::GetDuration() const {
 	return this->_duration;
 }
 
-
 double	UCooldown::_safeGetTimeSeconds() const {
 	if (!this->World) {
 		GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Red, FString("Cooldown::World is nullptr! Abort."));
-		return -1;
+		return -2;
 	} else {
 		return UGameplayStatics::GetTimeSeconds(this->World);
 	}

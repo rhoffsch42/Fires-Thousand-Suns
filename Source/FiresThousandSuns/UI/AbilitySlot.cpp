@@ -1,5 +1,6 @@
 
 #include "AbilitySlot.h"
+#include "../FuncLib.h"
 
 void	UAbilitySlot::NativeConstruct() {
 	this->bHasScriptImplementedTick = true;
@@ -7,7 +8,7 @@ void	UAbilitySlot::NativeConstruct() {
 
 	FScriptDelegate	script;
 	script.BindUFunction(this, "OnSlotClicked");
-	this->AbilitySlotClicked.Add(script);
+	this->Button->OnClicked.Add(script);
 }
 
 void	UAbilitySlot::NativeTick(const FGeometry & MyGeometry, float InDeltaTime) {
@@ -24,17 +25,25 @@ void	UAbilitySlot::UpdateWidget() {
 		//	this->_Ability->Cooldown->GetMaxUses(),
 		//	this->_Ability->Cooldown->Remaining()
 		//));
-		this->CooldownBar->SetPercent(this->_Ability->Cooldown->RemainingRelative());
+		if (UFuncLib::CheckObject(this->_Ability->Cooldown, "UAbilitySlot::UpdateWidget() _Ability->Cooldown is nullptr")) {
+			this->CooldownBar->SetPercent(this->_Ability->Cooldown->RemainingRelative());
+		}
 	}
 }
 
 void	UAbilitySlot::LinkAbility(UAbility* Ability) {
 	this->_Ability = Ability;
-	if (Ability) {
-		if (Ability->IconMaterial) {
+	if (this->_Ability) {
+		if (this->_Ability->IconMaterial) {
 			//UMaterialInstanceDynamic* MaterialInstance = UMaterialInstanceDynamic::Create(Ability->IconMaterial->GetMaterialInterface(), Ability->IconMaterial->GetMaterialInterface());
-			if (this->Image) { this->Image->SetBrushFromMaterial(Ability->IconMaterial); }
+			if (this->Image) {
+				this->Image->SetBrushFromMaterial(this->_Ability->IconMaterial);
+				this->Image->SetColorAndOpacity(FLinearColor(1.0f, 1.0f, 1.0f, 1.0f));
+			}
 		}
+	} else {
+		this->Image->SetBrushFromMaterial(nullptr);
+		this->Image->SetColorAndOpacity(FLinearColor(0.0f, 0.0f, 0.0f, 1.0f));
 	}
 	this->UpdateWidget();
 }
@@ -43,8 +52,13 @@ void	UAbilitySlot::UnLinkAbility() {
 	this->_Ability = nullptr;
 	this->CooldownBar->SetPercent(0.0f);
 	this->Image->SetBrushFromMaterial(nullptr);
+	this->Image->SetColorAndOpacity(FLinearColor(0.0f, 0.0f, 0.0f, 1.0f));
 }
 
 void	UAbilitySlot::OnSlotClicked() {
+	GEngine->AddOnScreenDebugMessage((int32)(int64)this, 5.0f, FColor::Purple, FString::Printf(
+		TEXT("UAbilitySlot::OnSlotClicked() %p"),
+		this->_Ability
+	));
 	this->AbilitySlotClicked.Broadcast(this);
 }
