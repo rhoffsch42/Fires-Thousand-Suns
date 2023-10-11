@@ -6,12 +6,12 @@
 
 void	UAbilitySlotManager::NativeConstruct() {
 	Super::NativeConstruct();
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString("UAbilitySlotManager::NativeConstruct()"));
+	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString("UAbilitySlotManager::NativeConstruct()"));
 }
 
 void	UAbilitySlotManager::NativeOnInitialized() {
 	Super::NativeOnInitialized();
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString("UAbilitySlotManager::NativeOnInitialized()"));
+	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString("UAbilitySlotManager::NativeOnInitialized()"));
 }
 
 void	UAbilitySlotManager::Tick(FGeometry MyGeometry, float InDeltaTime) {
@@ -65,6 +65,42 @@ UPanelSlot*	UAbilitySlotManager::AddSlot(UAbilitySlot* NewSlot) {
 	return this->ContainerPanel->AddChild(NewSlot);
 }
 
+void	UAbilitySlotManager::SetLayout(const TArray<EAbilityType> Layout) {
+	int32 count = std::min(Layout.Num(), this->ContainerPanel->GetChildrenCount());
+
+	for (int32 i = 0; i < count; i++) {
+		UWidget* w = this->ContainerPanel->GetChildAt(i);
+		if (UFuncLib::CheckObject(w, "UAbilitySlotManager::SetLayout() failed to get child")) {
+			UAbilitySlot* slot = Cast<UAbilitySlot>(w);
+			if (UFuncLib::CheckObject(slot, "UAbilitySlotManager::SetLayout() failed to cast<UAbilitySlot> widget ")) {
+				slot->LinkAbility(this->_Manager->GetAbilityByType(Layout[i]));
+			}
+		}
+	}
+}
+
+TArray<EAbilityType>	UAbilitySlotManager::GetLayoutAsAbilityType() const {
+	TArray<EAbilityType> Layout;
+	int32 count = this->ContainerPanel->GetChildrenCount();
+	Layout.SetNum(count);
+
+	for (int32 i = 0; i < count; i++) {
+		Layout[i] = EAbilityType::None;
+		UWidget* w = this->ContainerPanel->GetChildAt(i);
+		if (UFuncLib::CheckObject(w, "UAbilitySlotManager::GetLayoutAsAbilityType() failed to get child")) {
+			UAbilitySlot* slot = Cast<UAbilitySlot>(w);
+			if (UFuncLib::CheckObject(slot, "UAbilitySlotManager::GetLayoutAsAbilityType() failed to cast<UAbilitySlot> widget ")) {
+				UAbility* Ability = slot->GetLinkedAbility();
+				if (Ability) {
+					Layout[i] = Ability->AbilityType;
+				}
+			}
+		}
+	}
+
+	return Layout;
+}
+
 UAbilityManager* UAbilitySlotManager::GetLinkedAbilityManager() const { return this->_Manager; }
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -73,13 +109,13 @@ UAbilityManager* UAbilitySlotManager::GetLinkedAbilityManager() const { return t
 
 void	UAbilitySlotManagerHBox::NativeConstruct() {
 	Super::NativeConstruct();
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString("UAbilitySlotManagerHBox::NativeConstruct()"));
+	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString("UAbilitySlotManagerHBox::NativeConstruct()"));
 	//this->ContainerPanel = this->ContainerHBox;
 }
 
 void	UAbilitySlotManagerHBox::NativeOnInitialized() {
 	Super::NativeOnInitialized();
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString("UAbilitySlotManagerHBox::NativeOnInitialized()"));
+	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString("UAbilitySlotManagerHBox::NativeOnInitialized()"));
 }
 
 void	UAbilitySlotManagerHBox::Tick(FGeometry MyGeometry, float InDeltaTime) {

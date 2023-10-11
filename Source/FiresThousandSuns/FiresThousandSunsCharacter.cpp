@@ -101,7 +101,7 @@ void	AFiresThousandSunsCharacter::BeginPlay() {
 
 void AFiresThousandSunsCharacter::Tick(float DeltaSeconds) {
     Super::Tick(DeltaSeconds);
-
+	this->ApplyLifeRegen(DeltaSeconds);
 }
 
 void	AFiresThousandSunsCharacter::UpdateStats(const FPlayerStats& NewStats) {

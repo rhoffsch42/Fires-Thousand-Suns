@@ -1,6 +1,8 @@
 #include "PlayWidget.h"
 #include "../Abilitys/AbilityFlameDash.h"
 #include "../Abilitys/AbilityMoltenShell.h"
+#include "../Abilitys/LifeFlask.h"
+//#include "../Abilitys/RubyFlask.h"
 #include "../FuncLib.h"
 
 void	UPlayWidget::NativeConstruct() {
@@ -8,6 +10,7 @@ void	UPlayWidget::NativeConstruct() {
 
 	this->InitSliders();
 	this->InitAbilitys();
+	this->InitFlasks();
 }
 
 void	UPlayWidget::InitSliders() {
@@ -38,28 +41,14 @@ static inline void	ClearAbilitySlot(UWidget* Slot) {
 }
 
 void	UPlayWidget::InitAbilitys() {
-	// Abilitys
 	UAbilityFlameDash* FlameDash = NewObject<UAbilityFlameDash>();
-	FlameDash->Cooldown->World = this->GetWorld();
-
 	UAbilityMoltenShell* MoltenShell = NewObject<UAbilityMoltenShell>();
+	UAbilityVaalMoltenShell* VaalMoltenShell = NewObject<UAbilityVaalMoltenShell>();
+	UAbilitySteelskin* Steelskin = NewObject<UAbilitySteelskin>();
+	FlameDash->Cooldown->World = this->GetWorld();
 	MoltenShell->Cooldown->World = this->GetWorld();
-
-	UAbilityMoltenShell* VaalMoltenShell = NewObject<UAbilityMoltenShell>();
-	//VaalMoltenShell->ShellHP = 10000.0;
-	//VaalMoltenShell->ShellDuration = 10.8;
-	//VaalMoltenShell->ShellAbsorbtion = 0.39;
 	VaalMoltenShell->Cooldown->World = this->GetWorld();
-	//VaalMoltenShell->Cooldown->SetDuration(50.0);
-	VaalMoltenShell->SetNewMaterial(this->GetWorld(), FString("/Script/Engine.Material'/Game/LevelPrototyping/Materials/FireShield_red_01_50x50_UIMat.FireShield_red_01_50x50_UIMat'"));
-
-	UAbilityMoltenShell* Steelskin = NewObject<UAbilityMoltenShell>();
-	//Steelskin->ShellHP = 2209;
-	//Steelskin->ShellDuration = 1.5;
-	//Steelskin->ShellAbsorbtion = 0.70;
 	Steelskin->Cooldown->World = this->GetWorld();
-	//Steelskin->Cooldown->SetDuration(4.05);
-	Steelskin->SetNewMaterial(this->GetWorld(), FString("/Script/Engine.Material'/Game/LevelPrototyping/Materials/aura_100x100_UIMat.aura_100x100_UIMat'"));
 
 	this->AbilityManager = NewObject<UAbilityManager>();
 	this->AbilityManager->SetAbilityAmount(5);
@@ -74,14 +63,42 @@ void	UPlayWidget::InitAbilitys() {
 	UFuncLib::CheckObject(MoltenShell->Cooldown->World, "PlayWidget : Missing Cooldown->World on _MoltenShell");
 	UFuncLib::CheckObject(VaalMoltenShell->Cooldown->World, "PlayWidget : Missing Cooldown->World on _VaalMoltenShell");
 
-	this->UI_AbilityManager->LinkAbilityManager(this->AbilityManager);
-	ClearAbilitySlot(this->UI_AbilityManager->ContainerPanel->GetChildAt(0));
-	ClearAbilitySlot(this->UI_AbilityManager->ContainerPanel->GetChildAt(2));
-	ClearAbilitySlot(this->UI_AbilityManager->ContainerPanel->GetChildAt(4));
-	this->UI_AbilityManager_Picker->LinkAbilityManager(this->AbilityManager);
+
+	this->AbilityBar->LoadAbilityManager(this->AbilityManager);
+
+	//this->UI_AbilityManager->LinkAbilityManager(this->AbilityManager);
+	//ClearAbilitySlot(this->UI_AbilityManager->ContainerPanel->GetChildAt(0));
+	//ClearAbilitySlot(this->UI_AbilityManager->ContainerPanel->GetChildAt(2));
+	//ClearAbilitySlot(this->UI_AbilityManager->ContainerPanel->GetChildAt(4));
+	//this->UI_AbilityManager_Picker->LinkAbilityManager(this->AbilityManager);
 
 	GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Yellow, FString("UPlayWidget::InitAbilitys() done."));
 }
+
+
+void	UPlayWidget::InitFlasks() {
+	ULifeFlask* LifeFlask = NewObject<ULifeFlask>();
+	URubyFlask* RubyFlask = NewObject<URubyFlask>();
+	LifeFlask->Cooldown->World = this->GetWorld();
+	RubyFlask->Cooldown->World = this->GetWorld();
+
+	this->FlaskManager = NewObject<UAbilityManager>();
+	this->FlaskManager->SetAbilityAmount(3);
+	this->FlaskManager->SetAbility(0, nullptr);
+	this->FlaskManager->SetAbility(1, LifeFlask);
+	this->FlaskManager->SetAbility(2, RubyFlask);
+
+	UFuncLib::CheckObject(LifeFlask->Cooldown->World, "PlayWidget : Missing Cooldown->World on LifeFlask");
+	UFuncLib::CheckObject(RubyFlask->Cooldown->World, "PlayWidget : Missing Cooldown->World on RubyFlask");
+
+	this->UI_FlaskManager_Picker->LinkAbilityManager(this->FlaskManager);
+	this->FlaskManager->SetAbilityAmount(5);
+	this->UI_FlaskManager->LinkAbilityManager(this->FlaskManager);
+	this->FlaskManager->SetAbilityAmount(3);
+
+	GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Yellow, FString("UPlayWidget::InitFlasks() done."));
+}
+
 
 FPlayerStats	UPlayWidget::GeneratePlayerStats() const {
 	return FPlayerStats{

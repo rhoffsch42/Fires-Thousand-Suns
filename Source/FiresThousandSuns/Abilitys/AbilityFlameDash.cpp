@@ -5,8 +5,6 @@
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
 
-#define CD_MAXUSES	3
-#define CD_DURATION	3.0
 
 // explicit instanciation
 template ADebuffLockedMovement* UFuncLib::SafeSpawnActor<ADebuffLockedMovement>(
@@ -19,9 +17,10 @@ template ADebuffLockedMovement* UFuncLib::SafeSpawnActor<ADebuffLockedMovement>(
 	APawn* Instigator
 );
 
-UAbilityFlameDash::UAbilityFlameDash() : UAbility() {
-	this->Cooldown->SetMaxUses(CD_MAXUSES);
-	this->Cooldown->SetDuration(CD_DURATION);
+UAbilityFlameDash::UAbilityFlameDash() {
+	this->AbilityType = EAbilityType::FlameDash;
+	this->Cooldown->SetMaxUses(3);
+	this->Cooldown->SetDuration(3.0);
 	this->Cooldown->Reset();
 	this->SetNewMaterial(this->GetWorld(), FString("/Game/LevelPrototyping/Materials/fire-dash_UIMat.fire-dash_UIMat"));
 	FString NiagaraEffectPath = "/Script/Niagara.NiagaraSystem'/Game/LevelPrototyping/Particles/NS_FlameDash.NS_FlameDash'";

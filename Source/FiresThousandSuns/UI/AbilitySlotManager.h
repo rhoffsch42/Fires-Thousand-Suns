@@ -49,11 +49,16 @@ public:
 	UFUNCTION(BlueprintCallable)
 	virtual void	ClearContainer() const;
 	UFUNCTION(BlueprintCallable)
-	virtual UAbilityManager* GetLinkedAbilityManager() const;
-	UFUNCTION(BlueprintCallable)
 	virtual UAbilitySlot* CreateNewSlot();
 	//UFUNCTION(BlueprintCallable)
 	virtual UPanelSlot* AddSlot(UAbilitySlot* NewSlot) override;
+	UFUNCTION(BlueprintCallable)
+	void	SetLayout(const TArray<EAbilityType> Layout);
+
+	UFUNCTION(BlueprintCallable)
+	TArray<EAbilityType>	GetLayoutAsAbilityType() const;
+	UFUNCTION(BlueprintCallable)
+	virtual UAbilityManager* GetLinkedAbilityManager() const;
 
 #ifdef TESTS_IABILITYMANAGER
 	//UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)

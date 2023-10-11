@@ -8,19 +8,46 @@
 
 #include "AbilityMoltenShell.generated.h"
 
-/**
- * 
- */
+UCLASS()
+class FIRESTHOUSANDSUNS_API UGuardBase : public UAbility
+{
+	GENERATED_BODY()
+public:
+	UGuardBase();
+	virtual void	Activate(FEffectParameters Parameters) override;
+
+	double	ShellHP = 1000;
+	double	ShellAbsorbtion = 1.0;
+	double	ShellDuration = 5;
+private:
+};
+
 UCLASS(Blueprintable)
-class FIRESTHOUSANDSUNS_API UAbilityMoltenShell : public UAbility
+class FIRESTHOUSANDSUNS_API UAbilityMoltenShell : public UGuardBase
 {
 	GENERATED_BODY()
 public:
 	UAbilityMoltenShell();
-	void	Activate(FEffectParameters Parameters);
+	virtual void	Activate(FEffectParameters Parameters) override;
+private:
+};
 
-	double	ShellHP = 5000.0;
-	double	ShellAbsorbtion = 0.75;
-	double	ShellDuration = 3.6;
+UCLASS(Blueprintable)
+class FIRESTHOUSANDSUNS_API UAbilityVaalMoltenShell : public UGuardBase
+{
+	GENERATED_BODY()
+public:
+	UAbilityVaalMoltenShell();
+	virtual void	Activate(FEffectParameters Parameters) override;
+private:
+};
+
+UCLASS(Blueprintable)
+class FIRESTHOUSANDSUNS_API UAbilitySteelskin : public UGuardBase
+{
+	GENERATED_BODY()
+public:
+	UAbilitySteelskin();
+	virtual void	Activate(FEffectParameters Parameters) override;
 private:
 };

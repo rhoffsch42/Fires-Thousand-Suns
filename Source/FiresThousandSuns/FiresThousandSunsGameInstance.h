@@ -22,4 +22,6 @@ public:
 	UUserWidget*	SettingsWidget;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	FPlayerStats	BaseStats;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	TArray<EAbilityType>	AbilityLayout;
 };

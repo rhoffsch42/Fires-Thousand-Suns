@@ -57,4 +57,18 @@ UAbility* UAbilityManager::GetAbilityByClass(const TSubclassOf<UAbility> Ability
 	return FoundAbility;
 }
 
+UAbility* UAbilityManager::GetAbilityByType(const EAbilityType Type) const {
+	UAbility* FoundAbility = nullptr;
+
+	if (Type != EAbilityType::None) {
+		for (UAbility* Ability : this->_Abilitys) {
+			if (Ability && Ability->AbilityType == Type) {
+				return Ability;
+			}
+		}
+	}
+
+	return FoundAbility;
+}
+
 int32		UAbilityManager::GetAbilityAmount() const { return this->_Abilitys.Num(); }

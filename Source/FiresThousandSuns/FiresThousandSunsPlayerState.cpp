@@ -28,21 +28,11 @@ void	AFiresThousandSunsPlayerState::_InitPreBeginPlay() {
 	this->_MoltenShell = NewObject<UAbilityMoltenShell>();
 	this->_MoltenShell->Cooldown->World = this->GetWorld();
 
-	this->_VaalMoltenShell = NewObject<UAbilityMoltenShell>();
-	this->_VaalMoltenShell->ShellHP = 10000.0;
-	this->_VaalMoltenShell->ShellDuration = 10.8;
-	this->_VaalMoltenShell->ShellAbsorbtion = 0.39;
+	this->_VaalMoltenShell = NewObject<UAbilityVaalMoltenShell>();
 	this->_VaalMoltenShell->Cooldown->World = this->GetWorld();
-	this->_VaalMoltenShell->Cooldown->SetDuration(50.0);
-	this->_VaalMoltenShell->SetNewMaterial(this->GetWorld(), FString("/Script/Engine.Material'/Game/LevelPrototyping/Materials/FireShield_red_01_50x50_UIMat.FireShield_red_01_50x50_UIMat'"));
 
-	this->_Steelskin = NewObject<UAbilityMoltenShell>();
-	this->_Steelskin->ShellHP = 2209;
-	this->_Steelskin->ShellDuration = 1.5;
-	this->_Steelskin->ShellAbsorbtion = 0.70;
+	this->_Steelskin = NewObject<UAbilitySteelskin>();
 	this->_Steelskin->Cooldown->World = this->GetWorld();
-	this->_Steelskin->Cooldown->SetDuration(4.05);
-	this->_Steelskin->SetNewMaterial(this->GetWorld(), FString("/Script/Engine.Material'/Game/LevelPrototyping/Materials/aura_100x100_UIMat.aura_100x100_UIMat'"));
 
 	this->AbilityManager = NewObject<UAbilityManager>();
 	this->AbilityManager->SetAbilityAmount(5);

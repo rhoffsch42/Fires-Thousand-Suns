@@ -35,6 +35,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	UAbility*	GetAbilityByClass(const TSubclassOf<UAbility> AbilityClass) const;
 	UFUNCTION(BlueprintCallable)
+	UAbility* GetAbilityByType(const EAbilityType Type) const;
+	UFUNCTION(BlueprintCallable)
 	int32		GetAbilityAmount() const;
 
 protected:

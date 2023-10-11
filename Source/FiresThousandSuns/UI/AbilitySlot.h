@@ -29,6 +29,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void	UnLinkAbility();
 	UFUNCTION(BlueprintCallable)
+	UAbility* GetLinkedAbility() const;
+	UFUNCTION(BlueprintCallable)
 	void	OnSlotClicked();
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
@@ -40,11 +42,10 @@ public:
 
 	UPROPERTY(BlueprintAssignable, EditDefaultsOnly)
 	FAbilitySlotClicked	AbilitySlotClicked;
-
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	UAbility* _Ability = nullptr;
 protected:
 	virtual void NativeConstruct() override;
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 
+	UPROPERTY(BlueprintReadWrite)
+	UAbility* _Ability = nullptr;
 };

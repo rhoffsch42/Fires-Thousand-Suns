@@ -4,7 +4,7 @@
 
 void	UHealthWidget::NativeConstruct() {
 	Super::NativeConstruct();
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString("UHealthWidget::NativeConstruct()"));
+	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString("UHealthWidget::NativeConstruct()"));
 }
 
 void	UHealthWidget::Tick(FGeometry MyGeometry, float InDeltaTime) {

@@ -27,9 +27,17 @@ struct FEffectParameters
 	TArray<AActor*>	Targets;
 };
 
-/**
- * 
- */
+UENUM(BlueprintType)
+enum class EAbilityType : uint8 {
+	None = 0 UMETA(DisplayName = "None"),
+	FlameDash UMETA(DisplayName = "MoltenShell"),
+	MoltenShell UMETA(DisplayName = "MoltenShell"),
+	VaalMoltenShell UMETA(DisplayName = "VaalMoltenShell"),
+	Steelskin UMETA(DisplayName = "Steelskin"),
+	LifeFlask UMETA(DisplayName = "LifeFlask"),
+	RubyFlask UMETA(DisplayName = "RubyFlask"),
+};
+
 UCLASS(Blueprintable)
 class FIRESTHOUSANDSUNS_API UAbility : public UObject
 {
@@ -48,5 +56,8 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	UMaterial*	IconMaterial = nullptr;
 	//SoundCue	SoundCue;
+
+	UPROPERTY(BlueprintReadWrite)
+	EAbilityType	AbilityType = EAbilityType::None;
 private:
 };

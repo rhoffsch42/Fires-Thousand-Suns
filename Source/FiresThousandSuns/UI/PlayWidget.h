@@ -9,6 +9,7 @@
 #include "../FiresThousandSunsPlayerState.h"
 #include "../Abilitys/AbilityManager.h"
 #include "AbilitySlotManager.h"
+#include "AbilityBar.h"
 
 #include "PlayWidget.generated.h"
 
@@ -25,6 +26,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void	InitSliders();
 	void	InitAbilitys();
+	void	InitFlasks();
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
 	UButton* EnterArenaButton;
@@ -46,13 +48,19 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
 	UNamedValueSlider*	NVSlider_LessDamage;
 
+
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
-	UAbilitySlotManager* UI_AbilityManager;
+	UAbilityBar* AbilityBar;
+
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
-	UAbilitySlotManager* UI_AbilityManager_Picker;
+	UAbilitySlotManager* UI_FlaskManager;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
+	UAbilitySlotManager* UI_FlaskManager_Picker;
 
 	UPROPERTY(BlueprintReadWrite)
 	UAbilityManager* AbilityManager = nullptr;
+	UPROPERTY(BlueprintReadWrite)
+	UAbilityManager* FlaskManager = nullptr;
 protected:
 	virtual void NativeConstruct() override;
 };

@@ -39,9 +39,9 @@ public:
 	double	GetMaxHP() const;
 
 	// Delegate / event dispatcher
-	UPROPERTY(BlueprintAssignable, EditDefaultsOnly, Category = "Default")
+	UPROPERTY(BlueprintAssignable, EditDefaultsOnly)
 	FHpChanged	HpChanged;
-	UPROPERTY(BlueprintAssignable, EditDefaultsOnly, Category = "Default")
+	UPROPERTY(BlueprintAssignable, EditDefaultsOnly)
 	FHpEmpty	HpEmpty;
 
 private:

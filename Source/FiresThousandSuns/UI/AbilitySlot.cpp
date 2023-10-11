@@ -9,6 +9,7 @@ void	UAbilitySlot::NativeConstruct() {
 	FScriptDelegate	script;
 	script.BindUFunction(this, "OnSlotClicked");
 	this->Button->OnClicked.Add(script);
+	//GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Cyan, FString("UAbilitySlot::NativeConstruct() bind 0"));
 }
 
 void	UAbilitySlot::NativeTick(const FGeometry & MyGeometry, float InDeltaTime) {
@@ -62,3 +63,5 @@ void	UAbilitySlot::OnSlotClicked() {
 	));
 	this->AbilitySlotClicked.Broadcast(this);
 }
+
+UAbility* UAbilitySlot::GetLinkedAbility() const { return this->_Ability; }

@@ -66,8 +66,8 @@ protected:
 	void	_InitPostBeginPlay();
 	virtual void BeginPlay();
 private:
-	UAbilityFlameDash*		_FlameDash = nullptr;
-	UAbilityMoltenShell*	_MoltenShell = nullptr;
-	UAbilityMoltenShell*	_VaalMoltenShell = nullptr;
-	UAbilityMoltenShell*	_Steelskin = nullptr;
+	UAbilityFlameDash*			_FlameDash = nullptr;
+	UAbilityMoltenShell*		_MoltenShell = nullptr;
+	UAbilityVaalMoltenShell*	_VaalMoltenShell = nullptr;
+	UAbilitySteelskin*			_Steelskin = nullptr;
 };

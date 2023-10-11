@@ -2,10 +2,11 @@
 #include "../Funclib.h"
 
 UAbility::UAbility() {
-	this->Cooldown = NewObject<UCooldown>();
+	FString name = FString::FormatAsNumber((int64)this);
+	this->Cooldown = CreateDefaultSubobject<UCooldown>(*name); 
 	if (UFuncLib::CheckObject(this->Cooldown, FString("UAbility() NewObject<UCooldown>() failed : "))) {
 		this->Cooldown->World = this->GetWorld();
-		UFuncLib::CheckObject(this->Cooldown->World, FString("UAbility() GetWorld() failed "));
+		//UFuncLib::CheckObject(this->Cooldown->World, FString("UAbility() GetWorld() failed "));
 	}
 }
 
