@@ -22,6 +22,8 @@ public:
 	//UFUNCTION(BlueprintCallable)
 
 	UFUNCTION(BlueprintCallable)
+	static void SaveThumbnail(FString ObjectPath, FString OutputPath);
+	UFUNCTION(BlueprintCallable)
 	static bool	CheckObject(UObject* obj, FString ErrorMsg);
 	UFUNCTION(BlueprintCallable)
 	static void	PrintStats(const FPlayerStats& Stats);

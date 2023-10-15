@@ -53,7 +53,7 @@ public:
 	//UFUNCTION(BlueprintCallable)
 	virtual UPanelSlot* AddSlot(UAbilitySlot* NewSlot) override;
 	UFUNCTION(BlueprintCallable)
-	void	SetLayout(const TArray<EAbilityType> Layout);
+	void	SetLayout(const TArray<EAbilityType> Layout, bool UsingCopys = false);
 
 	UFUNCTION(BlueprintCallable)
 	TArray<EAbilityType>	GetLayoutAsAbilityType() const;

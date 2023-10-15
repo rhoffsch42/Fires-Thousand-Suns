@@ -1,24 +1,57 @@
 
 #include "BuffMoltenShell.h"
 
-#define DEFAULT_SHELL_HP	100.0
+
+ABuffGuard::ABuffGuard() {
+	this->BuffType = EBuffType::None;
+	this->HealthManager = NewObject<UHealthManager>();
+	this->HealthManager->SetMaxHP(100);
+	this->HealthManager->SetHP(100);
+}
+
+ABuffGuard::ABuffGuard(double HP) {
+	this->BuffType = EBuffType::None;
+	this->HealthManager = NewObject<UHealthManager>();
+	this->HealthManager->SetMaxHP(HP);
+	this->HealthManager->SetHP(HP);
+}
+
+//////////////////////////////////////////////////////////////////////
 
 ABuffMoltenShell::ABuffMoltenShell() {
-	this->PrimaryActorTick.bCanEverTick = false;
-
 	this->BuffType = EBuffType::MoltenShell;
-
-	// HealthManager
-	this->HealthManager = NewObject<UHealthManager>();
-	this->HealthManager->SetMaxHP(DEFAULT_SHELL_HP);
-	this->HealthManager->SetHP(DEFAULT_SHELL_HP);
 }
 
 ABuffMoltenShell::ABuffMoltenShell(double HP) {
-	this->PrimaryActorTick.bCanEverTick = false;
+	this->BuffType = EBuffType::MoltenShell;
+	this->HealthManager->SetMaxHP(HP);
+	this->HealthManager->SetHP(HP);
+}
 
-	// HealthManager
-	this->HealthManager = NewObject<UHealthManager>();
+//////////////////////////////////////////////////////////////////////
+
+ABuffVaalMoltenShell::ABuffVaalMoltenShell() {
+	this->BuffType = EBuffType::VaalMoltenShell;
+	this->Absorption = 0.39;
+}
+
+ABuffVaalMoltenShell::ABuffVaalMoltenShell(double HP) {
+	this->BuffType = EBuffType::VaalMoltenShell;
+	this->Absorption = 0.39;
+	this->HealthManager->SetMaxHP(HP);
+	this->HealthManager->SetHP(HP);
+}
+
+//////////////////////////////////////////////////////////////////////
+
+ABuffSteelskin::ABuffSteelskin() {
+	this->Absorption = 0.70;
+	this->BuffType = EBuffType::Steelskin;
+}
+
+ABuffSteelskin::ABuffSteelskin(double HP) {
+	this->BuffType = EBuffType::Steelskin;
+	this->Absorption = 0.70;
 	this->HealthManager->SetMaxHP(HP);
 	this->HealthManager->SetHP(HP);
 }

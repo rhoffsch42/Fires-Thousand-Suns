@@ -31,7 +31,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void	SpawnSunsSides(Side Start, Side End);
 	UFUNCTION(BlueprintCallable)
-	void	Init(TSubclassOf<AActor> ActorClass, FVector MinPosition, FVector MaxPosition, UPARAM(ref) AFiresThousandSunsCharacter* PlayerCharacter);
+	void	Init(UPARAM(ref) TSubclassOf<AActor> ActorClassForSuns, FVector MinPosition, FVector MaxPosition,
+		UPARAM(ref) AFiresThousandSunsCharacter* PlayerCharacter, UPARAM(ref) AActor* MavenActor);
 	UFUNCTION(BlueprintCallable)
 	bool	IsInitDone() const;
 
@@ -60,6 +61,8 @@ public:
 	AFiresThousandSunsCharacter* Player;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	UWorld*	World = nullptr;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	AActor* Maven = nullptr;//
 
 protected:
 	virtual void BeginPlay();
@@ -71,7 +74,8 @@ private:
 	void	GrabActorsWithTags() const;
 	UFUNCTION(BlueprintCallable)
 	void	CheckSunExplosion(FVector location, double damage, double radius) const;
-	double	tmp_applyMitigation(double damage) const;
+	double	_ApplyMitigation(double damage) const;
+	double	_ApplyGuardSkills(double damage) const;
 	void	_selectSunsForMavenCancellation(TArray<ASun*>* wave) const;
 
 	uint8	_spawnSunsCounter = 0;

@@ -24,4 +24,6 @@ public:
 	FPlayerStats	BaseStats;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	TArray<EAbilityType>	AbilityLayout;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	TArray<EAbilityType>	FlaskLayout;
 };

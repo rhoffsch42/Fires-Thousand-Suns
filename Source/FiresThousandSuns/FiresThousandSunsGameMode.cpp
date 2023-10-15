@@ -37,9 +37,16 @@ void AFiresThousandSunsGameMode::BeginPlay() {
 	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Yellow, FString::Printf(TEXT("AFiresThousandSunsGameMode::BeginPlay()")));
 }
 
-void	AFiresThousandSunsGameMode::Init(TSubclassOf<AActor> ActorClass, FVector MinPosition, FVector MaxPosition, UPARAM(ref) AFiresThousandSunsCharacter* PlayerCharacter) {
+void	AFiresThousandSunsGameMode::Init(
+	UPARAM(ref) TSubclassOf<AActor> ActorClassForSuns,
+	FVector MinPosition, FVector MaxPosition,
+	UPARAM(ref) AFiresThousandSunsCharacter* PlayerCharacter,
+	UPARAM(ref) AActor* MavenActor)
+{
+	
 	this->Player = PlayerCharacter;
-	this->SunActorClass = ActorClass;
+	this->SunActorClass = ActorClassForSuns;
+	this->Maven = MavenActor;
 	
 	FVector topleft = MinPosition;
 	FVector bottomRight = MaxPosition;
@@ -84,7 +91,6 @@ void	AFiresThousandSunsGameMode::SpawnSunsRegular() {
 	}
 	this->_spawnSunsCounter = r;
 }
-
 
 constexpr static int SideConvToInt(Side side)  { return CAST_NUM(side); }
 
@@ -141,7 +147,7 @@ void	AFiresThousandSunsGameMode::_selectSunsForMavenCancellation(TArray<ASun*>* 
 	// important to do it after all the swaps to not have duplicates
 	for (int32 i = 0; i < this->MavenCancelledSuns; ++i) {
 		(*wave)[i]->bMavenCancelled = true;
-		(*wave)[i]->SetMavenCancellationDistanceThreshold(double(i)*0.02 + (*wave)[i]->GetMavenCancellationDistanceThreshold());
+		(*wave)[i]->SetMavenCancellationDistanceThreshold(double(i)*0.01 + (*wave)[i]->GetMavenCancellationDistanceThreshold());
 	}
 }
 
@@ -150,32 +156,18 @@ void	AFiresThousandSunsGameMode::CheckSunExplosion(FVector location, double dama
 	FVector diff = location - this->Player->GetActorLocation();
 	if (diff.Length() <= radius) {
 		//GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Yellow, FString::Printf(TEXT("[max: %lf] diff with player : %lf"), radius, diff.Length()));
-		damage = tmp_applyMitigation(damage);
-
-		// molten shell(s)
-		UBuffManager* bm = this->Player->CustomPlayerState->GetComponentByClass<UBuffManager>();
-		if (bm) {
-			EBuffType types[3] = { EBuffType::VaalMoltenShell, EBuffType::MoltenShell, EBuffType::Steelskin };
-			for (int32 t = 0; t < 3; t++) {
-				ABuffMoltenShell* ms = Cast<ABuffMoltenShell>(bm->GetBuff(types[t])); // should be GetBuff<ABuffMoltenShell>()
-				if (ms) {
-					double MSbefore = ms->HealthManager->GetHP();
-					ms->HealthManager->RemoveHP(damage * ms->ShellAbsorption);
-					damage -= (MSbefore - ms->HealthManager->GetHP());
-				}
-			}
-		} else { /* should not happen */ }
-
+		damage = this->_ApplyMitigation(damage);
+		damage = this->_ApplyGuardSkills(damage);
 		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, FString::Printf(TEXT("Taking damage : %lf"), damage));
 		this->Player->CustomPlayerState->HealthManager->RemoveHP(damage);
 	}
 }
 
-double	AFiresThousandSunsGameMode::tmp_applyMitigation(double damage) const {
+double	AFiresThousandSunsGameMode::_ApplyMitigation(double damage) const {
 	APlayerState* ps = this->Player->GetPlayerState();
-	UFuncLib::CheckObject(ps, "AFiresThousandSunsGameMode::tmp_applyMitigation() GetPlayerState() returned nullptr");
+	UFuncLib::CheckObject(ps, "AFiresThousandSunsGameMode::_ApplyMitigation() GetPlayerState() returned nullptr");
 	AFiresThousandSunsPlayerState* State = Cast<AFiresThousandSunsPlayerState>(ps);
-	if (!UFuncLib::CheckObject(State, "AFiresThousandSunsGameMode::tmp_applyMitigation() failed to Cast PlayerState")) {
+	if (!UFuncLib::CheckObject(State, "AFiresThousandSunsGameMode::_ApplyMitigation() failed to Cast PlayerState")) {
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString::Printf(TEXT("ps: %p"), ps));
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString::Printf(TEXT("cu: %p"), this->Player->CustomPlayerState));
 		return 0;
@@ -187,8 +179,7 @@ double	AFiresThousandSunsGameMode::tmp_applyMitigation(double damage) const {
 	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, FString::FormatAsNumber(suppRand*100));
 
 	FPlayerStats	Stats = State->PlayerStats;
-	//Stats = this->Player->CustomPlayerState->PlayerStats;
-	double RubyFlask = 0.20;
+	double RubyFlask = 0.00;
 	double SunFirePenetration = 0.00;
 	return damage
 		* (1.0 - Stats.FireResistance + SunFirePenetration)
@@ -197,18 +188,23 @@ double	AFiresThousandSunsGameMode::tmp_applyMitigation(double damage) const {
 		* (1.0 - Stats.FortifyEffect)
 		* (1.0 - Stats.CustomLessDamage)
 		;
-	//double FireResistance = 0.75;
-	//double SpellSuppressionChance = 1.0;
-	//double SpellSuppressionEffect = 0.53;
-	//double Fortify = 0.20;
-	//double GlobalMitigation = 0.0;
-	//return damage
-	//	* (1.0 - FireResistance + SunFirePenetration)
-	//	* (1.0 - RubyFlask)
-	//	* (1.0 - (suppRand <= SpellSuppressionChance ? 1.0 : 0.0) * SpellSuppressionEffect)
-	//	* (1.0 - Fortify)
-	//	* (1.0 - GlobalMitigation)
-	//	;
+
+}
+
+double	AFiresThousandSunsGameMode::_ApplyGuardSkills(double damage) const {
+	UBuffManager* manager = this->Player->CustomPlayerState->GetComponentByClass<UBuffManager>();
+	if (UFuncLib::CheckObject(manager, "AFiresThousandSunsGameMode::CheckSunExplosion() failed to get Buff Manager")) {
+		EBuffType types[3] = { EBuffType::VaalMoltenShell, EBuffType::MoltenShell, EBuffType::Steelskin };
+		for (int32 t = 0; t < 3; t++) {
+			ABuffGuard* GuardBuff = Cast<ABuffGuard>(manager->GetBuff(types[t])); // should be GetBuff<ABuffMoltenShell>()
+			if (GuardBuff) {
+				double healthBefore = GuardBuff->HealthManager->GetHP();
+				GuardBuff->HealthManager->RemoveHP(damage * GuardBuff->Absorption);
+				damage -= (healthBefore - GuardBuff->HealthManager->GetHP());
+			}
+		}
+	}
+	return damage;
 }
 
  void	AFiresThousandSunsGameMode::GrabActorsWithTags() const {

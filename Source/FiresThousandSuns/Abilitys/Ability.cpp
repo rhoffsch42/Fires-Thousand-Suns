@@ -19,8 +19,7 @@ void	UAbility::TryActivate(FEffectParameters Parameters) {
 }
 
 void	UAbility::Activate(FEffectParameters Parameters) {
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Orange, FString::Printf(TEXT("[Ability] used ! CD:%d "), this->Cooldown->GetAvailableUses())
-	);
+	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Orange, FString::Printf(TEXT("[Ability] used ! CD:%d "), this->Cooldown->GetAvailableUses()));
 	this->Cooldown->Use();
 }
 

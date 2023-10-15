@@ -43,3 +43,31 @@ void	UAbilityBar::PickerOnClick(UAbilitySlot* InSlot) {
 	this->_LastSlotClicked->LinkAbility(InSlot->GetLinkedAbility());
 	this->UI_Picker->SetVisibility(ESlateVisibility::Hidden);
 }
+
+////////////////////////////////////
+
+void	UFlaskBar::NativeConstruct() {
+	Super::NativeConstruct();
+}
+
+void	UFlaskBar::ManagerOnClick(UAbilitySlot* InSlot) {
+	GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Purple, FString("UFlaskBar::ManagerOnClick()"));
+	this->_LastSlotClicked = InSlot;
+	this->UI_Picker->SetVisibility(ESlateVisibility::SelfHitTestInvisible);
+}
+
+void	UFlaskBar::PickerOnClick(UAbilitySlot* InSlot) {
+	GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Purple, FString("UFlaskBar::PickerOnClick()"));
+	
+	UAbility* Flask = nullptr;
+	UAbility* ab = InSlot->GetLinkedAbility();
+	if (ab) {
+		Flask = NewObject<UAbility>(this, ab->GetClass());
+		if (UFuncLib::CheckObject(Flask, "UFlaskBar::PickerOnClick() NewObject() failed ")) {
+			Flask->Cooldown->World = this->GetWorld();
+		}
+	}
+	
+	this->_LastSlotClicked->LinkAbility(Flask);
+	this->UI_Picker->SetVisibility(ESlateVisibility::Hidden);
+}

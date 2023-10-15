@@ -44,7 +44,7 @@ void	UAbilitySlot::LinkAbility(UAbility* Ability) {
 		}
 	} else {
 		this->Image->SetBrushFromMaterial(nullptr);
-		this->Image->SetColorAndOpacity(FLinearColor(0.0f, 0.0f, 0.0f, 1.0f));
+		this->Image->SetColorAndOpacity(FLinearColor(0.0f, 0.0f, 0.0f, 0.0f));
 	}
 	this->UpdateWidget();
 }
@@ -53,7 +53,7 @@ void	UAbilitySlot::UnLinkAbility() {
 	this->_Ability = nullptr;
 	this->CooldownBar->SetPercent(0.0f);
 	this->Image->SetBrushFromMaterial(nullptr);
-	this->Image->SetColorAndOpacity(FLinearColor(0.0f, 0.0f, 0.0f, 1.0f));
+	this->Image->SetColorAndOpacity(FLinearColor(0.0f, 0.0f, 0.0f, 0.0f));
 }
 
 void	UAbilitySlot::OnSlotClicked() {

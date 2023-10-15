@@ -6,6 +6,7 @@
 #include "Blueprint/UserWidget.h"
 #include "Components/Slider.h"
 #include "Components/TextBlock.h"
+#include "CommonTextBlock.h"
 
 #include "NamedValueSlider.generated.h"
 
@@ -32,9 +33,9 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
 	USlider* SliderWidget;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
-	UTextBlock* TextTitle;
+	UCommonTextBlock* TextTitle;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
-	UTextBlock* TextValue;
+	UCommonTextBlock* TextValue;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	double	Min = 0.0;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)

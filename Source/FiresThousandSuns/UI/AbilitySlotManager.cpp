@@ -65,7 +65,7 @@ UPanelSlot*	UAbilitySlotManager::AddSlot(UAbilitySlot* NewSlot) {
 	return this->ContainerPanel->AddChild(NewSlot);
 }
 
-void	UAbilitySlotManager::SetLayout(const TArray<EAbilityType> Layout) {
+void	UAbilitySlotManager::SetLayout(const TArray<EAbilityType> Layout, bool UsingCopys) {
 	int32 count = std::min(Layout.Num(), this->ContainerPanel->GetChildrenCount());
 
 	for (int32 i = 0; i < count; i++) {
@@ -73,7 +73,16 @@ void	UAbilitySlotManager::SetLayout(const TArray<EAbilityType> Layout) {
 		if (UFuncLib::CheckObject(w, "UAbilitySlotManager::SetLayout() failed to get child")) {
 			UAbilitySlot* slot = Cast<UAbilitySlot>(w);
 			if (UFuncLib::CheckObject(slot, "UAbilitySlotManager::SetLayout() failed to cast<UAbilitySlot> widget ")) {
-				slot->LinkAbility(this->_Manager->GetAbilityByType(Layout[i]));
+				
+				UAbility* Linked = this->_Manager->GetAbilityByType(Layout[i]);
+				if (UsingCopys && Linked) {
+					Linked = NewObject<UAbility>(this, Linked->GetClass());
+					if (UFuncLib::CheckObject(Linked, "UAbilitySlotManager::SetLayout() NewObject() failed ")) {
+						Linked->Cooldown->World = this->GetWorld();
+					}
+				}
+				slot->LinkAbility(Linked);
+
 			}
 		}
 	}

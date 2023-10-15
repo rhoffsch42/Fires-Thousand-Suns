@@ -4,7 +4,7 @@
 #include "../FuncLib.h"
 
 ULifeFlask::ULifeFlask() {
-	this->AbilityType = EAbilityType::FlameDash;
+	this->AbilityType = EAbilityType::LifeFlask;
 	this->Cooldown->SetMaxUses(1);
 	this->Cooldown->SetDuration(6.0);
 	this->Cooldown->Reset();
@@ -25,7 +25,7 @@ void	ULifeFlask::Activate(FEffectParameters Parameters) {
 /////////////////////////////////
 
 URubyFlask::URubyFlask() {
-	this->AbilityType = EAbilityType::FlameDash;
+	this->AbilityType = EAbilityType::RubyFlask;
 	this->Cooldown->SetMaxUses(1);
 	this->Cooldown->SetDuration(10.0);
 	this->Cooldown->Reset();

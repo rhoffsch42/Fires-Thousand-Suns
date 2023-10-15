@@ -9,7 +9,7 @@
 #include "Components/VerticalBox.h"
 #include "Components/WidgetSwitcher.h"
 #include "Components/CanvasPanel.h"
-#include "Components/TextBlock.h"
+#include "CommonTextBlock.h"
 #include "Internationalization/Text.h"
 
 #include "MenuContent.generated.h"
@@ -28,7 +28,7 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
 	UButton* Button;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
-	UTextBlock* ButtonText;
+	UCommonTextBlock* ButtonText;
 protected:
 	virtual void NativeConstruct() override;
 	UFUNCTION(BlueprintCallable)
@@ -76,9 +76,11 @@ protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
 	UPanelWidget*		MenuWidget;
 private:
+	/*
 	// construct some UWidget (not working)
 	void	_construct();
 	void	_debugWidgets(UCanvasPanel* Canvas, UHorizontalBox* Container, UVerticalBox* MenuBox, UWidgetSwitcher* ContentSwitche) const;
 	void	_initSlotSizes(UVerticalBox* MenuBox, UHorizontalBox* Container);
+	*/
 
 };

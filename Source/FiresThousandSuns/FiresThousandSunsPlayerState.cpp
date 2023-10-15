@@ -2,6 +2,8 @@
 #include "FiresThousandSunsPlayerState.h"
 #include "FiresThousandSunsGameInstance.h"
 #include "Systems/HealthManager.h"
+#include "Abilitys/LifeFlask.h"
+
 #include "FuncLib.h"
 
 AFiresThousandSunsPlayerState::AFiresThousandSunsPlayerState() {
@@ -23,25 +25,37 @@ void	AFiresThousandSunsPlayerState::_InitPreBeginPlay() {
 
 	// Abilitys
 	this->_FlameDash = NewObject<UAbilityFlameDash>();
-	this->_FlameDash->Cooldown->World = this->GetWorld();
-
 	this->_MoltenShell = NewObject<UAbilityMoltenShell>();
-	this->_MoltenShell->Cooldown->World = this->GetWorld();
-
 	this->_VaalMoltenShell = NewObject<UAbilityVaalMoltenShell>();
-	this->_VaalMoltenShell->Cooldown->World = this->GetWorld();
-
 	this->_Steelskin = NewObject<UAbilitySteelskin>();
+	this->_FlameDash->Cooldown->World = this->GetWorld();
+	this->_MoltenShell->Cooldown->World = this->GetWorld();
+	this->_VaalMoltenShell->Cooldown->World = this->GetWorld();
 	this->_Steelskin->Cooldown->World = this->GetWorld();
 
 	this->AbilityManager = NewObject<UAbilityManager>();
 	this->AbilityManager->SetAbilityAmount(5);
-	this->AbilityManager->SetAbility(0, nullptr); // shieldCharge // /Script/Engine.Material'/Game/LevelPrototyping/Materials/shield-bash_100x100_UIMat.shield-bash_100x100_UIMat'
+	this->AbilityManager->SetAbility(0, nullptr); // used as a 'slot clearer'
 	this->AbilityManager->SetAbility(1, this->_FlameDash);
 	this->AbilityManager->SetAbility(2, this->_Steelskin);
 	this->AbilityManager->SetAbility(3, this->_MoltenShell);
 	this->AbilityManager->SetAbility(4, this->_VaalMoltenShell);
 	//this->AbilityManager->SetAbility(5, VaalArcticArmor);
+	// shieldCharge // /Script/Engine.Material'/Game/LevelPrototyping/Materials/shield-bash_100x100_UIMat.shield-bash_100x100_UIMat'
+
+	// Flask
+	ULifeFlask* LifeFlask = NewObject<ULifeFlask>();
+	URubyFlask* RubyFlask = NewObject<URubyFlask>();
+	LifeFlask->Cooldown->World = this->GetWorld();
+	RubyFlask->Cooldown->World = this->GetWorld();
+
+	this->FlaskManager = NewObject<UAbilityManager>();
+	this->FlaskManager->SetAbilityAmount(5);
+	this->FlaskManager->SetAbility(0, nullptr); // used as a 'slot clearer'
+	this->FlaskManager->SetAbility(1, LifeFlask);
+	this->FlaskManager->SetAbility(2, RubyFlask);
+	this->FlaskManager->SetAbility(3, nullptr);
+	this->FlaskManager->SetAbility(4, nullptr);
 }
 
 void	AFiresThousandSunsPlayerState::_InitPostBeginPlay() {

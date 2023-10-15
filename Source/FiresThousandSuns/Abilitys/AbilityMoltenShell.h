@@ -16,9 +16,9 @@ public:
 	UGuardBase();
 	virtual void	Activate(FEffectParameters Parameters) override;
 
-	double	ShellHP = 1000;
-	double	ShellAbsorbtion = 1.0;
-	double	ShellDuration = 5;
+	double	HP = 1000;
+	double	Absorbtion = 1.0;
+	double	Duration = 5;
 private:
 };
 

@@ -4,21 +4,24 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "AbilitySlotManager.h"
+#include "Components/CanvasPanel.h"
 
 #include "AbilityBar.generated.h"
 
 
-UCLASS()
+UCLASS(Blueprintable)
 class FIRESTHOUSANDSUNS_API UAbilityBar : public UUserWidget
 {
 	GENERATED_BODY()
 public:
 	UFUNCTION(BlueprintCallable)
 	void	LoadAbilityManager(UAbilityManager* Manager);
+	void	BuildFlasksWithLayout(TArray<EAbilityType> Layout);
+
 	UFUNCTION(BlueprintCallable)
-	void	ManagerOnClick(UAbilitySlot* InSlot);
+	virtual void	ManagerOnClick(UAbilitySlot* InSlot);
 	UFUNCTION(BlueprintCallable)
-	void	PickerOnClick(UAbilitySlot* InSlot);
+	virtual void	PickerOnClick(UAbilitySlot* InSlot);
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
 	UAbilitySlotManager* UI_Manager;
@@ -32,4 +35,16 @@ protected:
 
 	UPROPERTY(BlueprintReadWrite)
 	UAbilityManager* AbilityManager = nullptr;
+};
+
+UCLASS(Blueprintable)
+class FIRESTHOUSANDSUNS_API UFlaskBar : public UAbilityBar
+{
+	GENERATED_BODY()
+public:
+	virtual void	ManagerOnClick(UAbilitySlot* InSlot) override;
+	virtual void	PickerOnClick(UAbilitySlot* InSlot) override;
+
+protected:
+	virtual void NativeConstruct() override;
 };

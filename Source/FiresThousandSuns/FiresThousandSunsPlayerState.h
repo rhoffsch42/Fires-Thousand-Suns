@@ -55,7 +55,11 @@ public:
 
 	// Abilitys
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	UAbilityManager*	AbilityManager = nullptr;
+	UAbilityManager* AbilityManager = nullptr;
+
+	// Flask
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	UAbilityManager* FlaskManager = nullptr;
 
 	// Buffs component
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)

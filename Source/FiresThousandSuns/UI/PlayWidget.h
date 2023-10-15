@@ -13,10 +13,7 @@
 
 #include "PlayWidget.generated.h"
 
-/**
- * 
- */
-UCLASS()
+UCLASS(Blueprintable)
 class FIRESTHOUSANDSUNS_API UPlayWidget : public UUserWidget
 {
 	GENERATED_BODY()
@@ -25,11 +22,10 @@ public:
 	FPlayerStats	GeneratePlayerStats() const;
 	UFUNCTION(BlueprintCallable)
 	void	InitSliders();
+	UFUNCTION(BlueprintCallable)
 	void	InitAbilitys();
+	UFUNCTION(BlueprintCallable)
 	void	InitFlasks();
-
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
-	UButton* EnterArenaButton;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
 	UNamedValueSlider*	NVSlider_MovSpeed;
@@ -48,14 +44,10 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
 	UNamedValueSlider*	NVSlider_LessDamage;
 
-
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
 	UAbilityBar* AbilityBar;
-
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
-	UAbilitySlotManager* UI_FlaskManager;
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
-	UAbilitySlotManager* UI_FlaskManager_Picker;
+	UAbilityBar* FlaskBar;
 
 	UPROPERTY(BlueprintReadWrite)
 	UAbilityManager* AbilityManager = nullptr;

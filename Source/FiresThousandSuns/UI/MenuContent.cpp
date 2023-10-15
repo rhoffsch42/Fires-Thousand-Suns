@@ -17,7 +17,7 @@
 
 void UMenuContentButton::NativeConstruct() {
 	this->bHasScriptImplementedTick = false;
-	Super::NativeConstruct();//new
+	Super::NativeConstruct();
 	FScriptDelegate script;
 	script.BindUFunction(this, "OnButtonClicked");
 	this->Button->OnClicked.Add(script);
@@ -112,6 +112,7 @@ void	UMenuContent::SetContentFlex(double Value) {}
 int32	UMenuContent::GetAmount() const { return 0; }
 
 ///////////////////////////////////////////////////////////////////////////////
+/*
 void	UMenuContent::_construct() {
 	GEngine->AddOnScreenDebugMessage(-1, DBUG_L, FColor::Orange, FString::Printf(TEXT("_construct() %p"), this));
 
@@ -203,3 +204,5 @@ void	UMenuContent::_debugWidgets(UCanvasPanel* Canvas, UHorizontalBox* Container
 	if (w) { GEngine->AddOnScreenDebugMessage(-1, DBUG_L, FColor::Orange, FString::Printf(TEXT("MenuBox child[0] in viewport : %d"), w->IsInViewport())); }
 	else { GEngine->AddOnScreenDebugMessage(-1, DBUG_L, FColor::Orange, FString::Printf(TEXT("MenuBox child[0] is null"))); }
 }
+
+*/

@@ -7,6 +7,8 @@ void	UNamedValueSlider::NativeConstruct() {
 
 	this->_LinkSliderToFunc(this->SliderWidget, "UpdateWithPercent");
 	this->SetSliderValue(0.75);
+	this->TextTitle->SetColorAndOpacity(FSlateColor(FLinearColor(1.0f, 0.5f, 0.14f, 1.0f)));
+	this->TextValue->SetColorAndOpacity(FSlateColor(FLinearColor(1.0f, 0.5f, 0.14f, 1.0f)));
 }
 
 void	UNamedValueSlider::_LinkSliderToFunc(USlider* Slider, const FName& FuncName) {

@@ -52,29 +52,25 @@ void	UPlayWidget::InitAbilitys() {
 
 	this->AbilityManager = NewObject<UAbilityManager>();
 	this->AbilityManager->SetAbilityAmount(5);
-	this->AbilityManager->SetAbility(0, nullptr); // shieldCharge // /Script/Engine.Material'/Game/LevelPrototyping/Materials/shield-bash_100x100_UIMat.shield-bash_100x100_UIMat'
+	this->AbilityManager->SetAbility(0, nullptr); // used as a 'slot clearer'
 	this->AbilityManager->SetAbility(1, FlameDash);
 	this->AbilityManager->SetAbility(2, Steelskin);
 	this->AbilityManager->SetAbility(3, MoltenShell);
 	this->AbilityManager->SetAbility(4, VaalMoltenShell);
+	// shieldCharge // /Script/Engine.Material'/Game/LevelPrototyping/Materials/shield-bash_100x100_UIMat.shield-bash_100x100_UIMat'
 
 	UFuncLib::CheckObject(FlameDash->Cooldown->World, "PlayWidget : Missing Cooldown->World on _FlameDash");
 	UFuncLib::CheckObject(Steelskin->Cooldown->World, "PlayWidget : Missing Cooldown->World on _Steelskin");
 	UFuncLib::CheckObject(MoltenShell->Cooldown->World, "PlayWidget : Missing Cooldown->World on _MoltenShell");
 	UFuncLib::CheckObject(VaalMoltenShell->Cooldown->World, "PlayWidget : Missing Cooldown->World on _VaalMoltenShell");
 
-
 	this->AbilityBar->LoadAbilityManager(this->AbilityManager);
-
-	//this->UI_AbilityManager->LinkAbilityManager(this->AbilityManager);
-	//ClearAbilitySlot(this->UI_AbilityManager->ContainerPanel->GetChildAt(0));
-	//ClearAbilitySlot(this->UI_AbilityManager->ContainerPanel->GetChildAt(2));
-	//ClearAbilitySlot(this->UI_AbilityManager->ContainerPanel->GetChildAt(4));
-	//this->UI_AbilityManager_Picker->LinkAbilityManager(this->AbilityManager);
+	ClearAbilitySlot(this->AbilityBar->UI_Manager->ContainerPanel->GetChildAt(0));
+	ClearAbilitySlot(this->AbilityBar->UI_Manager->ContainerPanel->GetChildAt(2));
+	ClearAbilitySlot(this->AbilityBar->UI_Manager->ContainerPanel->GetChildAt(4));
 
 	GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Yellow, FString("UPlayWidget::InitAbilitys() done."));
 }
-
 
 void	UPlayWidget::InitFlasks() {
 	ULifeFlask* LifeFlask = NewObject<ULifeFlask>();
@@ -83,18 +79,17 @@ void	UPlayWidget::InitFlasks() {
 	RubyFlask->Cooldown->World = this->GetWorld();
 
 	this->FlaskManager = NewObject<UAbilityManager>();
-	this->FlaskManager->SetAbilityAmount(3);
+	this->FlaskManager->SetAbilityAmount(5);
 	this->FlaskManager->SetAbility(0, nullptr);
 	this->FlaskManager->SetAbility(1, LifeFlask);
 	this->FlaskManager->SetAbility(2, RubyFlask);
+	this->FlaskManager->SetAbility(3, nullptr);
+	this->FlaskManager->SetAbility(4, nullptr);
 
 	UFuncLib::CheckObject(LifeFlask->Cooldown->World, "PlayWidget : Missing Cooldown->World on LifeFlask");
 	UFuncLib::CheckObject(RubyFlask->Cooldown->World, "PlayWidget : Missing Cooldown->World on RubyFlask");
 
-	this->UI_FlaskManager_Picker->LinkAbilityManager(this->FlaskManager);
-	this->FlaskManager->SetAbilityAmount(5);
-	this->UI_FlaskManager->LinkAbilityManager(this->FlaskManager);
-	this->FlaskManager->SetAbilityAmount(3);
+	this->FlaskBar->LoadAbilityManager(this->FlaskManager);
 
 	GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Yellow, FString("UPlayWidget::InitFlasks() done."));
 }
