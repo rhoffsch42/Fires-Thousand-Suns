@@ -17,6 +17,7 @@ void	ABuff::BeginPlay() {
 void	ABuff::EndPlay(const EEndPlayReason::Type EndPlayReason) {
 	Super::EndPlay(EndPlayReason);
 	this->Remove();
+	this->BuffExpired.Broadcast(this);
 	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("ABuff::EndPlay():%d. Removed buff."), (int32)EndPlayReason));
 }
 

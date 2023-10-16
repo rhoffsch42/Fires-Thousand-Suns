@@ -35,7 +35,8 @@ public:
 		UPARAM(ref) AFiresThousandSunsCharacter* PlayerCharacter, UPARAM(ref) AActor* MavenActor);
 	UFUNCTION(BlueprintCallable)
 	bool	IsInitDone() const;
-
+	UFUNCTION(BlueprintCallable)
+	FVector	GetLastSpawnSideLocation() const;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
 	double MovementSpeedBonus = 0.38;
@@ -54,7 +55,7 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
 	int MavenCancelledSuns = 7;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
-	uint8	_sunsPerSide = 20;
+	uint8	_SunsPerSide = 20;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
 	TSubclassOf<ASun>  SunActorClass;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
@@ -67,18 +68,19 @@ public:
 protected:
 	virtual void BeginPlay();
 
-	bool	_isInit = false;
-	FVector	_sidePos1[4];
-	FVector	_sidePos2[4];
+	bool	_IsInit = false;
+	FVector	_SidePos1[4];
+	FVector	_SidePos2[4];
+	FVector _LastSpawnSideLocation;
 private:
-	void	GrabActorsWithTags() const;
+	void	_GrabActorsWithTags() const;
 	UFUNCTION(BlueprintCallable)
-	void	CheckSunExplosion(FVector location, double damage, double radius) const;
+	void	_CheckSunExplosion(FVector location, double damage, double radius) const;
 	double	_ApplyMitigation(double damage) const;
 	double	_ApplyGuardSkills(double damage) const;
-	void	_selectSunsForMavenCancellation(TArray<ASun*>* wave) const;
+	void	_SelectSunsForMavenCancellation(TArray<ASun*>* wave) const;
 
-	uint8	_spawnSunsCounter = 0;
+	uint8	_SpawnSunsCounter = 0;
 };
 
 

@@ -49,6 +49,7 @@ void	UAbilityMoltenShell::Activate(FEffectParameters Parameters) {
 		buff->Absorption = this->Absorbtion;
 		buff->HealthManager->SetMaxHP(this->HP);
 		buff->HealthManager->SetHP(this->HP);
+		buff->IconMaterial = this->IconMaterial;
 		buff->SetBaseDuration(this->Duration);
 		buff->AttachToActor(Parameters.ActorInstigator, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, false));
 		buff->ApplyTo(target);
@@ -78,6 +79,7 @@ void	UAbilityVaalMoltenShell::Activate(FEffectParameters Parameters) {
 		buff->Absorption = this->Absorbtion;
 		buff->HealthManager->SetMaxHP(this->HP);
 		buff->HealthManager->SetHP(this->HP);
+		buff->IconMaterial = this->IconMaterial;
 		buff->SetBaseDuration(this->Duration);
 		buff->AttachToActor(Parameters.ActorInstigator, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, false));
 		buff->ApplyTo(target);
@@ -107,6 +109,7 @@ void	UAbilitySteelskin::Activate(FEffectParameters Parameters) {
 		buff->Absorption = this->Absorbtion;
 		buff->HealthManager->SetMaxHP(this->HP);
 		buff->HealthManager->SetHP(this->HP);
+		buff->IconMaterial = this->IconMaterial;
 		buff->SetBaseDuration(this->Duration);
 		buff->AttachToActor(Parameters.ActorInstigator, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, false));
 		buff->ApplyTo(target);

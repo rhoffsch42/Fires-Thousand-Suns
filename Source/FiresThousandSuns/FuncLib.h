@@ -4,6 +4,7 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "FiresThousandSunsPlayerState.h"
+#include "FiresThousandSunsGameMode.h"
 
 #include "FuncLib.generated.h"
 

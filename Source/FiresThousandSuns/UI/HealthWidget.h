@@ -20,6 +20,8 @@ public:
 	void	UpdateHP(double HP, double MaxHP);
 	UFUNCTION(BlueprintCallable)
 	void	SetDisplayText(bool Display);
+	UFUNCTION(BlueprintCallable)
+	void	SetFontSize(float NewSize) const;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
 	UProgressBar*	HealthBar;
@@ -27,6 +29,8 @@ public:
 	UCommonTextBlock* HpText;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
 	UCommonTextBlock* MaxHpText;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
+	UCommonTextBlock* Separator;
 protected:
 	virtual void NativeConstruct() override;
 	virtual void Tick(FGeometry MyGeometry, float InDeltaTime);

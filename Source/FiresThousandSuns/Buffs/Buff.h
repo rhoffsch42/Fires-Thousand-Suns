@@ -17,6 +17,9 @@ enum class EBuffType : uint8 {
 	DebuffLockedMovement UMETA(DisplayName = "DebuffLockedMovement"),
 };
 
+UDELEGATE(BlueprintCallable)
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBuffExpired, ABuff*, Buff);
+
 UCLASS(Blueprintable)
 class FIRESTHOUSANDSUNS_API ABuff : public AActor
 {
@@ -46,6 +49,12 @@ public:
 	bool		bIsDebuff = false;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	EBuffType	BuffType = EBuffType::None;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	UMaterial* IconMaterial = nullptr;
+
+	// Delegate / Event dispatcher
+	UPROPERTY(BlueprintAssignable, EditDefaultsOnly)
+	FBuffExpired	BuffExpired;
 
 protected:
 	virtual void BeginPlay() override;

@@ -7,6 +7,9 @@
 
 #include "BuffManager.generated.h"
 
+UDELEGATE(BlueprintCallable)
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBuffAdded, ABuff*, Buff);
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class FIRESTHOUSANDSUNS_API UBuffManager : public UActorComponent
 {
@@ -22,6 +25,9 @@ public:
 	void	RemoveBuff(ABuff* Buff);
 	UFUNCTION(BlueprintCallable)
 	ABuff*	GetBuff(EBuffType BuffType) const;
+
+	UPROPERTY(BlueprintAssignable, EditDefaultsOnly)
+	FBuffAdded	OnBuffAdded;
 
 protected:
 	virtual void BeginPlay() override;

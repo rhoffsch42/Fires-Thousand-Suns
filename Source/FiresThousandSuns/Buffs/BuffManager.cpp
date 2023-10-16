@@ -28,6 +28,7 @@ void	UBuffManager::AddBuff(ABuff* Buff) {
 		//this->_buffs[enumVal]->Absorb(Buff);
 		//this->_buffs[enumVal]->Stack(Buff); // list ?
 	}
+	this->OnBuffAdded.Broadcast(Buff);
 }
 
 void	UBuffManager::RemoveBuff(ABuff* Buff) {
