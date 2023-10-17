@@ -14,8 +14,8 @@ void	UAbilitySlotManager::NativeOnInitialized() {
 	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString("UAbilitySlotManager::NativeOnInitialized()"));
 }
 
-void	UAbilitySlotManager::Tick(FGeometry MyGeometry, float InDeltaTime) {
-	Super::Tick(MyGeometry, InDeltaTime);
+void	UAbilitySlotManager::NativeTick(const FGeometry& MyGeometry, float InDeltaTime) {
+	Super::NativeTick(MyGeometry, InDeltaTime);
 }
 
 void	UAbilitySlotManager::SetSlotClass(TSubclassOf<UAbilitySlot> Class) {
@@ -127,8 +127,8 @@ void	UAbilitySlotManagerHBox::NativeOnInitialized() {
 	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString("UAbilitySlotManagerHBox::NativeOnInitialized()"));
 }
 
-void	UAbilitySlotManagerHBox::Tick(FGeometry MyGeometry, float InDeltaTime) {
-	Super::Tick(MyGeometry, InDeltaTime);
+void	UAbilitySlotManagerHBox::NativeTick(const FGeometry& MyGeometry, float InDeltaTime) {
+	Super::NativeTick(MyGeometry, InDeltaTime);
 }
 
 UPanelSlot* UAbilitySlotManagerHBox::AddSlot(UAbilitySlot* NewSlot) {

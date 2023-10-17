@@ -51,6 +51,6 @@ private:
 	int32	_availableUses = 1;
 	int32	_maxUses = 1;
 
-	void	_update();//could call this during a tick()
+	void	_update();
 	double	_safeGetTimeSeconds() const;
 };

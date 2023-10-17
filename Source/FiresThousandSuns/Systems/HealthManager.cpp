@@ -8,8 +8,8 @@ UHealthManager::UHealthManager(double HP) : _maxhp(std::max(1.0, HP)), _hp(_maxh
 }
 
 void	UHealthManager::CheckEmptyHP() const {
-	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("[HealthManager] Player HP : %lf"), this->_hp));
-	if (this->_hp <= 0) {
+	if (this->_hp <= 0.0) {
+		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("[HealthManager] HP : %lf"), this->_hp));
 		this->HpEmpty.Broadcast();
 	}
 }

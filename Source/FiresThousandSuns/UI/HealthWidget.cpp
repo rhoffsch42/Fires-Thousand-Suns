@@ -1,13 +1,14 @@
 
 #include "HealthWidget.h"
+#include "../FuncLib.h"
 
 void	UHealthWidget::NativeConstruct() {
 	Super::NativeConstruct();
 	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString("UHealthWidget::NativeConstruct()"));
 }
 
-void	UHealthWidget::Tick(FGeometry MyGeometry, float InDeltaTime) {
-	Super::Tick(MyGeometry, InDeltaTime);
+void	UHealthWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime) {
+	Super::NativeTick(MyGeometry, InDeltaTime);
 }
 
 void	UHealthWidget::UpdateHP(double HP, double MaxHP) {

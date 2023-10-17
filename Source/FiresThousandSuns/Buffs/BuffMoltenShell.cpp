@@ -1,12 +1,15 @@
 
 #include "BuffMoltenShell.h"
 
-
 ABuffGuard::ABuffGuard() {
 	this->BuffType = EBuffType::None;
 	this->HealthManager = NewObject<UHealthManager>();
 	this->HealthManager->SetMaxHP(100);
 	this->HealthManager->SetHP(100);
+
+	FScriptDelegate script;
+	script.BindUFunction(this, "OnGuardHpEmpty");
+	this->HealthManager->HpEmpty.Add(script);
 }
 
 ABuffGuard::ABuffGuard(double HP) {
@@ -14,6 +17,10 @@ ABuffGuard::ABuffGuard(double HP) {
 	this->HealthManager = NewObject<UHealthManager>();
 	this->HealthManager->SetMaxHP(HP);
 	this->HealthManager->SetHP(HP);
+}
+
+void	ABuffGuard::OnGuardHpEmpty() {
+	this->Destroy();
 }
 
 //////////////////////////////////////////////////////////////////////

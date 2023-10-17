@@ -2,6 +2,7 @@
 #include "Buff.h"
 #include "BuffManager.h"
 #include "Engine/EngineTypes.h"
+#include "../FuncLib.h"
 
 ABuff::ABuff() {
 	PrimaryActorTick.bCanEverTick = false;
@@ -18,11 +19,12 @@ void	ABuff::EndPlay(const EEndPlayReason::Type EndPlayReason) {
 	Super::EndPlay(EndPlayReason);
 	this->Remove();
 	this->BuffExpired.Broadcast(this);
-	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("ABuff::EndPlay():%d. Removed buff."), (int32)EndPlayReason));
+	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString::Printf(TEXT("ABuff::EndPlay(): %d. Removed buff."), (int32)EndPlayReason));
 }
 
-void	ABuff::Tick(float DeltaTime) {
-	Super::Tick(DeltaTime);
+void	ABuff::Tick(float DeltaSeconds) {
+	Super::Tick(DeltaSeconds);
+	WHEREAMI(this);
 }
 
 void	ABuff::ApplyTo(AActor* Target) {

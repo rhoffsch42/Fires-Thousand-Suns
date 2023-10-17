@@ -5,7 +5,6 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "Components/Slider.h"
-#include "Components/TextBlock.h"
 #include "CommonTextBlock.h"
 
 #include "NamedValueSlider.generated.h"

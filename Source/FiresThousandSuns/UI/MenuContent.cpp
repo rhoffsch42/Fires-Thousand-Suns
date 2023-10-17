@@ -29,11 +29,10 @@ void UMenuContentButton::OnButtonClicked() {
 
 void UMenuContent::NativeConstruct() {
 	Super::NativeConstruct();
-	//GEngine->AddOnScreenDebugMessage(-1, DBUG_L, FColor::Yellow, FString::Printf(TEXT("UMenuContent::NativeConstruct() %p"), this));
 }
 
-void	UMenuContent::Tick(FGeometry MyGeometry, float InDeltaTime) {
-	//GEngine->AddOnScreenDebugMessage(-1, DBUG_L, FColor::Orange, FString::Printf(TEXT("UMenuContent::tick()  GetRootWidget : %p"), this->GetRootWidget()));
+void	UMenuContent::NativeTick(const FGeometry& MyGeometry, float InDeltaTime) {
+	Super::NativeTick(MyGeometry, InDeltaTime);
 }
 
 void	UMenuContent::SetMenuWidget(UPanelWidget* Widget) {

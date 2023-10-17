@@ -60,13 +60,13 @@ void	ASun::BeginPlay() {
 }
 
 // Called every frame
-void	ASun::Tick(float DeltaTime) {
-	Super::Tick(DeltaTime);
+void	ASun::Tick(float DeltaSeconds) {
+	Super::Tick(DeltaSeconds);
 	if (this->GetGameTimeSinceCreation() >= this->_timeBeforeMoving) {
 		this->bIsMoving = true;
 	}
 	if (this->bIsMoving) {
-		this->Move(DeltaTime);
+		this->Move(DeltaSeconds);
 		if (this->bMavenCancelled && this->IsInRangeForMavenCancellation()) {
 			this->SunMavenCancelled.Broadcast();
 			this->Destroy();
@@ -74,17 +74,17 @@ void	ASun::Tick(float DeltaTime) {
 	}
 }
 
-void	ASun::Move(float DeltaTime) {
+void	ASun::Move(float DeltaSeconds) {
 	FVector location = this->_DefaultSceneRoot->GetComponentLocation();
 	FVector diff = this->_destination - location;
 
-	if (diff.Length() <= (DeltaTime * this->_speed)) {
+	if (diff.Length() <= (DeltaSeconds * this->_speed)) {
 		this->_DefaultSceneRoot->SetWorldLocation(this->_destination);
 		this->bIsMoving = false;
 		this->Explode();
 	} else {
 		diff.Normalize();
-		diff = diff * DeltaTime * this->_speed;
+		diff = diff * DeltaSeconds * this->_speed;
 		this->_DefaultSceneRoot->SetWorldLocation(location + diff);
 	}
 }

@@ -71,7 +71,7 @@ public:
 	UWidgetSwitcher* ContentWidgetSwitcher;
 
 protected:
-	virtual void Tick(FGeometry MyGeometry, float InDeltaTime);
+	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 	virtual void NativeConstruct() override;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
 	UPanelWidget*		MenuWidget;

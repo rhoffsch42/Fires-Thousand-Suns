@@ -15,6 +15,9 @@ public:
 	ABuffGuard();
 	ABuffGuard(double HP);
 
+	UFUNCTION(BlueprintCallable)
+	virtual void	OnGuardHpEmpty();
+
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	UHealthManager* HealthManager = nullptr;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)

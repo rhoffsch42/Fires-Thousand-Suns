@@ -27,7 +27,7 @@ class FIRESTHOUSANDSUNS_API ABuff : public AActor
 	
 public:
 	ABuff();
-	virtual void Tick(float DeltaTime) override;
+	virtual void Tick(float DeltaSeconds) override;
 
 	UFUNCTION(BlueprintCallable)
 	virtual void	ApplyTo(AActor* Target);
