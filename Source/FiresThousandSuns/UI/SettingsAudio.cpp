@@ -74,3 +74,8 @@ void	USettingsAudio::SetDialoguesVolume(float Value) const {
 	this->DialoguesVolumeSlider->SetValue(Value);
 	this->UpdateDialoguesVolume(Value);
 }
+
+float	USettingsAudio::GetMasterVolumeValue() const { return this->MasterVolumeSlider->GetValue(); }
+float	USettingsAudio::GetEffectsVolumeValue() const { return this->EffectsVolumeSlider->GetValue(); }
+float	USettingsAudio::GetMusicVolumeValue() const { return this->MusicVolumeSlider->GetValue(); }
+float	USettingsAudio::GetDialoguesVolumeValue() const { return this->DialoguesVolumeSlider->GetValue(); }

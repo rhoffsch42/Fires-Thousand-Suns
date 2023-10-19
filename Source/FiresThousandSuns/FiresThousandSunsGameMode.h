@@ -63,7 +63,7 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	UWorld*	World = nullptr;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	AActor* Maven = nullptr;//
+	AActor* Maven = nullptr;
 
 protected:
 	virtual void BeginPlay();
@@ -83,5 +83,5 @@ private:
 	uint8	_SpawnSunsCounter = 0;
 };
 
-
-
+// todo fire flask in mitigation
+// todo remove logo from life flask

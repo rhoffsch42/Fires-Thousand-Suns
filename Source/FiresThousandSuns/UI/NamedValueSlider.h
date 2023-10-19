@@ -21,11 +21,14 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void	SetTitleAndRange(FText Text, float MinValue, float MaxValue);
 	UFUNCTION(BlueprintCallable)
-	double	SliderValueToRange(float Value) const;
+	void	UpdateWithValue(float Value) const;
 	UFUNCTION(BlueprintCallable)
-	void	SetSliderValue(float Value) const;
+	void	UpdateWithPercent(float Percent) const;
+
 	UFUNCTION(BlueprintCallable)
-	void	UpdateWithPercent(float Value) const;
+	double	SliderPercentToValue(float Percent) const;
+	UFUNCTION(BlueprintCallable)
+	double	ValueToSliderPercent(float Value) const;
 	UFUNCTION(BlueprintCallable)
 	double	GetValue() const;
 

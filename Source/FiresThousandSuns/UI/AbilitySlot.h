@@ -7,6 +7,7 @@
 #include "Components/Button.h"
 #include "Components/ProgressBar.h"
 #include "Components/Image.h"
+#include "CommonTextBlock.h"
 #include "../Abilitys/Ability.h"
 
 #include "AbilitySlot.generated.h"
@@ -38,6 +39,8 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
 	UProgressBar*	CooldownBar;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
+	UCommonTextBlock*	UseCountText;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
 	UImage*			Image;
 
 	UPROPERTY(BlueprintAssignable, EditDefaultsOnly)
@@ -48,4 +51,6 @@ protected:
 
 	UPROPERTY(BlueprintReadWrite)
 	UAbility* _Ability = nullptr;
+
+	FNumberFormattingOptions _FormatOptions;
 };

@@ -83,7 +83,7 @@ void	UMenuContent::AddButtonOnly(UMenuContentButton* Button) {
 void	UMenuContent::AddContentOnly(UUserWidget* Content) {
 	if (Content && this->ContentWidgetSwitcher) {
 		if (UFuncLib::CheckObject(Content, FString("Content is null"))) {
-			this->ContentWidgetSwitcher->AddChild(Content);
+			UFuncLib::CheckObject(this->ContentWidgetSwitcher->AddChild(Content), "UMenuContent::AddContentOnly() failed to add content to switcher.");
 			UWidgetSwitcherSlot* slot = Cast<UWidgetSwitcherSlot>(Content->Slot);
 			if (UFuncLib::CheckObject(slot, FString("Content slot is null"))) {
 				slot->SetHorizontalAlignment(EHorizontalAlignment::HAlign_Fill);

@@ -5,6 +5,7 @@
 #include "Engine/GameInstance.h"
 #include "Blueprint/UserWidget.h"
 #include "FiresThousandSunsPlayerState.h"
+#include "FiresThousandSunsSaveGame.h"
 
 #include "FiresThousandSunsGameInstance.generated.h"
 
@@ -18,8 +19,14 @@ class FIRESTHOUSANDSUNS_API UFiresThousandSunsGameInstance : public UGameInstanc
 public:
 	UFiresThousandSunsGameInstance();
 
+	UFUNCTION(BlueprintCallable)
+	void	InitSaveGame(FString SaveName);
+
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	UUserWidget*	SettingsWidget;
+	UFiresThousandSunsSaveGame* Fires_SG = nullptr;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	UUserWidget*	UserWidgetRef = nullptr;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	FPlayerStats	BaseStats;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)

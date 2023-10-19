@@ -19,6 +19,8 @@ class FIRESTHOUSANDSUNS_API UPlayWidget : public UUserWidget
 	GENERATED_BODY()
 public:
 	UFUNCTION(BlueprintCallable)
+	void	ApplyPlayerStats(const FPlayerStats Stats);
+	UFUNCTION(BlueprintCallable)
 	FPlayerStats	GeneratePlayerStats() const;
 	UFUNCTION(BlueprintCallable)
 	void	InitSliders();
@@ -26,6 +28,7 @@ public:
 	void	InitAbilitys();
 	UFUNCTION(BlueprintCallable)
 	void	InitFlasks();
+
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
 	UNamedValueSlider*	NVSlider_MovSpeed;

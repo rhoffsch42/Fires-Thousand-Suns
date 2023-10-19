@@ -23,14 +23,7 @@ void	UPlayWidget::InitSliders() {
 	this->NVSlider_Fortify->SetTitleAndRange(			NSLOCTEXT("Fires", "NVSlider_Fortify_Name",			"Fortify Stacks"),				0.0f, 30.0f);
 	this->NVSlider_LessDamage->SetTitleAndRange(		NSLOCTEXT("Fires", "NVSlider_LessDamage_Name",		"Less Damage"),					0.0f, 90.0f);
 
-	this->NVSlider_MovSpeed->SetSliderValue(0.4f);
-	this->NVSlider_Life->SetSliderValue(0.25f);
-	this->NVSlider_LifeRegen->SetSliderValue(0.05f);
-	this->NVSlider_FireRes->SetSliderValue(0.84f);
-	this->NVSlider_SpellSuppChance->SetSliderValue(1.0f);
-	this->NVSlider_SpellSuppEffect->SetSliderValue(0.2f);
-	this->NVSlider_Fortify->SetSliderValue(0.0f);
-	this->NVSlider_LessDamage->SetSliderValue(0.0f);
+	this->ApplyPlayerStats(FPlayerStats());
 }
 
 static inline void	ClearAbilitySlot(UWidget* Slot) {
@@ -69,7 +62,7 @@ void	UPlayWidget::InitAbilitys() {
 	ClearAbilitySlot(this->AbilityBar->UI_Manager->ContainerPanel->GetChildAt(2));
 	ClearAbilitySlot(this->AbilityBar->UI_Manager->ContainerPanel->GetChildAt(4));
 
-	GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Yellow, FString("UPlayWidget::InitAbilitys() done."));
+	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString("UPlayWidget::InitAbilitys() done."));
 }
 
 void	UPlayWidget::InitFlasks() {
@@ -91,7 +84,18 @@ void	UPlayWidget::InitFlasks() {
 
 	this->FlaskBar->LoadAbilityManager(this->FlaskManager);
 
-	GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Yellow, FString("UPlayWidget::InitFlasks() done."));
+	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString("UPlayWidget::InitFlasks() done."));
+}
+
+void	UPlayWidget::ApplyPlayerStats(const FPlayerStats Stats) {
+	this->NVSlider_MovSpeed->UpdateWithValue(Stats.MovementSpeed * 100);
+	this->NVSlider_Life->UpdateWithValue(Stats.Life);
+	this->NVSlider_LifeRegen->UpdateWithValue(Stats.LifeRegeneration);
+	this->NVSlider_FireRes->UpdateWithValue(Stats.FireResistance * 100);
+	this->NVSlider_SpellSuppChance->UpdateWithValue(Stats.SpellSuppressionChance * 100);
+	this->NVSlider_SpellSuppEffect->UpdateWithValue(Stats.SpellSuppressionEffect * 100);
+	this->NVSlider_Fortify->UpdateWithValue(Stats.FortifyEffect * 100);
+	this->NVSlider_LessDamage->UpdateWithValue(Stats.CustomLessDamage * 100);
 }
 
 

@@ -3,8 +3,10 @@
 #include "../FuncLib.h"
 
 void	UAbilitySlot::NativeConstruct() {
-	this->bHasScriptImplementedTick = true;
 	Super::NativeConstruct();
+	this->bHasScriptImplementedTick = true;
+	this->_FormatOptions.MaximumFractionalDigits = 0;
+	this->UseCountText->SetVisibility(ESlateVisibility::Hidden);
 
 	FScriptDelegate	script;
 	script.BindUFunction(this, "OnSlotClicked");
@@ -28,24 +30,30 @@ void	UAbilitySlot::UpdateWidget() {
 		//));
 		if (UFuncLib::CheckObject(this->_Ability->Cooldown, "UAbilitySlot::UpdateWidget() _Ability->Cooldown is nullptr")) {
 			this->CooldownBar->SetPercent(this->_Ability->Cooldown->RemainingRelative());
+			this->UseCountText->SetText(FText::AsNumber(this->_Ability->Cooldown->GetAvailableUses(), &this->_FormatOptions));
 		}
 	}
 }
 
 void	UAbilitySlot::LinkAbility(UAbility* Ability) {
 	this->_Ability = Ability;
-	if (this->_Ability) {
+
+	if (!this->_Ability) {
+		this->UnLinkAbility();
+	} else {
 		if (this->_Ability->IconMaterial) {
-			//UMaterialInstanceDynamic* MaterialInstance = UMaterialInstanceDynamic::Create(Ability->IconMaterial->GetMaterialInterface(), Ability->IconMaterial->GetMaterialInterface());
 			if (this->Image) {
 				this->Image->SetBrushFromMaterial(this->_Ability->IconMaterial);
 				this->Image->SetColorAndOpacity(FLinearColor(1.0f, 1.0f, 1.0f, 1.0f));
 			}
 		}
-	} else {
-		this->Image->SetBrushFromMaterial(nullptr);
-		this->Image->SetColorAndOpacity(FLinearColor(0.0f, 0.0f, 0.0f, 0.0f));
+
+		// this has to be done elsewhere if user changes the max uses
+		this->UseCountText->SetVisibility(
+			(this->_Ability->Cooldown->GetMaxUses() > 1) ? ESlateVisibility::HitTestInvisible : ESlateVisibility::Hidden);
+	
 	}
+
 	this->UpdateWidget();
 }
 
@@ -54,13 +62,14 @@ void	UAbilitySlot::UnLinkAbility() {
 	this->CooldownBar->SetPercent(0.0f);
 	this->Image->SetBrushFromMaterial(nullptr);
 	this->Image->SetColorAndOpacity(FLinearColor(0.0f, 0.0f, 0.0f, 0.0f));
+	this->UseCountText->SetVisibility(ESlateVisibility::Hidden);
 }
 
 void	UAbilitySlot::OnSlotClicked() {
-	GEngine->AddOnScreenDebugMessage((int32)(int64)this, 5.0f, FColor::Purple, FString::Printf(
-		TEXT("UAbilitySlot::OnSlotClicked() %p"),
-		this->_Ability
-	));
+	//GEngine->AddOnScreenDebugMessage((int32)(int64)this, 5.0f, FColor::Purple, FString::Printf(
+	//	TEXT("UAbilitySlot::OnSlotClicked() %p"),
+	//	this->_Ability
+	//));
 	this->AbilitySlotClicked.Broadcast(this);
 }
 

@@ -18,11 +18,11 @@ struct FPlayerStats
 	GENERATED_BODY()
 	//public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	double	MovementSpeed = 0.35;
+	double	MovementSpeed = 0.4;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	double	Life = 6000.0;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	double	LifeRegeneration = 500.0;
+	double	LifeRegeneration = 200.0;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	double	FireResistance = 0.75;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)

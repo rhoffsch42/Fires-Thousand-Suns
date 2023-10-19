@@ -12,7 +12,9 @@
 //#define LOG(msg) UE_LOG(LogTemp, Warning, TEXT("[%s@line: %d] - %s"), TEXT(__FUNCTION__), __LINE__, *FString(msg))
 #define LOG(func, msg) UE_LOG(LogTemp, Warning, TEXT("[%s@line: %d] %s"), *FString(func), __LINE__, *FString(msg))
 
-#define WHEREAMI(x) GEngine->AddOnScreenDebugMessage((int32)(int64)x, 5.0f, FColor::Yellow, FString(__FUNCSIG__))
+#define D_(x) x
+#define D(x) GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, x)
+#define WHEREAMI(x) D_( GEngine->AddOnScreenDebugMessage((int32)(int64)x, 5.0f, FColor::Yellow, FString(__FUNCSIG__)) )
 
 /**
  * 

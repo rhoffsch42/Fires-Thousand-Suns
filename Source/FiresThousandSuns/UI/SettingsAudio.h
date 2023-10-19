@@ -46,6 +46,15 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void	UpdateDialoguesVolume(float Value) const;
 
+	UFUNCTION(BlueprintCallable)
+	float	GetMasterVolumeValue() const;
+	UFUNCTION(BlueprintCallable)
+	float	GetEffectsVolumeValue() const;
+	UFUNCTION(BlueprintCallable)
+	float	GetMusicVolumeValue() const;
+	UFUNCTION(BlueprintCallable)
+	float	GetDialoguesVolumeValue() const;
+
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	USoundMix* SoundMix = nullptr;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))

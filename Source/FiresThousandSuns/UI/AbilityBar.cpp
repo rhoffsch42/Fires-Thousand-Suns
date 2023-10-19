@@ -51,13 +51,13 @@ void	UFlaskBar::NativeConstruct() {
 }
 
 void	UFlaskBar::ManagerOnClick(UAbilitySlot* InSlot) {
-	GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Purple, FString("UFlaskBar::ManagerOnClick()"));
+	//GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Purple, FString("UFlaskBar::ManagerOnClick()"));
 	this->_LastSlotClicked = InSlot;
 	this->UI_Picker->SetVisibility(ESlateVisibility::SelfHitTestInvisible);
 }
 
 void	UFlaskBar::PickerOnClick(UAbilitySlot* InSlot) {
-	GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Purple, FString("UFlaskBar::PickerOnClick()"));
+	//GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Purple, FString("UFlaskBar::PickerOnClick()"));
 	
 	UAbility* Flask = nullptr;
 	UAbility* ab = InSlot->GetLinkedAbility();
