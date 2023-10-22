@@ -16,9 +16,7 @@
 #define D(x) GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, x)
 #define WHEREAMI(x) D_( GEngine->AddOnScreenDebugMessage((int32)(int64)x, 5.0f, FColor::Yellow, FString(__FUNCSIG__)) )
 
-/**
- * 
- */
+
 UCLASS(Blueprintable)
 class FIRESTHOUSANDSUNS_API UFuncLib : public UBlueprintFunctionLibrary
 {
@@ -34,7 +32,7 @@ public:
 	static void	PrintStats(const FPlayerStats& Stats);
 
 	// https://docs.oracle.com/cd/E19205-01/819-5267/6n7c46du6/index.html
-	// https ://nerivec.github.io/old-ue4-wiki/pages/templates-in-c.html
+	// https://nerivec.github.io/old-ue4-wiki/pages/templates-in-c.html
 	template <typename T>
 	static FORCEINLINE T* SafeSpawnActor(
 		UWorld*			TheWorld,
@@ -69,5 +67,3 @@ public:
 	}
 
 };
-
-//[CHECK] every overriding func has the override specifier

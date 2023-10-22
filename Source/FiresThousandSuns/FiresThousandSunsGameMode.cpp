@@ -12,6 +12,7 @@
 #include "FuncLib.h"
 #include "FiresThousandSunsPlayerState.h"
 #include "Buffs/BuffMoltenShell.h"
+#include "Kismet/GameplayStatics.h"
 
 AFiresThousandSunsGameMode::AFiresThousandSunsGameMode() {
 	// use our custom classes
@@ -62,6 +63,13 @@ void	AFiresThousandSunsGameMode::Init(
 	this->_SidePos1[CAST_NUM(Side::bottom)] = bottomLeft;
 	this->_SidePos2[CAST_NUM(Side::bottom)] = bottomRight;
 	
+	this->_SunExplosionSoundCue = LoadObject<USoundCue>(this->GetWorld(),
+		*FString("/Script/Engine.SoundCue'/Game/TopDown/Blueprints/Audio/fts-sun-explosion_Cue.fts-sun-explosion_Cue'"));
+	this->_MavenCancelSoundCue = LoadObject<USoundCue>(this->GetWorld(),
+		*FString("/Script/Engine.SoundCue'/Game/TopDown/Blueprints/Audio/fts-maven-cancel_Cue.fts-maven-cancel_Cue'"));
+	UFuncLib::CheckObject(this->_SunExplosionSoundCue, "AFiresThousandSunsGameMode::init() Failed to load sun explosion SoundCue");
+	UFuncLib::CheckObject(this->_MavenCancelSoundCue, "AFiresThousandSunsGameMode::init() Failed to load Maven cancel SoundCue");
+
 	this->_IsInit = true;
 }
 
@@ -159,10 +167,9 @@ void	AFiresThousandSunsGameMode::_CheckSunExplosion(FVector location, double dam
 	if (!this->Player->IsValidLowLevel()) { return; }
 	FVector diff = location - this->Player->GetActorLocation();
 	if (diff.Length() <= radius) {
-		//GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Yellow, FString::Printf(TEXT("[max: %lf] diff with player : %lf"), radius, diff.Length()));
+		UGameplayStatics::PlaySound2D(this, this->_SunExplosionSoundCue);
 		damage = this->_ApplyMitigation(damage);
 		damage = this->_ApplyGuardSkills(damage);
-		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, FString::Printf(TEXT("Taking damage : %lf"), damage));
 		this->Player->CustomPlayerState->HealthManager->RemoveHP(damage);
 	}
 }
@@ -198,7 +205,7 @@ double	AFiresThousandSunsGameMode::_ApplyMitigation(double damage) const {
 double	AFiresThousandSunsGameMode::_ApplyGuardSkills(double damage) const {
 	UBuffManager* manager = this->Player->CustomPlayerState->GetComponentByClass<UBuffManager>();
 	if (UFuncLib::CheckObject(manager, "AFiresThousandSunsGameMode::_CheckSunExplosion() failed to get Buff Manager")) {
-		EBuffType types[3] = { EBuffType::VaalMoltenShell, EBuffType::MoltenShell, EBuffType::Steelskin };
+		EBuffType types[3] = { EBuffType::Steelskin, EBuffType::MoltenShell, EBuffType::VaalMoltenShell };
 		for (int32 t = 0; t < 3; t++) {
 			ABuffGuard* GuardBuff = Cast<ABuffGuard>(manager->GetBuff(types[t])); // should be GetBuff<ABuffMoltenShell>()
 			if (GuardBuff) {

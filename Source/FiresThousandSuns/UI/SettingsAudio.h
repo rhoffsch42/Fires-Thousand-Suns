@@ -19,6 +19,9 @@ class FIRESTHOUSANDSUNS_API USettingsAudio : public UUserWidget
 	GENERATED_BODY()
 public:
 	UFUNCTION(BlueprintCallable)
+	void	SetDefaultVolumes();
+
+	UFUNCTION(BlueprintCallable)
 	void	LinkMasterVolumeSoundClass(USoundClass* Sound);
 	UFUNCTION(BlueprintCallable)
 	void	LinkEffectsVolumeSoundClass(USoundClass* Sound);
@@ -26,6 +29,8 @@ public:
 	void	LinkMusicVolumeSoundClass(USoundClass* Sound);
 	UFUNCTION(BlueprintCallable)
 	void	LinkDialoguesVolumeSoundClass(USoundClass* Sound);
+	UFUNCTION(BlueprintCallable)
+	void	LinkAmbientVolumeSoundClass(USoundClass* Sound);
 
 
 	UFUNCTION(BlueprintCallable)
@@ -36,6 +41,8 @@ public:
 	void	SetMusicVolume(float Value) const;
 	UFUNCTION(BlueprintCallable)
 	void	SetDialoguesVolume(float Value) const;
+	UFUNCTION(BlueprintCallable)
+	void	SetAmbientVolume(float Value) const;
 
 	UFUNCTION(BlueprintCallable)
 	void	UpdateMasterVolume(float Value) const;
@@ -45,6 +52,8 @@ public:
 	void	UpdateMusicVolume(float Value) const;
 	UFUNCTION(BlueprintCallable)
 	void	UpdateDialoguesVolume(float Value) const;
+	UFUNCTION(BlueprintCallable)
+	void	UpdateAmbientVolume(float Value) const;
 
 	UFUNCTION(BlueprintCallable)
 	float	GetMasterVolumeValue() const;
@@ -54,6 +63,8 @@ public:
 	float	GetMusicVolumeValue() const;
 	UFUNCTION(BlueprintCallable)
 	float	GetDialoguesVolumeValue() const;
+	UFUNCTION(BlueprintCallable)
+	float	GetAmbientVolumeValue() const;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	USoundMix* SoundMix = nullptr;
@@ -65,6 +76,8 @@ public:
 	USlider* MusicVolumeSlider;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
 	USlider* DialoguesVolumeSlider;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
+	USlider* AmbientVolumeSlider;
 protected:
 	virtual void NativeConstruct() override;
 	void	_LinkSliderToFunc(USlider* Slider, const FName& FuncName);
@@ -72,4 +85,5 @@ protected:
 	USoundClass* _EffectsSound = nullptr;
 	USoundClass* _MusicSound = nullptr;
 	USoundClass* _DialoguesSound = nullptr;
+	USoundClass* _AmbientSound = nullptr;
 };

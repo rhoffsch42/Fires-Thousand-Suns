@@ -5,6 +5,7 @@
 #include "Ability.h"
 #include "../Systems/HealthManager.h"
 #include "../Systems/HealthManager.h"
+#include "../Buffs/BuffMoltenShell.h"
 
 #include "AbilityMoltenShell.generated.h"
 
@@ -19,6 +20,8 @@ public:
 	double	HP = 1000;
 	double	Absorbtion = 1.0;
 	double	Duration = 5;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	TSubclassOf<ABuffGuard>	BuffGuardClass;
 private:
 };
 

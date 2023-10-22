@@ -16,10 +16,9 @@ bool	UCooldown::TryUse() {
 
 void	UCooldown::Use() {
 	this->_update();
-	if (this->_availableUses > 0) {
-		this->_availableUses = std::max(0, this->_availableUses - 1);// should go negative if forced ?
+	if (this->_availableUses == this->_maxUses)
 		this->_lastUse = this->_safeGetTimeSeconds();
-	}
+	this->_availableUses = std::max(0, this->_availableUses - 1);// should go negative if forced ?
 }
 
 void	UCooldown::Reset() {

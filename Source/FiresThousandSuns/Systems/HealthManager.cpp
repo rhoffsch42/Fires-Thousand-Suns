@@ -1,7 +1,9 @@
 
 #include "HealthManager.h"
+#include "../FuncLib.h"
 
 UHealthManager::UHealthManager() {
+	//WHEREAMI(-1);
 }
 
 UHealthManager::UHealthManager(double HP) : _maxhp(std::max(1.0, HP)), _hp(_maxhp) {
@@ -9,7 +11,7 @@ UHealthManager::UHealthManager(double HP) : _maxhp(std::max(1.0, HP)), _hp(_maxh
 
 void	UHealthManager::CheckEmptyHP() const {
 	if (this->_hp <= 0.0) {
-		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("[HealthManager] HP : %lf"), this->_hp));
+		D(FString::Printf(TEXT("[HealthManager] HP : %lf"), this->_hp));
 		this->HpEmpty.Broadcast();
 	}
 }

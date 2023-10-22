@@ -23,9 +23,11 @@ UAbilityFlameDash::UAbilityFlameDash() {
 	this->Cooldown->SetDuration(3.0);
 	this->Cooldown->Reset();
 	this->SetNewMaterial(this->GetWorld(), FString("/Game/LevelPrototyping/Materials/fire-dash_UIMat.fire-dash_UIMat"));
-	FString NiagaraEffectPath = "/Script/Niagara.NiagaraSystem'/Game/LevelPrototyping/Particles/NS_FlameDash.NS_FlameDash'";
-	this->NiagaraSystem = LoadObject<UNiagaraSystem>(this->GetWorld(), *NiagaraEffectPath);
-	UFuncLib::CheckObject(this->NiagaraSystem, FString("LoadObject<UNiagaraSystem>() failed : ").Append(NiagaraEffectPath));
+	this->NiagaraSystem = LoadObject<UNiagaraSystem>(this->GetWorld(), *FString("/Script/Niagara.NiagaraSystem'/Game/LevelPrototyping/Particles/NS_FlameDash.NS_FlameDash'"));
+	this->ActivationSuccessSoundCue = LoadObject<USoundCue>(this->GetWorld(), *FString("/Script/Engine.SoundCue'/Game/TopDown/Blueprints/Audio/fts-flame-dash_Cue.fts-flame-dash_Cue'"));
+	
+	UFuncLib::CheckObject(this->NiagaraSystem, FString("UAbilityFlameDash::LoadObject<UNiagaraSystem>() failed"));
+	UFuncLib::CheckObject(this->ActivationSuccessSoundCue, "UAbilityFlameDash::UAbilitySteelskin() failed to LoadObject() USoundCue");
 }
 
 void	UAbilityFlameDash::Activate(FEffectParameters Parameters) {

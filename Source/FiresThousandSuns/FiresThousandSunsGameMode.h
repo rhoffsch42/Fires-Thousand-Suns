@@ -72,6 +72,8 @@ protected:
 	FVector	_SidePos1[4];
 	FVector	_SidePos2[4];
 	FVector _LastSpawnSideLocation;
+	USoundCue* _SunExplosionSoundCue = nullptr;
+	USoundCue* _MavenCancelSoundCue = nullptr;
 private:
 	void	_GrabActorsWithTags() const;
 	UFUNCTION(BlueprintCallable)

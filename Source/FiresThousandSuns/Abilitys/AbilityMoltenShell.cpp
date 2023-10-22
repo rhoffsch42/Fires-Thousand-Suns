@@ -22,6 +22,7 @@ UGuardBase::UGuardBase() {
 	this->Cooldown->SetDuration(1.0 + this->Duration); // This Skill's Cooldown does not recover during its effect
 	this->Cooldown->Reset();
 	this->SetNewMaterial(this->GetWorld(), FString("/Script/Engine.Material'/Game/LevelPrototyping/Materials/Default_UIMat.Default_UIMat'"));
+	this->BuffGuardClass = ABuffGuard::StaticClass();
 }
 
 void	UGuardBase::Activate(FEffectParameters Parameters) {
@@ -40,19 +41,26 @@ UAbilityMoltenShell::UAbilityMoltenShell() {
 	this->Cooldown->SetDuration(4.0 + this->Duration); // This Skill's Cooldown does not recover during its effect
 	this->Cooldown->Reset();
 	this->SetNewMaterial(this->GetWorld(), FString("/Script/Engine.Material'/Game/LevelPrototyping/Materials/FireShield_01_50x50_UIMat.FireShield_01_50x50_UIMat'"));
+	this->BuffGuardClass = ABuffMoltenShell::StaticClass();
+	this->ActivationSuccessSoundCue = LoadObject<USoundCue>(this->GetWorld(), *FString("/Script/Engine.SoundCue'/Game/TopDown/Blueprints/Audio/fts-molten-shell_Cue.fts-molten-shell_Cue'"));
+	
+	UFuncLib::CheckObject(this->ActivationSuccessSoundCue, "UAbilitySteelskin::UAbilityVaalMoltenShell() failed to LoadObject() USoundCue");
 }
 
 void	UAbilityMoltenShell::Activate(FEffectParameters Parameters) {
 	for (auto target : Parameters.Targets) {
-		ABuffMoltenShell* buff = UFuncLib::SafeSpawnActor<ABuffMoltenShell>(Parameters.World, ABuffMoltenShell::StaticClass());
-		buff->BuffType = EBuffType::MoltenShell;
-		buff->Absorption = this->Absorbtion;
-		buff->HealthManager->SetMaxHP(this->HP);
-		buff->HealthManager->SetHP(this->HP);
-		buff->IconMaterial = this->IconMaterial;
-		buff->SetBaseDuration(this->Duration);
-		buff->AttachToActor(Parameters.ActorInstigator, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, false));
-		buff->ApplyTo(target);
+		ABuffMoltenShell* buff = UFuncLib::SafeSpawnActor<ABuffMoltenShell>(Parameters.World, this->BuffGuardClass);
+		if (UFuncLib::CheckObject(buff, "UAbilityMoltenShell::Activate() buff failed to create ")) {
+			buff->BuffType = EBuffType::MoltenShell;
+			buff->Absorption = this->Absorbtion;
+			buff->HealthManager->SetMaxHP(this->HP);
+			buff->HealthManager->SetHP(this->HP);
+			buff->IconMaterial = this->IconMaterial;
+			buff->SetBaseDuration(this->Duration);
+			buff->AttachToActor(Parameters.ActorInstigator, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, false));
+			//buff->AttachToComponent(Parameters.ActorInstigator->GetRootComponent(), FAttachmentTransformRules(EAttachmentRule::KeepRelative, false));
+			buff->ApplyTo(target);
+		}
 	}
 
 	this->UGuardBase::Activate(Parameters);
@@ -70,19 +78,25 @@ UAbilityVaalMoltenShell::UAbilityVaalMoltenShell() {
 	this->Cooldown->SetDuration(50.0 + this->Duration); // This Skill's Cooldown does not recover during its effect
 	this->Cooldown->Reset();
 	this->SetNewMaterial(this->GetWorld(), FString("/Script/Engine.Material'/Game/LevelPrototyping/Materials/FireShield_red_01_50x50_UIMat.FireShield_red_01_50x50_UIMat'"));
+	this->BuffGuardClass = ABuffVaalMoltenShell::StaticClass();
+	this->ActivationSuccessSoundCue = LoadObject<USoundCue>(this->GetWorld(), *FString("/Script/Engine.SoundCue'/Game/TopDown/Blueprints/Audio/fts-molten-shell_Cue.fts-molten-shell_Cue'"));
+	
+	UFuncLib::CheckObject(this->ActivationSuccessSoundCue, "UAbilitySteelskin::UAbilityVaalMoltenShell() failed to LoadObject() USoundCue");
 }
 
 void	UAbilityVaalMoltenShell::Activate(FEffectParameters Parameters) {
 	for (auto target : Parameters.Targets) {
-		ABuffMoltenShell* buff = UFuncLib::SafeSpawnActor<ABuffMoltenShell>(Parameters.World, ABuffMoltenShell::StaticClass());
-		buff->BuffType = EBuffType::VaalMoltenShell;
-		buff->Absorption = this->Absorbtion;
-		buff->HealthManager->SetMaxHP(this->HP);
-		buff->HealthManager->SetHP(this->HP);
-		buff->IconMaterial = this->IconMaterial;
-		buff->SetBaseDuration(this->Duration);
-		buff->AttachToActor(Parameters.ActorInstigator, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, false));
-		buff->ApplyTo(target);
+		ABuffVaalMoltenShell* buff = UFuncLib::SafeSpawnActor<ABuffVaalMoltenShell>(Parameters.World, this->BuffGuardClass);
+		if (UFuncLib::CheckObject(buff, "UAbilityVaalMoltenShell::Activate() buff failed to create ")) {
+			buff->BuffType = EBuffType::VaalMoltenShell;
+			buff->Absorption = this->Absorbtion;
+			buff->HealthManager->SetMaxHP(this->HP);
+			buff->HealthManager->SetHP(this->HP);
+			buff->IconMaterial = this->IconMaterial;
+			buff->SetBaseDuration(this->Duration);
+			buff->AttachToActor(Parameters.ActorInstigator, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, false));
+			buff->ApplyTo(target);
+		}
 	}
 
 	this->UGuardBase::Activate(Parameters);
@@ -100,19 +114,26 @@ UAbilitySteelskin::UAbilitySteelskin() {
 	this->Cooldown->SetDuration(4.05 + this->Duration); // This Skill's Cooldown does not recover during its effect
 	this->Cooldown->Reset();
 	this->SetNewMaterial(this->GetWorld(), FString("/Script/Engine.Material'/Game/LevelPrototyping/Materials/aura_100x100_UIMat.aura_100x100_UIMat'"));
+	this->BuffGuardClass = ABuffSteelskin::StaticClass();
+	this->ActivationSuccessSoundCue = LoadObject<USoundCue>(this->GetWorld(), *FString("/Script/Engine.SoundCue'/Game/TopDown/Blueprints/Audio/fts-steelskin_Cue.fts-steelskin_Cue'"));
+	
+	UFuncLib::CheckObject(this->ActivationSuccessSoundCue, "UAbilitySteelskin::UAbilitySteelskin() failed to LoadObject() USoundCue");
 }
 
 void	UAbilitySteelskin::Activate(FEffectParameters Parameters) {
 	for (auto target : Parameters.Targets) {
-		ABuffMoltenShell* buff = UFuncLib::SafeSpawnActor<ABuffMoltenShell>(Parameters.World, ABuffMoltenShell::StaticClass());
-		buff->BuffType = EBuffType::Steelskin;
-		buff->Absorption = this->Absorbtion;
-		buff->HealthManager->SetMaxHP(this->HP);
-		buff->HealthManager->SetHP(this->HP);
-		buff->IconMaterial = this->IconMaterial;
-		buff->SetBaseDuration(this->Duration);
-		buff->AttachToActor(Parameters.ActorInstigator, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, false));
-		buff->ApplyTo(target);
+		ABuffSteelskin* buff = UFuncLib::SafeSpawnActor<ABuffSteelskin>(Parameters.World, this->BuffGuardClass);
+		if (UFuncLib::CheckObject(buff, "UAbilitySteelskin::Activate() buff failed to create ")) {
+			buff->BuffType = EBuffType::Steelskin;
+			buff->Absorption = this->Absorbtion;
+			buff->HealthManager->SetMaxHP(this->HP);
+			buff->HealthManager->SetHP(this->HP);
+			buff->IconMaterial = this->IconMaterial;
+			buff->SetBaseDuration(this->Duration);
+			buff->AttachToActor(Parameters.ActorInstigator, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, false));
+			//D(FString("UAbilitySteelskin::Activate() buff attached"));
+			buff->ApplyTo(target);
+		}
 	}
 
 	this->UGuardBase::Activate(Parameters);

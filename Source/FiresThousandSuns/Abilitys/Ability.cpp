@@ -1,29 +1,32 @@
 #include "Ability.h"
 #include "../Funclib.h"
+#include "Kismet/GameplayStatics.h"
 
 UAbility::UAbility() {
 	FString name = FString::FormatAsNumber((int64)this);
 	this->Cooldown = CreateDefaultSubobject<UCooldown>(*name); 
 	if (UFuncLib::CheckObject(this->Cooldown, FString("UAbility() NewObject<UCooldown>() failed : "))) {
 		this->Cooldown->World = this->GetWorld();
-		//UFuncLib::CheckObject(this->Cooldown->World, FString("UAbility() GetWorld() failed "));
 	}
+	this->ActivationFailedSoundCue = LoadObject<USoundCue>(this->GetWorld(), *FString("/Script/Engine.SoundCue'/Game/TopDown/Blueprints/Audio/mixkit-old-camera-shutter-click-1137_Cue.mixkit-old-camera-shutter-click-1137_Cue'"));
+	
+	UFuncLib::CheckObject(this->ActivationFailedSoundCue, "UAbilityFlameDash::UAbilitySteelskin() failed to LoadObject() USoundCue");
 }
 
 void	UAbility::TryActivate(FEffectParameters Parameters) {
 	if (this->Cooldown->IsReady()) {
 		this->Activate(Parameters);
+	} else {
+		UGameplayStatics::PlaySound2D(this->Cooldown->World, this->ActivationFailedSoundCue);
 	}
-	//else { GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Orange, FString::Printf(TEXT("[Ability] failed to used, remaining : %lf sec"), this->Cooldown->Remaining())); }
 }
 
 void	UAbility::Activate(FEffectParameters Parameters) {
-	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Orange, FString::Printf(TEXT("[Ability] used ! CD:%d "), this->Cooldown->GetAvailableUses()));
 	this->Cooldown->Use();
+	UGameplayStatics::PlaySound2D(this->Cooldown->World, this->ActivationSuccessSoundCue);
 }
 
 void	UAbility::SetNewMaterial(UObject* Outer, const FString MatPath) {
 	this->IconMaterial = LoadObject<UMaterial>(this->GetWorld(), *MatPath);
 	UFuncLib::CheckObject(this->IconMaterial, FString("LoadObject<UMaterial>() failed : ").Append(MatPath));
-	//tmpImage->SetBrush(UWidgetBlueprintLibrary::MakeBrushFromTexture(tempTexture));
 }

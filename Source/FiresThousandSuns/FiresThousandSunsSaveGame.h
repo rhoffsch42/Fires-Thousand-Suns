@@ -38,6 +38,8 @@ public:
 	float	MusicVolume = 0.5f;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	float	DialoguesVolume = 0.75f;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	float	AmbientVolume = 1.0f;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	FPlayerStats	PlayerStats;

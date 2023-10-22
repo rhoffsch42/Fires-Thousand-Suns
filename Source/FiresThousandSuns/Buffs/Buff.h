@@ -61,7 +61,7 @@ protected:
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 	void	_UpdateDuration(double Duration);
 
-	AActor* _target = nullptr;
+	AActor* _Target = nullptr;
 	TObjectPtr<USceneComponent> _DefaultSceneRoot;
 	double	_baseDuration = BUFF_DEFAULT_DURATION;
 private:

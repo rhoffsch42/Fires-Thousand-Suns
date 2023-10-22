@@ -5,6 +5,7 @@
 #include "../FuncLib.h"
 
 ABuff::ABuff() {
+	//WHEREAMI(this);
 	PrimaryActorTick.bCanEverTick = false;
 
 	this->_DefaultSceneRoot = CreateDefaultSubobject<USceneComponent>(TEXT("Default"));
@@ -15,41 +16,33 @@ ABuff::ABuff() {
 void	ABuff::BeginPlay() {
 	Super::BeginPlay();
 }
+
 void	ABuff::EndPlay(const EEndPlayReason::Type EndPlayReason) {
 	Super::EndPlay(EndPlayReason);
 	this->Remove();
 	this->BuffExpired.Broadcast(this);
-	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString::Printf(TEXT("ABuff::EndPlay(): %d. Removed buff."), (int32)EndPlayReason));
 }
 
 void	ABuff::Tick(float DeltaSeconds) {
 	Super::Tick(DeltaSeconds);
-	WHEREAMI(this);
 }
 
 void	ABuff::ApplyTo(AActor* Target) {
-	this->_target = Target;
-	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT(">>> ABuff::ApplyTo(AActor* Target) _target : %d "), this->_target));
-	UBuffManager* bm = this->_target->GetComponentByClass<UBuffManager>();// not mandatory
+	this->_Target = Target;
+	UBuffManager* bm = this->_Target->GetComponentByClass<UBuffManager>();// not mandatory
 	if (bm) {
 		bm->AddBuff(this);
 	}
-	//else {
-	//	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString("ABuff::Remove() error: target has no BuffManager Component."));
-	//}
-	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT(">>> ABuff::ApplyTo(AActor* Target) setLifeSpan(_baseDuration) : %f "), this->_baseDuration));
 	this->SetLifeSpan(this->_baseDuration);
 }
 
 void	ABuff::Remove() {
-	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT(">>> ABuff::Remove() _target : %d "), this->_target));
-	UBuffManager* bm = this->_target->GetComponentByClass<UBuffManager>();// not mandatory
-	if (bm) {
-		bm->RemoveBuff(this);
+	if (this->_Target) {
+		UBuffManager* bm = this->_Target->GetComponentByClass<UBuffManager>();// not mandatory
+		if (bm) {
+			bm->RemoveBuff(this);
+		}
 	}
-	//else {
-	//	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString("ABuff::Remove() error: target has no BuffManager Component."));
-	//}
 }
 
 void	ABuff::SetBaseDuration(double NewDuration) {

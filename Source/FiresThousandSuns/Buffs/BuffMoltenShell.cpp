@@ -1,22 +1,32 @@
 
 #include "BuffMoltenShell.h"
+#include "../FuncLib.h"
+#include "Components/MeshComponent.h"
 
 ABuffGuard::ABuffGuard() {
 	this->BuffType = EBuffType::None;
-	this->HealthManager = NewObject<UHealthManager>();
-	this->HealthManager->SetMaxHP(100);
-	this->HealthManager->SetHP(100);
-
-	FScriptDelegate script;
-	script.BindUFunction(this, "OnGuardHpEmpty");
-	this->HealthManager->HpEmpty.Add(script);
 }
 
-ABuffGuard::ABuffGuard(double HP) {
-	this->BuffType = EBuffType::None;
-	this->HealthManager = NewObject<UHealthManager>();
-	this->HealthManager->SetMaxHP(HP);
-	this->HealthManager->SetHP(HP);
+void ABuffGuard::OnConstruction(const FTransform& Transform) {
+	Super::OnConstruction(Transform);
+	this->HealthManager = NewObject<UHealthManager>(this->GetWorld(), FName(FString::FromInt((int64)this))); //::FormatAsNumber((int32)(int64)this).); // check all NewObject outers
+
+	if (UFuncLib::CheckObject(this->HealthManager, "ABuffGuard() failed to create HealthManager")) {
+		//D(FString::FromInt((int64)this->HealthManager));
+		//D(FString::FromInt((int64)this->GetWorld()));
+		this->HealthManager->SetMaxHP(100);
+		this->HealthManager->SetHP(100);
+
+		FScriptDelegate script;
+		script.BindUFunction(this, "OnGuardHpEmpty");
+		this->HealthManager->HpEmpty.Add(script);
+	}
+}
+
+void	ABuffGuard::ApplyTo(AActor* Target) {
+	Super::ApplyTo(Target);
+	APlayerState* PlayerState = Cast<APlayerState>(Target);
+	this->_TargetPawn = PlayerState->GetPawn();
 }
 
 void	ABuffGuard::OnGuardHpEmpty() {
@@ -29,36 +39,37 @@ ABuffMoltenShell::ABuffMoltenShell() {
 	this->BuffType = EBuffType::MoltenShell;
 }
 
-ABuffMoltenShell::ABuffMoltenShell(double HP) {
-	this->BuffType = EBuffType::MoltenShell;
-	this->HealthManager->SetMaxHP(HP);
-	this->HealthManager->SetHP(HP);
-}
-
 //////////////////////////////////////////////////////////////////////
 
 ABuffVaalMoltenShell::ABuffVaalMoltenShell() {
+	//WHEREAMI(-1);
 	this->BuffType = EBuffType::VaalMoltenShell;
 	this->Absorption = 0.39;
-}
-
-ABuffVaalMoltenShell::ABuffVaalMoltenShell(double HP) {
-	this->BuffType = EBuffType::VaalMoltenShell;
-	this->Absorption = 0.39;
-	this->HealthManager->SetMaxHP(HP);
-	this->HealthManager->SetHP(HP);
 }
 
 //////////////////////////////////////////////////////////////////////
 
 ABuffSteelskin::ABuffSteelskin() {
+	//WHEREAMI(-1);
 	this->Absorption = 0.70;
 	this->BuffType = EBuffType::Steelskin;
 }
 
-ABuffSteelskin::ABuffSteelskin(double HP) {
-	this->BuffType = EBuffType::Steelskin;
-	this->Absorption = 0.70;
-	this->HealthManager->SetMaxHP(HP);
-	this->HealthManager->SetHP(HP);
+void	ABuffSteelskin::ApplyTo(AActor* Target) {
+	Super::ApplyTo(Target);
+	UMeshComponent* comp = this->_TargetPawn->GetComponentByClass<UMeshComponent>();
+	if (UFuncLib::CheckObject(comp, "ABuffSteelskin::ApplyTo() failed to get component UMeshComponent")) {
+		UMaterial* mat = LoadObject<UMaterial>(this->GetWorld(), *FString("/Script/Engine.Material'/Game/LevelPrototyping/Materials/M_Glow.M_Glow'"));
+		if (UFuncLib::CheckObject(mat, "ABuffSteelskin::ApplyTo() failed to LoadObject UMaterial M_Glow.M_Glow")) {
+			comp->SetOverlayMaterial(mat);
+		}
+	}
+}
+
+void	ABuffSteelskin::Remove() {
+	Super::Remove();
+	UMeshComponent* comp = this->_TargetPawn->GetComponentByClass<UMeshComponent>();
+	if (UFuncLib::CheckObject(comp, "ABuffSteelskin::ApplyTo() failed to get component UMeshComponent")) {
+		comp->SetOverlayMaterial(nullptr);
+	}
 }

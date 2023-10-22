@@ -2,6 +2,7 @@
 #include "LifeFlask.h"
 #include "../FiresThousandSunsPlayerState.h"
 #include "../FuncLib.h"
+#include "Kismet/GameplayStatics.h"
 
 ULifeFlask::ULifeFlask() {
 	this->AbilityType = EAbilityType::LifeFlask;
@@ -9,6 +10,10 @@ ULifeFlask::ULifeFlask() {
 	this->Cooldown->SetDuration(6.0);
 	this->Cooldown->Reset();
 	this->SetNewMaterial(this->GetWorld(), FString("/Script/Engine.Material'/Game/LevelPrototyping/Materials/flask-life-transparent_100x100_UIMat.flask-life-transparent_100x100_UIMat'"));
+	this->ActivationSuccessSoundCue = LoadObject<USoundCue>(this->GetWorld(),
+		*FString("/Script/Engine.SoundCue'/Game/TopDown/Blueprints/Audio/fts-flask_Cue.fts-flask_Cue'"));
+
+	UFuncLib::CheckObject(this->ActivationSuccessSoundCue, "ULifeFlask::ULifeFlask() failed to LoadObject() USoundCue");
 }
 
 void	ULifeFlask::Activate(FEffectParameters Parameters) {
@@ -30,6 +35,10 @@ URubyFlask::URubyFlask() {
 	this->Cooldown->SetDuration(10.0);
 	this->Cooldown->Reset();
 	this->SetNewMaterial(this->GetWorld(), FString("/Script/Engine.Material'/Game/LevelPrototyping/Materials/flask-fire-transparent_100x100_UIMat.flask-fire-transparent_100x100_UIMat'"));
+	this->ActivationSuccessSoundCue = LoadObject<USoundCue>(this->GetWorld(),
+		*FString("/Script/Engine.SoundCue'/Game/TopDown/Blueprints/Audio/fts-flask_Cue.fts-flask_Cue'"));
+
+	UFuncLib::CheckObject(this->ActivationSuccessSoundCue, "URubyFlask::URubyFlask() failed to LoadObject() USoundCue");
 }
 
 void	URubyFlask::Activate(FEffectParameters Parameters) {

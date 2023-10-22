@@ -7,6 +7,7 @@
 #include "Materials/Material.h"
 #include "../Systems/Cooldown.h"
 typedef int32* EffectClassPtr;
+#include "Sound/SoundCue.h"
 
 #include "Ability.generated.h"
 
@@ -55,7 +56,10 @@ public:
 	UCooldown*	Cooldown = nullptr;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	UMaterial*	IconMaterial = nullptr;
-	//SoundCue	SoundCue;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	USoundCue* ActivationSuccessSoundCue = nullptr;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	USoundCue*	ActivationFailedSoundCue = nullptr;
 
 	UPROPERTY(BlueprintReadWrite)
 	EAbilityType	AbilityType = EAbilityType::None;

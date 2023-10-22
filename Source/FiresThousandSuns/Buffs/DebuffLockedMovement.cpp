@@ -16,7 +16,7 @@ void	ADebuffLockedMovement::ApplyTo(AActor* Target) {
 }
 
 void	ADebuffLockedMovement::Remove() {
-	AController* ctrl = this->_target->GetInstigatorController();
+	AController* ctrl = this->_Target->GetInstigatorController();
 	ctrl->bBlockInput = false;
 
 	Super::Remove();

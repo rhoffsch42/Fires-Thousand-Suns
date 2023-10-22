@@ -48,13 +48,14 @@ bool    UFiresThousandSunsSaveGame::Save() {
 }
 
 FString	UFiresThousandSunsSaveGame::ToString() const {
-    return FString::Printf(TEXT("[name: %s, master:%f, effects:%f, music:%f, dialogues:%f]\n\
+    return FString::Printf(TEXT("[name: %s, master:%f, effects:%f, music:%f, dialogues:%f, ambient:%f]\n\
 [moveSpeed:%f, life:%d, lifeRegen:%d, fireRes:%f, suppChance:%f, suppEffect:%f, fortify:%f, lessDmg:%f]"),
         *this->SlotName,
         this->MasterVolume,
         this->EffectsVolume,
         this->MusicVolume,
         this->DialoguesVolume,
+        this->AmbientVolume,
 
         this->PlayerStats.MovementSpeed,
         (int32)this->PlayerStats.Life,
