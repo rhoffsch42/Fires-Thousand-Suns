@@ -1,5 +1,6 @@
 
 #include "FuncLib.h"
+#include "GenericPlatform/GenericPlatformMisc.h"
 
 constexpr float D_LEN = 5.0f;
 
@@ -20,6 +21,16 @@ void	UFuncLib::PrintStats(const FPlayerStats& Stats) {
 	D_(GEngine->AddOnScreenDebugMessage(-1, D_LEN, FColor::Cyan, FString::Printf(TEXT("Life Regeneration       : %lf"), Stats.LifeRegeneration)));
 	D_(GEngine->AddOnScreenDebugMessage(-1, D_LEN, FColor::Cyan, FString::Printf(TEXT("Life                    : %lf"), Stats.Life)));
 	D_(GEngine->AddOnScreenDebugMessage(-1, D_LEN, FColor::Cyan, FString::Printf(TEXT("Movement Speed          : %lf"), Stats.MovementSpeed)));
+}
+
+void	UFuncLib::CopyToClipboard(FString Input) {
+	FGenericPlatformMisc::ClipboardCopy(*Input);
+}
+
+FString	UFuncLib::GetFromClipboard() {
+	FString res;
+	FGenericPlatformMisc::ClipboardPaste(res);
+	return res;
 }
 
 void UFuncLib::SaveThumbnail(FString ObjectPath, FString OutputPath) {}

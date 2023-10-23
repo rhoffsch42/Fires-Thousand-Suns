@@ -30,6 +30,10 @@ public:
 	static bool	CheckObject(UObject* obj, FString ErrorMsg);
 	UFUNCTION(BlueprintCallable)
 	static void	PrintStats(const FPlayerStats& Stats);
+	UFUNCTION(BlueprintCallable)
+	static void	CopyToClipboard(FString Input);
+	UFUNCTION(BlueprintCallable)
+	static FString	GetFromClipboard();
 
 	// https://docs.oracle.com/cd/E19205-01/819-5267/6n7c46du6/index.html
 	// https://nerivec.github.io/old-ue4-wiki/pages/templates-in-c.html

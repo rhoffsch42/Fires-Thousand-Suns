@@ -14,7 +14,7 @@ UFiresThousandSunsSaveGame* UFiresThousandSunsSaveGame::LoadSave(FString InSlotN
         }
     }
 
-    if (SaveGameObject) { D(SaveGameObject->ToString()); }
+    //if (SaveGameObject) { D(SaveGameObject->ToString()); }
     return SaveGameObject;
 }
 
@@ -27,7 +27,7 @@ UFiresThousandSunsSaveGame* UFiresThousandSunsSaveGame::CreateSave(FString InSlo
         Fires_SG->Save();
     }
 
-    D(Fires_SG->ToString());
+    //D(Fires_SG->ToString());
     return Fires_SG;
 }
 
@@ -37,7 +37,7 @@ UFiresThousandSunsSaveGame::UFiresThousandSunsSaveGame() {
 }
 
 bool    UFiresThousandSunsSaveGame::Save() {
-    D(this->ToString());
+    //D(this->ToString());
     bool success = UGameplayStatics::SaveGameToSlot(this, this->SlotName, 0);
     if (success) {
         D(FString("Saved !"));
