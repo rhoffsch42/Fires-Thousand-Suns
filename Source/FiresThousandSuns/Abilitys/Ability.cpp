@@ -27,6 +27,6 @@ void	UAbility::Activate(FEffectParameters Parameters) {
 }
 
 void	UAbility::SetNewMaterial(UObject* Outer, const FString MatPath) {
-	this->IconMaterial = LoadObject<UMaterial>(this->GetWorld(), *MatPath);
+	this->IconMaterial = LoadObject<UMaterial>(Outer, *MatPath);
 	UFuncLib::CheckObject(this->IconMaterial, FString("LoadObject<UMaterial>() failed : ").Append(MatPath));
 }

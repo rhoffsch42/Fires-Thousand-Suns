@@ -13,6 +13,7 @@
 #include "FiresThousandSunsPlayerState.h"
 #include "Buffs/BuffMoltenShell.h"
 #include "Kismet/GameplayStatics.h"
+#include "GenericPlatform/GenericPlatformMath.h"
 
 AFiresThousandSunsGameMode::AFiresThousandSunsGameMode() {
 	// use our custom classes
@@ -48,7 +49,9 @@ void	AFiresThousandSunsGameMode::Init(
 	this->Player = PlayerCharacter;
 	this->SunActorClass = ActorClassForSuns;
 	this->Maven = MavenActor;
-	
+	this->_MinPos = MinPosition;
+	this->_MaxPos = MaxPosition;
+
 	FVector topleft = MinPosition;
 	FVector bottomRight = MaxPosition;
 	FVector bottomLeft = FVector(topleft.X, bottomRight.Y, topleft.Z);
@@ -67,8 +70,11 @@ void	AFiresThousandSunsGameMode::Init(
 		*FString("/Script/Engine.SoundCue'/Game/TopDown/Blueprints/Audio/fts-sun-explosion_Cue.fts-sun-explosion_Cue'"));
 	this->_MavenCancelSoundCue = LoadObject<USoundCue>(this->GetWorld(),
 		*FString("/Script/Engine.SoundCue'/Game/TopDown/Blueprints/Audio/fts-maven-cancel_Cue.fts-maven-cancel_Cue'"));
+	//this->_SoundConcurrency = LoadObject<USoundConcurrency>(this->GetWorld(),
+		//*FString("/Script/Engine.SoundConcurrency'/Game/TopDown/Blueprints/Audio/MavenCancel_SoundConcurrency.MavenCancel_SoundConcurrency'"));
 	UFuncLib::CheckObject(this->_SunExplosionSoundCue, "AFiresThousandSunsGameMode::init() Failed to load sun explosion SoundCue");
 	UFuncLib::CheckObject(this->_MavenCancelSoundCue, "AFiresThousandSunsGameMode::init() Failed to load Maven cancel SoundCue");
+	//UFuncLib::CheckObject(this->_SoundConcurrency, "AFiresThousandSunsGameMode::init() Failed to load sound concurrency");
 
 	this->_IsInit = true;
 }
@@ -97,7 +103,7 @@ void	AFiresThousandSunsGameMode::SpawnSunsRegular() {
 	this->_SpawnSunsCounter = r;
 }
 
-constexpr static int SideConvToInt(Side side)  { return CAST_NUM(side); }
+//constexpr static int SideConvToInt(Side side)  { return CAST_NUM(side); }
 
 #define OFFSET 5.0f
 void	AFiresThousandSunsGameMode::SpawnSunsSides(Side Start, Side End) {
@@ -129,7 +135,7 @@ void	AFiresThousandSunsGameMode::SpawnSunsSides(Side Start, Side End) {
 		FVector spawnPos = spawn1 + sideVecSpawn * (i / (double)(this->_SunsPerSide - 1));// -1 because we will have suns-1 "segments" with 1 sun on each sides, starting at 0
 		FVector destPos = dest1 + sideVecDest * (i / (double)(this->_SunsPerSide - 1));// -1 because we will have suns-1 "segments" with 1 sun on each sides, starting at 0
 		ASun* sun = Cast<ASun>(this->GetWorld()->SpawnActor<AActor>(this->SunActorClass, spawnPos, rotation, spawnInfo));
-		if (sun->IsValidLowLevel()) {
+		if (UFuncLib::CheckObject(sun, FString::Printf(TEXT("[Fires..GameMode] Failed to spawn ASun %d"), (int)i))) {
 			sun->SetDamage(this->bIsUber ? this->UberDamage : this->Normaldamage);
 			wave.Add(sun);
 			sun->SetDestination(destPos);
@@ -137,10 +143,49 @@ void	AFiresThousandSunsGameMode::SpawnSunsSides(Side Start, Side End) {
 			FScriptDelegate delegateScript;
 			delegateScript.BindUFunction(this, "_CheckSunExplosion");
 			sun->SunExploded.Add(delegateScript);
-		} else { GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("[Fires..GameMode] Failed to spawn ASun %d"), (int)i)); }
+		}
 	}
 	this->_SelectSunsForMavenCancellation(&wave);
 	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("Spawned %d Suns"), this->_SunsPerSide));
+}
+
+#include "DrawDebugHelpers.h"
+// imperfection at the corners of the arena
+FVector	AFiresThousandSunsGameMode::ClampLocationToArenaBounds(FVector HitLocation, FVector PlayerLocation) const {
+	float time = 0.05f;
+	HitLocation.Z = this->_MinPos.Z;// ~ player height
+	FVector BoundCorrection(50, 50, 0);// because _MinPos and _MaxPos are spawn pos for suns, not actual arena bounds
+	FVector clampLoc = ClampVector(HitLocation, this->_MinPos - BoundCorrection, this->_MaxPos + BoundCorrection);
+	FVector clampVec = clampLoc - HitLocation;
+	FVector finalIntersectionPoint = clampLoc;
+	DrawDebugLine(this->Player->GetWorld(), PlayerLocation, HitLocation, FColor::Yellow, false, time);
+	DrawDebugLine(this->Player->GetWorld(), HitLocation, clampLoc, FColor::Green, false, time);
+
+	if (clampVec.SquaredLength() > 0.5f) {
+		FVector clampLocDir = clampLoc - PlayerLocation;
+		FVector wallDir;
+		float c = 0;
+		if (FGenericPlatformMath::Abs(clampVec.X) > FGenericPlatformMath::Abs(clampVec.Y)) {
+			c = clampLocDir.X / clampVec.X;
+			clampVec.Y = 0;
+			wallDir = c * clampVec;
+			c = clampVec.X / (clampVec.X - wallDir.X);
+		}
+		else {
+			c = clampLocDir.Y / clampVec.Y;
+			clampVec.X = 0;
+			wallDir = c * clampVec;
+			c = clampVec.Y / (clampVec.Y - wallDir.Y);
+		}
+		D(FString::FromInt(c*100));
+		finalIntersectionPoint = FMath::Lerp(HitLocation, PlayerLocation, c);
+
+		DrawDebugLine(this->Player->GetWorld(), PlayerLocation, PlayerLocation + wallDir, FColor::Cyan, false, time);
+		//DrawDebugLine(this->Player->GetWorld(), clampLoc, playerToWall, FColor::Yellow, false, time);
+		DrawDebugLine(this->Player->GetWorld(), PlayerLocation, finalIntersectionPoint, FColor::Purple, false, time, 0, 3.0f);
+	}
+
+	return finalIntersectionPoint;
 }
 
 bool	AFiresThousandSunsGameMode::IsInitDone() const { return this->_IsInit; }
@@ -167,7 +212,7 @@ void	AFiresThousandSunsGameMode::_CheckSunExplosion(FVector location, double dam
 	if (!this->Player->IsValidLowLevel()) { return; }
 	FVector diff = location - this->Player->GetActorLocation();
 	if (diff.Length() <= radius) {
-		UGameplayStatics::PlaySound2D(this, this->_SunExplosionSoundCue);
+		//UGameplayStatics::PlaySound2D(this->Player, this->_SunExplosionSoundCue, 1.0f, 1.0f, 0.0f, this->_SoundConcurrency, this->Player); // crashing for unknow reason (probly bcause in GameMode)
 		damage = this->_ApplyMitigation(damage);
 		damage = this->_ApplyGuardSkills(damage);
 		this->Player->CustomPlayerState->HealthManager->RemoveHP(damage);

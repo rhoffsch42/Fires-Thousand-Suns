@@ -17,6 +17,7 @@ AFiresThousandSunsPlayerController::AFiresThousandSunsPlayerController() {
 	DefaultMouseCursor = EMouseCursor::Default;
 	CachedDestination = FVector::ZeroVector;
 	FollowTime = 0.f;
+
 }
 
 void AFiresThousandSunsPlayerController::BeginPlay() {

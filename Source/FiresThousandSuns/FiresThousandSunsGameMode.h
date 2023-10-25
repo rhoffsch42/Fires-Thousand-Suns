@@ -34,6 +34,8 @@ public:
 	void	Init(UPARAM(ref) TSubclassOf<AActor> ActorClassForSuns, FVector MinPosition, FVector MaxPosition,
 		UPARAM(ref) AFiresThousandSunsCharacter* PlayerCharacter, UPARAM(ref) AActor* MavenActor);
 	UFUNCTION(BlueprintCallable)
+	FVector	ClampLocationToArenaBounds(FVector HitLocation, FVector PlayerLocation) const;
+	UFUNCTION(BlueprintCallable)
 	bool	IsInitDone() const;
 	UFUNCTION(BlueprintCallable)
 	FVector	GetLastSpawnSideLocation() const;
@@ -69,11 +71,14 @@ protected:
 	virtual void BeginPlay();
 
 	bool	_IsInit = false;
+	FVector	_MinPos;
+	FVector	_MaxPos;
 	FVector	_SidePos1[4];
 	FVector	_SidePos2[4];
 	FVector _LastSpawnSideLocation;
 	USoundCue* _SunExplosionSoundCue = nullptr;
 	USoundCue* _MavenCancelSoundCue = nullptr;
+	//USoundConcurrency* _SoundConcurrency = nullptr;
 private:
 	void	_GrabActorsWithTags() const;
 	UFUNCTION(BlueprintCallable)
