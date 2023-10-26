@@ -12,6 +12,7 @@
 #include "FuncLib.h"
 #include "FiresThousandSunsPlayerState.h"
 #include "Buffs/BuffMoltenShell.h"
+#include "Buffs/BuffRubyFlask.h"
 #include "Kismet/GameplayStatics.h"
 #include "GenericPlatform/GenericPlatformMath.h"
 
@@ -70,11 +71,8 @@ void	AFiresThousandSunsGameMode::Init(
 		*FString("/Script/Engine.SoundCue'/Game/TopDown/Blueprints/Audio/fts-sun-explosion_Cue.fts-sun-explosion_Cue'"));
 	this->_MavenCancelSoundCue = LoadObject<USoundCue>(this->GetWorld(),
 		*FString("/Script/Engine.SoundCue'/Game/TopDown/Blueprints/Audio/fts-maven-cancel_Cue.fts-maven-cancel_Cue'"));
-	//this->_SoundConcurrency = LoadObject<USoundConcurrency>(this->GetWorld(),
-		//*FString("/Script/Engine.SoundConcurrency'/Game/TopDown/Blueprints/Audio/MavenCancel_SoundConcurrency.MavenCancel_SoundConcurrency'"));
 	UFuncLib::CheckObject(this->_SunExplosionSoundCue, "AFiresThousandSunsGameMode::init() Failed to load sun explosion SoundCue");
 	UFuncLib::CheckObject(this->_MavenCancelSoundCue, "AFiresThousandSunsGameMode::init() Failed to load Maven cancel SoundCue");
-	//UFuncLib::CheckObject(this->_SoundConcurrency, "AFiresThousandSunsGameMode::init() Failed to load sound concurrency");
 
 	this->_IsInit = true;
 }
@@ -209,50 +207,57 @@ void	AFiresThousandSunsGameMode::_SelectSunsForMavenCancellation(TArray<ASun*>* 
 }
 
 void	AFiresThousandSunsGameMode::_CheckSunExplosion(FVector location, double damage, double radius) const {
-	if (!this->Player->IsValidLowLevel()) { return; }
-	FVector diff = location - this->Player->GetActorLocation();
-	if (diff.Length() <= radius) {
-		//UGameplayStatics::PlaySound2D(this->Player, this->_SunExplosionSoundCue, 1.0f, 1.0f, 0.0f, this->_SoundConcurrency, this->Player); // crashing for unknow reason (probly bcause in GameMode)
-		damage = this->_ApplyMitigation(damage);
-		damage = this->_ApplyGuardSkills(damage);
-		this->Player->CustomPlayerState->HealthManager->RemoveHP(damage);
+	if (!this->Player->CustomPlayerState->bIsDead) {
+		FVector diff = location - this->Player->GetActorLocation();
+		if (diff.Length() <= radius) {
+			damage = this->_ApplyMitigation(damage);
+			//D_(GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Orange, FString::FormatAsNumber(damage)));
+			damage = this->_ApplyGuardSkills(damage);
+			this->Player->CustomPlayerState->HealthManager->RemoveHP(damage);
+		}
 	}
 }
 
 double	AFiresThousandSunsGameMode::_ApplyMitigation(double damage) const {
-	APlayerState* ps = this->Player->GetPlayerState();
-	UFuncLib::CheckObject(ps, "AFiresThousandSunsGameMode::_ApplyMitigation() GetPlayerState() returned nullptr");
-	AFiresThousandSunsPlayerState* State = Cast<AFiresThousandSunsPlayerState>(ps);
-	if (!UFuncLib::CheckObject(State, "AFiresThousandSunsGameMode::_ApplyMitigation() failed to Cast PlayerState")) {
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString::Printf(TEXT("ps: %p"), ps));
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString::Printf(TEXT("cu: %p"), this->Player->CustomPlayerState));
-		return 0;
+	APlayerState* PlayerState = this->Player->GetPlayerState();
+	UFuncLib::CheckObject(PlayerState, "AFiresThousandSunsGameMode::_ApplyMitigation() GetPlayerState() returned nullptr");
+	AFiresThousandSunsPlayerState* Fires_State = Cast<AFiresThousandSunsPlayerState>(PlayerState);
+	if (!UFuncLib::CheckObject(Fires_State, "AFiresThousandSunsGameMode::_ApplyMitigation() failed to Cast PlayerState")) {
+		UFuncLib::CheckObject(nullptr, FString::Printf(TEXT("PlayerState: %p"), PlayerState));
+		UFuncLib::CheckObject(nullptr, FString::Printf(TEXT("cu: %p"), this->Player->CustomPlayerState));
+		return damage; // unmitigated damage
 	}
+	ABuffRubyFlask* RubyFlaskBuff = Cast<ABuffRubyFlask>(Fires_State->BuffManager->GetBuff(EBuffType::RubyFlask));
 
 	FRandomStream RandomStream;
 	RandomStream.GenerateNewSeed();
 	double suppRand = FMath::RandRange(0.0f, 1.0f);
 	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, FString::FormatAsNumber(suppRand*100));
 
-	FPlayerStats	Stats = State->PlayerStats;
-	double RubyFlask = 0.00;
-	double SunFirePenetration = 0.00;
+	FPlayerStats	Stats = Fires_State->PlayerStats;
+	double rubyFlaskLess = RubyFlaskBuff ? RubyFlaskBuff->LessFireDamage : 0.0;
+	double sunFirePenetration = 0.00;
+	double finalFireRes = std::min(0.9,
+			Stats.FireResistance
+			+ (RubyFlaskBuff ? RubyFlaskBuff->BonusFireResistance : 0.0)
+			- sunFirePenetration
+		);
+
 	return damage
-		* (1.0 - Stats.FireResistance + SunFirePenetration)
-		* (1.0 - RubyFlask)
+		* (1.0 - finalFireRes)
+		* (1.0 - rubyFlaskLess)
 		* (1.0 - (suppRand <= Stats.SpellSuppressionChance ? 1.0 : 0.0) * Stats.SpellSuppressionEffect) 
 		* (1.0 - Stats.FortifyEffect)
 		* (1.0 - Stats.CustomLessDamage)
 		;
-
 }
 
 double	AFiresThousandSunsGameMode::_ApplyGuardSkills(double damage) const {
 	UBuffManager* manager = this->Player->CustomPlayerState->GetComponentByClass<UBuffManager>();
-	if (UFuncLib::CheckObject(manager, "AFiresThousandSunsGameMode::_CheckSunExplosion() failed to get Buff Manager")) {
+	if (UFuncLib::CheckObject(manager, "AFiresThousandSunsGameMode::_ApplyGuardSkills() failed to get Buff Manager")) {
 		EBuffType types[3] = { EBuffType::Steelskin, EBuffType::MoltenShell, EBuffType::VaalMoltenShell };
 		for (int32 t = 0; t < 3; t++) {
-			ABuffGuard* GuardBuff = Cast<ABuffGuard>(manager->GetBuff(types[t])); // should be GetBuff<ABuffMoltenShell>()
+			ABuffGuard* GuardBuff = Cast<ABuffGuard>(manager->GetBuff(types[t])); // could be GetBuff<ABuffGuard>()
 			if (GuardBuff) {
 				double healthBefore = GuardBuff->HealthManager->GetHP();
 				GuardBuff->HealthManager->RemoveHP(damage * GuardBuff->Absorption);

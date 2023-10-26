@@ -25,8 +25,8 @@ UGuardBase::UGuardBase() {
 	this->BuffGuardClass = ABuffGuard::StaticClass();
 }
 
-void	UGuardBase::Activate(FEffectParameters Parameters) {
-	this->UAbility::Activate(Parameters);
+bool	UGuardBase::Activate(FEffectParameters Parameters) {
+	return this->UAbility::Activate(Parameters);
 }
 
 ////////////////////////////////////
@@ -47,23 +47,21 @@ UAbilityMoltenShell::UAbilityMoltenShell() {
 	UFuncLib::CheckObject(this->ActivationSuccessSoundCue, "UAbilitySteelskin::UAbilityVaalMoltenShell() failed to LoadObject() USoundCue");
 }
 
-void	UAbilityMoltenShell::Activate(FEffectParameters Parameters) {
+bool	UAbilityMoltenShell::Activate(FEffectParameters Parameters) {
 	for (auto target : Parameters.Targets) {
 		ABuffMoltenShell* buff = UFuncLib::SafeSpawnActor<ABuffMoltenShell>(Parameters.World, this->BuffGuardClass);
 		if (UFuncLib::CheckObject(buff, "UAbilityMoltenShell::Activate() buff failed to create ")) {
-			buff->BuffType = EBuffType::MoltenShell;
 			buff->Absorption = this->Absorbtion;
 			buff->HealthManager->SetMaxHP(this->HP);
 			buff->HealthManager->SetHP(this->HP);
 			buff->IconMaterial = this->IconMaterial;
 			buff->SetBaseDuration(this->Duration);
 			buff->AttachToActor(Parameters.ActorInstigator, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, false));
-			//buff->AttachToComponent(Parameters.ActorInstigator->GetRootComponent(), FAttachmentTransformRules(EAttachmentRule::KeepRelative, false));
 			buff->ApplyTo(target);
 		}
 	}
 
-	this->UGuardBase::Activate(Parameters);
+	return this->UGuardBase::Activate(Parameters);
 }
 
 ////////////////////////////////////
@@ -84,11 +82,10 @@ UAbilityVaalMoltenShell::UAbilityVaalMoltenShell() {
 	UFuncLib::CheckObject(this->ActivationSuccessSoundCue, "UAbilitySteelskin::UAbilityVaalMoltenShell() failed to LoadObject() USoundCue");
 }
 
-void	UAbilityVaalMoltenShell::Activate(FEffectParameters Parameters) {
+bool	UAbilityVaalMoltenShell::Activate(FEffectParameters Parameters) {
 	for (auto target : Parameters.Targets) {
 		ABuffVaalMoltenShell* buff = UFuncLib::SafeSpawnActor<ABuffVaalMoltenShell>(Parameters.World, this->BuffGuardClass);
 		if (UFuncLib::CheckObject(buff, "UAbilityVaalMoltenShell::Activate() buff failed to create ")) {
-			buff->BuffType = EBuffType::VaalMoltenShell;
 			buff->Absorption = this->Absorbtion;
 			buff->HealthManager->SetMaxHP(this->HP);
 			buff->HealthManager->SetHP(this->HP);
@@ -99,7 +96,7 @@ void	UAbilityVaalMoltenShell::Activate(FEffectParameters Parameters) {
 		}
 	}
 
-	this->UGuardBase::Activate(Parameters);
+	return this->UGuardBase::Activate(Parameters);
 }
 
 ////////////////////////////////////
@@ -120,21 +117,19 @@ UAbilitySteelskin::UAbilitySteelskin() {
 	UFuncLib::CheckObject(this->ActivationSuccessSoundCue, "UAbilitySteelskin::UAbilitySteelskin() failed to LoadObject() USoundCue");
 }
 
-void	UAbilitySteelskin::Activate(FEffectParameters Parameters) {
+bool	UAbilitySteelskin::Activate(FEffectParameters Parameters) {
 	for (auto target : Parameters.Targets) {
 		ABuffSteelskin* buff = UFuncLib::SafeSpawnActor<ABuffSteelskin>(Parameters.World, this->BuffGuardClass);
 		if (UFuncLib::CheckObject(buff, "UAbilitySteelskin::Activate() buff failed to create ")) {
-			buff->BuffType = EBuffType::Steelskin;
 			buff->Absorption = this->Absorbtion;
 			buff->HealthManager->SetMaxHP(this->HP);
 			buff->HealthManager->SetHP(this->HP);
 			buff->IconMaterial = this->IconMaterial;
 			buff->SetBaseDuration(this->Duration);
 			buff->AttachToActor(Parameters.ActorInstigator, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, false));
-			//D(FString("UAbilitySteelskin::Activate() buff attached"));
 			buff->ApplyTo(target);
 		}
 	}
 
-	this->UGuardBase::Activate(Parameters);
+	return this->UGuardBase::Activate(Parameters);
 }

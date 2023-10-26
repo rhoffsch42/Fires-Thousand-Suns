@@ -65,6 +65,9 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	UBuffManager* BuffManager = nullptr;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	bool	bIsDead = false;
+
 protected:
 	void	_InitPreBeginPlay();
 	void	_InitPostBeginPlay();

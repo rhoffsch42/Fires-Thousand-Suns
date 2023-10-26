@@ -9,6 +9,7 @@
 #include "Engine/World.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "FuncLib.h"
 
 #include "GenericPlatform/GenericPlatformMath.h"
 
@@ -69,16 +70,17 @@ void AFiresThousandSunsPlayerController::OnSetDestinationTriggered() {
 	bool bHitSuccessful = false;
 	if (bIsTouch)
 	{
-		bHitSuccessful = GetHitResultUnderFinger(ETouchIndex::Touch1, ECollisionChannel::ECC_Visibility, true, Hit);
+		bHitSuccessful = GetHitResultUnderFinger(ETouchIndex::Touch1, this->ClickCollisionChannel, true, Hit);
 	}
 	else
 	{
-		bHitSuccessful = GetHitResultUnderCursor(ECollisionChannel::ECC_Visibility, true, Hit);
+		bHitSuccessful = GetHitResultUnderCursor(this->ClickCollisionChannel, true, Hit);
 	}
 
 	// If we hit a surface, cache the location
 	if (bHitSuccessful)
 	{
+		//DKEY(this, Hit.GetActor()->GetName());
 		CachedDestination = Hit.Location;
 	}
 	

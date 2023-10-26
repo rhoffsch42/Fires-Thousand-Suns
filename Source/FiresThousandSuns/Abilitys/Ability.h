@@ -49,7 +49,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void	TryActivate(FEffectParameters Parameters);
 	UFUNCTION(BlueprintCallable)
-	virtual void	Activate(FEffectParameters Parameters); // todo : could return bool, Ability can have reasons to fail (ex with TP to invalid location)
+	virtual bool	Activate(FEffectParameters Parameters); // todo : could return bool, Ability can have reasons to fail (ex with TP to invalid location)
 	void	SetNewMaterial(UObject* Outer, const FString MatPath);
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)

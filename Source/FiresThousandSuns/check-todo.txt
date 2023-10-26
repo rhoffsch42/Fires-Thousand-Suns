@@ -1,0 +1,117 @@
+./Abilitys/Ability.cpp:8:	if (UFuncLib::CheckObject(this->Cooldown, FString("UAbility() NewObject<UCooldown>() failed : "))) {
+./Abilitys/Ability.cpp:13:	UFuncLib::CheckObject(this->ActivationFailedSoundCue, "UAbilityFlameDash::UAbilitySteelskin() failed to LoadObject() USoundCue");
+./Abilitys/Ability.cpp:31:	UFuncLib::CheckObject(this->IconMaterial, FString("LoadObject<UMaterial>() failed : ").Append(MatPath));
+./Abilitys/Ability.h:52:	virtual void	Activate(FEffectParameters Parameters); // todo : could return bool, Ability can have reasons to fail (ex with TP to invalid location)
+./Abilitys/AbilityFlameDash.cpp:31:	UFuncLib::CheckObject(this->NiagaraSystem, FString("UAbilityFlameDash::LoadObject<UNiagaraSystem>() failed"));
+./Abilitys/AbilityFlameDash.cpp:32:	UFuncLib::CheckObject(this->ActivationSuccessSoundCue, "UAbilityFlameDash::UAbilitySteelskin() failed to LoadObject() USoundCue");
+./Abilitys/AbilityFlameDash.cpp:48:	// line trace to check blocking volumes
+./Abilitys/AbilityFlameDash.cpp:64:	if (UFuncLib::CheckObject(navSys, "UAbilityFlameDash::Activate() navSys not found")) {
+./Abilitys/AbilityFlameDash.cpp:81:	if (!UFuncLib::CheckObject(owner, "[AbilityFlameDash] failed to get owner")) { return; }
+./Abilitys/AbilityFlameDash.cpp:83:	if (UFuncLib::CheckObject(playerCtrl, "[AbilityFlameDash] PlayerController is null or cast failed.")) {
+./Abilitys/AbilityFlameDash.cpp:96:	if (UFuncLib::CheckObject(Ncomp, "[UAbilityFlameDash] Niagara SpawnSystemAtLocation() failed ")) {
+./Abilitys/AbilityMoltenShell.cpp:47:	UFuncLib::CheckObject(this->ActivationSuccessSoundCue, "UAbilitySteelskin::UAbilityVaalMoltenShell() failed to LoadObject() USoundCue");
+./Abilitys/AbilityMoltenShell.cpp:53:		if (UFuncLib::CheckObject(buff, "UAbilityMoltenShell::Activate() buff failed to create ")) {
+./Abilitys/AbilityMoltenShell.cpp:83:	UFuncLib::CheckObject(this->ActivationSuccessSoundCue, "UAbilitySteelskin::UAbilityVaalMoltenShell() failed to LoadObject() USoundCue");
+./Abilitys/AbilityMoltenShell.cpp:89:		if (UFuncLib::CheckObject(buff, "UAbilityVaalMoltenShell::Activate() buff failed to create ")) {
+./Abilitys/AbilityMoltenShell.cpp:119:	UFuncLib::CheckObject(this->ActivationSuccessSoundCue, "UAbilitySteelskin::UAbilitySteelskin() failed to LoadObject() USoundCue");
+./Abilitys/AbilityMoltenShell.cpp:125:		if (UFuncLib::CheckObject(buff, "UAbilitySteelskin::Activate() buff failed to create ")) {
+./Abilitys/LifeFlask.cpp:17:	UFuncLib::CheckObject(this->ActivationSuccessSoundCue, "ULifeFlask::ULifeFlask() failed to LoadObject() USoundCue");
+./Abilitys/LifeFlask.cpp:23:		if (UFuncLib::CheckObject(state, "ULifeFlask::Activate() target is not player state")) {
+./Abilitys/LifeFlask.cpp:42:	UFuncLib::CheckObject(this->ActivationSuccessSoundCue, "URubyFlask::URubyFlask() failed to LoadObject() USoundCue");
+./Abilitys/LifeFlask.cpp:48:		if (UFuncLib::CheckObject(buff, "URubyFlask::Activate() buff failed to create ")) {
+./Buffs/BuffMoltenShell.cpp:12:	this->HealthManager = NewObject<UHealthManager>(this->GetWorld(), FName(FString::FromInt((int64)this))); //::FormatAsNumber((int32)(int64)this).); // check all NewObject outers
+./Buffs/BuffMoltenShell.cpp:14:	if (UFuncLib::CheckObject(this->HealthManager, "ABuffGuard() failed to create HealthManager")) {
+./Buffs/BuffMoltenShell.cpp:61:	if (UFuncLib::CheckObject(comp, "ABuffSteelskin::ApplyTo() failed to get component UMeshComponent")) {
+./Buffs/BuffMoltenShell.cpp:63:		if (UFuncLib::CheckObject(mat, "ABuffSteelskin::ApplyTo() failed to LoadObject UMaterial M_Glow.M_Glow")) {
+./Buffs/BuffMoltenShell.cpp:72:	if (UFuncLib::CheckObject(comp, "ABuffSteelskin::ApplyTo() failed to get component UMeshComponent")) {
+./Buffs/BuffMoltenShell.h:16:	virtual void	OnConstruction(const FTransform& Transform) override;// todo check every UObject that need to constructs UObjects in ctor
+./Buffs/BuffRubyFlask.cpp:9:	UFuncLib::CheckObject(this->IconMaterial, FString("LoadObject<UMaterial>() failed : ").Append(MatPath));
+./FiresThousandSunsCharacter.cpp:64:	UFuncLib::CheckObject(this->CustomPlayerState, "AFiresThousandSunsCharacter::Debug_PlayerState() CustomPlayerState nullptr");
+./FiresThousandSunsCharacter.cpp:66:	UFuncLib::CheckObject(ps, "AFiresThousandSunsCharacter::Debug_PlayerState() GetPlayerState() returned nullptr");
+./FiresThousandSunsCharacter.cpp:68:	UFuncLib::CheckObject(casted, "AFiresThousandSunsCharacter::Debug_PlayerState() Cast<Fires..PlayerState>() failed");
+./FiresThousandSunsCharacter.cpp:79:	UFuncLib::CheckObject(ps, "AFiresThousandSunsCharacter::_InitPostBeginPlay() GetPlayerState() returned nullptr");
+./FiresThousandSunsCharacter.cpp:81:	if (UFuncLib::CheckObject(this->CustomPlayerState, "AFiresThousandSunsCharacter::_InitPostBeginPlay() Cast<Fires..PlayerState>() failed")) {
+./FiresThousandSunsCharacter.cpp:85:		if (UFuncLib::CheckObject(FiresGI, "AFiresThousandSunsCharacter  GetGameInstance() or Cast<>() failed")) {
+./FiresThousandSunsCharacter.cpp:109:	if (!UFuncLib::CheckObject(this->CustomPlayerState, "AFiresThousandSunsCharacter UpdateStats() CustomPlayerState is nullptr")) {
+./FiresThousandSunsCharacter.cpp:116:	if (UFuncLib::CheckObject(movcomp, "AFiresThousandSunsCharacter GetCharacterMovement() returned nullptr")) {
+./FiresThousandSunsGameMode.cpp:74:	UFuncLib::CheckObject(this->_SunExplosionSoundCue, "AFiresThousandSunsGameMode::init() Failed to load sun explosion SoundCue");
+./FiresThousandSunsGameMode.cpp:75:	UFuncLib::CheckObject(this->_MavenCancelSoundCue, "AFiresThousandSunsGameMode::init() Failed to load Maven cancel SoundCue");
+./FiresThousandSunsGameMode.cpp:136:		if (UFuncLib::CheckObject(sun, FString::Printf(TEXT("[Fires..GameMode] Failed to spawn ASun %d"), (int)i))) {
+./FiresThousandSunsGameMode.cpp:142:			delegateScript.BindUFunction(this, "_CheckSunExplosion");
+./FiresThousandSunsGameMode.cpp:209:void	AFiresThousandSunsGameMode::_CheckSunExplosion(FVector location, double damage, double radius) const {
+./FiresThousandSunsGameMode.cpp:222:	UFuncLib::CheckObject(PlayerState, "AFiresThousandSunsGameMode::_ApplyMitigation() GetPlayerState() returned nullptr");
+./FiresThousandSunsGameMode.cpp:224:	if (!UFuncLib::CheckObject(Fires_State, "AFiresThousandSunsGameMode::_ApplyMitigation() failed to Cast PlayerState")) {
+./FiresThousandSunsGameMode.cpp:225:		UFuncLib::CheckObject(nullptr, FString::Printf(TEXT("PlayerState: %p"), PlayerState));
+./FiresThousandSunsGameMode.cpp:226:		UFuncLib::CheckObject(nullptr, FString::Printf(TEXT("cu: %p"), this->Player->CustomPlayerState));
+./FiresThousandSunsGameMode.cpp:256:	if (UFuncLib::CheckObject(manager, "AFiresThousandSunsGameMode::_CheckSunExplosion() failed to get Buff Manager")) {
+./FiresThousandSunsGameMode.h:84:	void	_CheckSunExplosion(FVector location, double damage, double radius) const;
+./FiresThousandSunsPlayerController.cpp:40:	if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(InputComponent))
+./FiresThousandSunsPlayerState.cpp:64:	//if (UFuncLib::CheckObject(GI, "AFiresThousandSunsPlayerState::_Init() Couldn't get the GI")) {
+./FiresThousandSunsPlayerState.cpp:66:	//	if (UFuncLib::CheckObject(FiresGI, "AFiresThousandSunsPlayerState::_Init() Couldn't cast as FiresGI")) {
+./FiresThousandSunsPlayerState.cpp:85:	 // Check Cooldowns Worlds
+./FiresThousandSunsPlayerState.cpp:86:	UFuncLib::CheckObject(this->_FlameDash->Cooldown->World, "AFires..PlayerState:: Missing Cooldown->World on _FlameDash");
+./FiresThousandSunsPlayerState.cpp:87:	UFuncLib::CheckObject(this->_Steelskin->Cooldown->World, "AFires..PlayerState:: Missing Cooldown->World on _Steelskin");
+./FiresThousandSunsPlayerState.cpp:88:	UFuncLib::CheckObject(this->_MoltenShell->Cooldown->World, "AFires..PlayerState:: Missing Cooldown->World on _MoltenShell");
+./FiresThousandSunsPlayerState.cpp:89:	UFuncLib::CheckObject(this->_VaalMoltenShell->Cooldown->World, "AFires..PlayerState:: Missing Cooldown->World on _VaalMoltenShell");
+./FiresThousandSunsSaveGame.cpp:10:    if (UFuncLib::CheckObject(LoadedGame, "Failed to load SaveGame")) {
+./FiresThousandSunsSaveGame.cpp:12:        if (UFuncLib::CheckObject(SaveGameObject, "Cast failed UFiresThousandSunsSaveGame")) {
+./FiresThousandSunsSaveGame.cpp:23:    UFuncLib::CheckObject(SaveGame, "UFiresThousandSunsSaveGame::CreateSave() Failed to create USaveGame");
+./FiresThousandSunsSaveGame.cpp:25:    if (UFuncLib::CheckObject(Fires_SG, "UFiresThousandSunsSaveGame::CreateSave() Failed to cast as UFiresThousandSunsSaveGame")) {
+./FiresThousandSunsSaveGame.cpp:45:        UFuncLib::CheckObject(nullptr, "Failed to save game.");
+./FuncLib.cpp:7:bool	UFuncLib::CheckObject(UObject* obj, FString ErrorMsg) {
+./FuncLib.cpp:46:	FAssetRegistryModule& AssetRegistryModule = FModuleManager::Get().LoadModuleChecked<FAssetRegistryModule>(TEXT("AssetRegistry"));
+./FuncLib.cpp:52:	if (UFuncLib::CheckObject(MyObject, "fuck1"))
+./FuncLib.cpp:57:			IImageWrapperModule& ImageWrapperModule = FModuleManager::Get().LoadModuleChecked<IImageWrapperModule>(TEXT("ImageWrapper"));
+./FuncLib.cpp:70:				} else { UFuncLib::CheckObject(nullptr, "fuck4"); }
+./FuncLib.cpp:71:			} else { UFuncLib::CheckObject(nullptr, "fuck3"); }
+./FuncLib.cpp:72:		} else { UFuncLib::CheckObject(nullptr, "fuck2"); }
+./FuncLib.h:31:	static bool	CheckObject(UObject* obj, FString ErrorMsg);
+./Systems/HealthManager.cpp:12:void	UHealthManager::CheckEmptyHP() const {
+./Systems/HealthManager.cpp:26:	this->CheckEmptyHP();
+./Systems/HealthManager.cpp:31:	this->CheckEmptyHP();
+./Systems/HealthManager.h:23:	/* Do not call this with negative Value, there is no check for resulting negative HP. Use RemoveHP() for damaging */
+./Systems/HealthManager.h:26:	/* Do not call this with negative Value, there is no check for resulting HP > maxHP. Use AddHP() for healing */
+./Systems/HealthManager.h:34:	void	CheckEmptyHP() const;
+./UI/AbilityBar.cpp:16:		if (UFuncLib::CheckObject(slot, "UAbilityBar::LoadAbilityManager() Cast<UAbilitySlot> failed ")) {
+./UI/AbilityBar.cpp:27:		if (UFuncLib::CheckObject(slot, "UAbilityBar::LoadAbilityManager() Cast<UAbilitySlot> failed ")) {
+./UI/AbilityBar.cpp:66:		if (UFuncLib::CheckObject(Flask, "UFlaskBar::PickerOnClick() NewObject() failed ")) {
+./UI/AbilitySlot.cpp:31:		if (UFuncLib::CheckObject(this->_Ability->Cooldown, "UAbilitySlot::UpdateWidget() _Ability->Cooldown is nullptr")) {
+./UI/AbilitySlotManager.cpp:52:	if (!UFuncLib::CheckObject(this->_SlotClass.Get(), "UAbilitySlotManager::CreateNewSlot() _SlotClass is not set.")) {
+./UI/AbilitySlotManager.cpp:56:	UFuncLib::CheckObject(slot, "Slot creation failed");
+./UI/AbilitySlotManager.cpp:61:	if (!UFuncLib::CheckObject(NewSlot, "UAbilitySlotManagerHBox::AddSlot() arg is null")) {
+./UI/AbilitySlotManager.cpp:73:		if (UFuncLib::CheckObject(w, "UAbilitySlotManager::SetLayout() failed to get child")) {
+./UI/AbilitySlotManager.cpp:75:			if (UFuncLib::CheckObject(slot, "UAbilitySlotManager::SetLayout() failed to cast<UAbilitySlot> widget ")) {
+./UI/AbilitySlotManager.cpp:80:					if (UFuncLib::CheckObject(Linked, "UAbilitySlotManager::SetLayout() NewObject() failed ")) {
+./UI/AbilitySlotManager.cpp:99:		if (UFuncLib::CheckObject(w, "UAbilitySlotManager::GetLayoutAsAbilityType() failed to get child")) {
+./UI/AbilitySlotManager.cpp:101:			if (UFuncLib::CheckObject(slot, "UAbilitySlotManager::GetLayoutAsAbilityType() failed to cast<UAbilitySlot> widget ")) {
+./UI/AbilitySlotManager.cpp:136:	if (UFuncLib::CheckObject(slot, "UHorizontalBoxSlot::AddSlot() Containeris not a UHorizontalBox")) {
+./UI/AbilitySlotManager.cpp:173:	if (!UFuncLib::CheckObject(tempTexture, "LoadObject<UTexture2D> failed")) {
+./UI/AbilitySlotManager.cpp:177:	if (!UFuncLib::CheckObject(MyCanvas, "WidgetTree->ConstructWidget<UCanvasPanel> failed")) {
+./UI/AbilitySlotManager.cpp:183:	if (!UFuncLib::CheckObject(MyCanvas, "WidgetTree->ConstructWidget<UImage> failed")) {
+./UI/AbilitySlotManager.cpp:188:	UFuncLib::CheckObject(MyCanvas->AddChild(tmpImage), "MyCanvas->AddChild(tmpImage) no slot");
+./UI/AbilitySlotManager.cpp:190:	UFuncLib::CheckObject(tempSlot, "Cast<UCanvasPanelSlot>(tmpImage->Slot) failed");
+./UI/AbilitySlotManager.h:18:// todo : replace UAbility by any Widget ! rename this to ObjectManager / Inventory 
+./UI/BuffWidget.cpp:62:	UFuncLib::CheckObject(this->_BuffGuard, "UBuffWidgetGuard::LinkBuff() Cast<ABuffGuard>() failed");
+./UI/BuffWidget.h:68:// todo replace all tick() override by Nativetick() override
+./UI/MenuContent.cpp:39:	if (UFuncLib::CheckObject(Widget, FString("Menu Widget is null"))) {
+./UI/MenuContent.cpp:45://	if (UFuncLib::CheckObject(Widget, FString("WidgetSwitcher is null"))) {
+./UI/MenuContent.cpp:70:		if (UFuncLib::CheckObject(Button, FString("Button is null"))) {
+./UI/MenuContent.cpp:73:			if (UFuncLib::CheckObject(slot, FString("Button slot is null"))) {
+./UI/MenuContent.cpp:85:		if (UFuncLib::CheckObject(Content, FString("Content is null"))) {
+./UI/MenuContent.cpp:86:			UFuncLib::CheckObject(this->ContentWidgetSwitcher->AddChild(Content), "UMenuContent::AddContentOnly() failed to add content to switcher.");
+./UI/MenuContent.cpp:88:			if (UFuncLib::CheckObject(slot, FString("Content slot is null"))) {
+./UI/MenuContent.cpp:141:	UFuncLib::CheckObject(Cast<UObject>(canvasSlot), FString("Container's herited canvasSlot is null"));
+./UI/MenuContent.cpp:150:	UFuncLib::CheckObject(Cast<UObject>(HboxSlot), FString("MenuBox's herited HboxSlot is null"));
+./UI/MenuContent.cpp:159:	//UFuncLib::CheckObject(Cast<UObject>(VboxSlot), FString("VboxSlot is null"));
+./UI/MenuContent.cpp:171:	UFuncLib::CheckObject(this->WidgetTree, FString("WidgetTree is null"));
+./UI/MenuContent.cpp:172:	if (this->WidgetTree) { UFuncLib::CheckObject(this->WidgetTree->RootWidget, FString("WidgetTree->RootWidget is null")); }
+./UI/MenuContent.cpp:173:	UFuncLib::CheckObject(Container, FString("Container is null"));
+./UI/MenuContent.cpp:174:	UFuncLib::CheckObject(MenuBox, FString("MenuBox is null"));
+./UI/MenuContent.cpp:175:	UFuncLib::CheckObject(ContentSwitcher, FString("ContentSwitcher is null"));
+./UI/PlayWidget.cpp:31:	if (UFuncLib::CheckObject(AbSlot, "UPlayWidget ClearAbilitySlot() cast failed : UAbilitySlot")) {
+./UI/PlayWidget.cpp:55:	UFuncLib::CheckObject(FlameDash->Cooldown->World, "PlayWidget : Missing Cooldown->World on _FlameDash");
+./UI/PlayWidget.cpp:56:	UFuncLib::CheckObject(Steelskin->Cooldown->World, "PlayWidget : Missing Cooldown->World on _Steelskin");
+./UI/PlayWidget.cpp:57:	UFuncLib::CheckObject(MoltenShell->Cooldown->World, "PlayWidget : Missing Cooldown->World on _MoltenShell");
+./UI/PlayWidget.cpp:58:	UFuncLib::CheckObject(VaalMoltenShell->Cooldown->World, "PlayWidget : Missing Cooldown->World on _VaalMoltenShell");
+./UI/PlayWidget.cpp:82:	UFuncLib::CheckObject(LifeFlask->Cooldown->World, "PlayWidget : Missing Cooldown->World on LifeFlask");
+./UI/PlayWidget.cpp:83:	UFuncLib::CheckObject(RubyFlask->Cooldown->World, "PlayWidget : Missing Cooldown->World on RubyFlask");

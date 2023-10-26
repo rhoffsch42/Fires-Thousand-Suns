@@ -14,7 +14,8 @@
 
 #define D_(x) x
 #define D(x) GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, x)
-#define WHEREAMI(x) D_( GEngine->AddOnScreenDebugMessage((int32)(int64)x, 5.0f, FColor::Yellow, FString(__FUNCSIG__)) )
+#define DKEY(k, x) GEngine->AddOnScreenDebugMessage((int32)(int64)k, 5.0f, FColor::Yellow, x)
+#define WHEREAMI(k) DKEY(k, FString(__FUNCSIG__))
 
 
 UCLASS(Blueprintable)
@@ -71,3 +72,14 @@ public:
 	}
 
 };
+
+/*
+	- arena UI : some background ?
+	- Better Maven hairs...
+	- visual feedback on hitting save button in settings
+	- make key binding save, currently bugged ?
+	- patreon link ?
+	~ player death : sound
+	~ trade message (with fish312/CONCESOHO ref ?)
+	~ infos message (quin is the first to enter fetid pool, ben is the first to kill, carn is the first to hit lv100
+*/

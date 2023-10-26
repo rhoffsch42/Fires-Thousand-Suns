@@ -78,7 +78,6 @@ protected:
 	FVector _LastSpawnSideLocation;
 	USoundCue* _SunExplosionSoundCue = nullptr;
 	USoundCue* _MavenCancelSoundCue = nullptr;
-	//USoundConcurrency* _SoundConcurrency = nullptr;
 private:
 	void	_GrabActorsWithTags() const;
 	UFUNCTION(BlueprintCallable)
@@ -89,6 +88,3 @@ private:
 
 	uint8	_SpawnSunsCounter = 0;
 };
-
-// todo fire flask in mitigation
-// todo remove logo from life flask

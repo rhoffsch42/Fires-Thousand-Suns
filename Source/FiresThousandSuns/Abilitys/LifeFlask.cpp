@@ -1,6 +1,7 @@
 
 #include "LifeFlask.h"
 #include "../FiresThousandSunsPlayerState.h"
+#include "../Buffs/BuffRubyFlask.h"
 #include "../FuncLib.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -16,15 +17,15 @@ ULifeFlask::ULifeFlask() {
 	UFuncLib::CheckObject(this->ActivationSuccessSoundCue, "ULifeFlask::ULifeFlask() failed to LoadObject() USoundCue");
 }
 
-void	ULifeFlask::Activate(FEffectParameters Parameters) {
+bool	ULifeFlask::Activate(FEffectParameters Parameters) {
 	for (auto target : Parameters.Targets) {
 		AFiresThousandSunsPlayerState* state = Cast<AFiresThousandSunsPlayerState>(target);
 		if (UFuncLib::CheckObject(state, "ULifeFlask::Activate() target is not player state")) {
 			state->HealthManager->AddHP(this->HealValue);
-		}
+		} else { return false; }
 	}
 
-	this->UAbility::Activate(Parameters);
+	return this->UAbility::Activate(Parameters);
 }
 
 /////////////////////////////////
@@ -41,10 +42,16 @@ URubyFlask::URubyFlask() {
 	UFuncLib::CheckObject(this->ActivationSuccessSoundCue, "URubyFlask::URubyFlask() failed to LoadObject() USoundCue");
 }
 
-void	URubyFlask::Activate(FEffectParameters Parameters) {
+bool	URubyFlask::Activate(FEffectParameters Parameters) {
 	for (auto target : Parameters.Targets) {
-		// buff todo
+		ABuffRubyFlask* buff = UFuncLib::SafeSpawnActor<ABuffRubyFlask>(Parameters.World, ABuffRubyFlask::StaticClass());
+		if (UFuncLib::CheckObject(buff, "URubyFlask::Activate() buff failed to create ")) {
+			buff->SetBaseDuration(this->Cooldown->GetDuration());
+			//buff->AttachToActor(Parameters.ActorInstigator, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, false));
+			buff->AttachToActor(target, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, false));
+			buff->ApplyTo(target);
+		}
 	}
 
-	this->UAbility::Activate(Parameters);
+	return this->UAbility::Activate(Parameters);
 }

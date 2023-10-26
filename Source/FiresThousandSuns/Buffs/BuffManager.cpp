@@ -24,9 +24,14 @@ void	UBuffManager::AddBuff(ABuff* Buff) {
 		this->_buffs[enumVal] = Buff;
 	} else {
 		// merging with one ot these:
-		this->_buffs[enumVal] = Buff; // ie replace
+		this->_buffs[enumVal]->Destroy(); // ie replace
+		this->_buffs[enumVal] = Buff;
 		//this->_buffs[enumVal]->Absorb(Buff);
 		//this->_buffs[enumVal]->Stack(Buff); // list ?
+		/*
+			a buff can be stronger than another one but expire sooner
+			we need to stack them, and display only the strongest at the current time
+		*/
 	}
 	this->OnBuffAdded.Broadcast(Buff);
 }

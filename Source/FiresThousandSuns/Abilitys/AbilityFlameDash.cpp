@@ -37,7 +37,7 @@ UAbilityFlameDash::UAbilityFlameDash() {
 #include "CollisionQueryParams.h"
 
 // currently cannot flame dash through static even if maxrange allows it.
-void	UAbilityFlameDash::Activate(FEffectParameters Parameters) {
+bool	UAbilityFlameDash::Activate(FEffectParameters Parameters) {
 	FVector instigatorLocation = Parameters.ActorInstigator->GetActorLocation();
 	Parameters.CursorHitLocation.Z = instigatorLocation.Z;
 	FVector direction = Parameters.CursorHitLocation - instigatorLocation;
@@ -54,7 +54,7 @@ void	UAbilityFlameDash::Activate(FEffectParameters Parameters) {
 	if (Hit.bBlockingHit) {
 		double hitlen = (Hit.Location - instigatorLocation).Length();
 		if (hitlen < this->_minRange / 4.0)//too close from a wall
-			return;
+			return false;
 		len = std::min(len, hitlen);
 		targetDest = instigatorLocation + direction * len;
 	}
@@ -69,7 +69,7 @@ void	UAbilityFlameDash::Activate(FEffectParameters Parameters) {
 			targetDest = result.Location;
 		} else {
 			D(FString("UAbilityFlameDash::Activate() navSys no location found"));
-			return;
+			return false;
 		}
 	}
 
@@ -78,7 +78,7 @@ void	UAbilityFlameDash::Activate(FEffectParameters Parameters) {
 	FRotator rot = UKismetMathLibrary::FindLookAtRotation(instigatorLocation, Parameters.CursorHitLocation);
 	Parameters.ActorInstigator->SetActorRotation(rot);
 	UPlayer* owner = Parameters.ActorInstigator->GetNetOwningPlayer();
-	if (!UFuncLib::CheckObject(owner, "[AbilityFlameDash] failed to get owner")) { return; }
+	if (!UFuncLib::CheckObject(owner, "[AbilityFlameDash] failed to get owner")) { return false; }
 	AFiresThousandSunsPlayerController* playerCtrl = Cast<AFiresThousandSunsPlayerController>(owner->GetPlayerController(0));
 	if (UFuncLib::CheckObject(playerCtrl, "[AbilityFlameDash] PlayerController is null or cast failed.")) {
 		playerCtrl->StopMovement();
@@ -99,5 +99,5 @@ void	UAbilityFlameDash::Activate(FEffectParameters Parameters) {
 		Ncomp->SetVectorParameter("InSprite2AlignVector", direction.Cross(FVector(0, 0, -1)));
 	}
 
-	this->UAbility::Activate(Parameters);
+	return this->UAbility::Activate(Parameters);
 }

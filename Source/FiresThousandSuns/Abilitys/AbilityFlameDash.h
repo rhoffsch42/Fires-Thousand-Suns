@@ -19,7 +19,7 @@ class FIRESTHOUSANDSUNS_API UAbilityFlameDash : public UAbility
 	GENERATED_BODY()
 public:
 	UAbilityFlameDash();
-	virtual void	Activate(FEffectParameters Parameters) override;
+	virtual bool	Activate(FEffectParameters Parameters) override;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	UNiagaraSystem* NiagaraSystem = nullptr;

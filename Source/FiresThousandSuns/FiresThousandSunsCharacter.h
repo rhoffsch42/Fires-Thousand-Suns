@@ -39,7 +39,7 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	AFiresThousandSunsPlayerState* CustomPlayerState = nullptr;
 
-	UPROPERTY(BlueprintAssignable, EditDefaultsOnly, Category = "Default")
+	UPROPERTY(BlueprintAssignable, EditDefaultsOnly)
 	FPlayerDied	PlayerDied;
 
 protected:

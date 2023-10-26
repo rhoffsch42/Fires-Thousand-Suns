@@ -36,6 +36,7 @@ public:
 	bool	IsInRangeForMavenCancellation() const;
 	UFUNCTION(BlueprintCallable)
 	void	SetMavenCancellationDistanceThreshold(double Value); // range is [0:1]
+	UFUNCTION(BlueprintCallable)
 	double	GetMavenCancellationDistanceThreshold() const;
 	UFUNCTION(BlueprintCallable)
 	void	SetDamage(double Value);

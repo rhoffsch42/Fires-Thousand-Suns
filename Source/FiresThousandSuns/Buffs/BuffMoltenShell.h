@@ -13,7 +13,7 @@ class FIRESTHOUSANDSUNS_API ABuffGuard : public ABuff
 	GENERATED_BODY()
 public:
 	ABuffGuard();
-	virtual void OnConstruction(const FTransform& Transform) override;// todo check every UObject that need to constructs UObjects in ctor
+	virtual void	OnConstruction(const FTransform& Transform) override;// todo check every UObject that need to constructs UObjects in ctor
 	virtual void	ApplyTo(AActor* Target);
 
 	UFUNCTION(BlueprintCallable)

@@ -28,6 +28,22 @@ ABuff* UBuffWidget::GetLinkedBuff() const { return this->_LinkedBuff; }
 
 //////////////////////////////////////
 
+void	UBuffWidgetDuration::NativeConstruct() {
+	Super::NativeConstruct();
+}
+
+void	UBuffWidgetDuration::NativeTick(const FGeometry& MyGeometry, float InDeltaTime) {
+	Super::NativeTick(MyGeometry, InDeltaTime);
+	if (this->_LinkedBuff) {
+		FTimespan time(0, 0, this->_LinkedBuff->GetLifeSpan());
+		FString timestring(time.ToString(TEXT("%m:%s")));
+		timestring.RemoveAt(0, 2);
+		this->TextDuration->SetText(FText::FromString(timestring));
+	}
+}
+
+//////////////////////////////////////
+
 void	UBuffWidgetGuard::NativeConstruct() {
 	Super::NativeConstruct();
 	this->_FormatOptions.MaximumFractionalDigits = 0;
@@ -37,10 +53,6 @@ void	UBuffWidgetGuard::NativeTick(const FGeometry& MyGeometry, float InDeltaTime
 	Super::NativeTick(MyGeometry, InDeltaTime);
 	if (this->_BuffGuard) {
 		this->TextValue->SetText(FText::AsNumber(this->_BuffGuard->HealthManager->GetHP(), &this->_FormatOptions));
-		FTimespan time(0, 0, this->_BuffGuard->GetLifeSpan());
-		FString timestring(time.ToString(TEXT("%m:%s")));
-		timestring.RemoveAt(0, 2);
-		this->TextDuration->SetText(FText::FromString(timestring));
 	}
 }
 

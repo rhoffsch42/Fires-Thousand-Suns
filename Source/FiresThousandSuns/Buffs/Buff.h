@@ -5,7 +5,6 @@
 #include "GameFramework/Actor.h"
 #include "Buff.generated.h"
 
-
 #define BUFF_DEFAULT_DURATION	0.0
 
 UENUM(BlueprintType)
@@ -15,6 +14,7 @@ enum class EBuffType : uint8 {
 	VaalMoltenShell UMETA(DisplayName = "VaalMoltenShell"),
 	Steelskin UMETA(DisplayName = "SteelSkin"),
 	DebuffLockedMovement UMETA(DisplayName = "DebuffLockedMovement"),
+	RubyFlask UMETA(DisplayName = "RubyFlask")
 };
 
 UDELEGATE(BlueprintCallable)

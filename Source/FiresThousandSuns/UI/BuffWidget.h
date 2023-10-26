@@ -31,21 +31,31 @@ public:
 protected:
 	virtual void NativeConstruct() override;
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
-
-private:
+	
 	ABuff* _LinkedBuff;
+private:
 };
 
 UCLASS(Blueprintable)
-class FIRESTHOUSANDSUNS_API UBuffWidgetGuard: public UBuffWidget
+class FIRESTHOUSANDSUNS_API UBuffWidgetDuration : public UBuffWidget
+{
+	GENERATED_BODY()
+public:
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
+	UCommonTextBlock* TextDuration;
+protected:
+	virtual void NativeConstruct() override;
+	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
+};
+
+UCLASS(Blueprintable)
+class FIRESTHOUSANDSUNS_API UBuffWidgetGuard: public UBuffWidgetDuration
 {
 	GENERATED_BODY()
 public:
 	virtual void	LinkBuff(UPARAM(ref) ABuff* Buff);
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
 	UCommonTextBlock* TextValue;
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
-	UCommonTextBlock* TextDuration;
 protected:
 	virtual void NativeConstruct() override;
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
@@ -54,5 +64,3 @@ protected:
 	ABuffGuard* _BuffGuard;
 private:
 };
-
-// todo replace all tick() override by Mativetick() override

@@ -21,9 +21,10 @@ void	UAbility::TryActivate(FEffectParameters Parameters) {
 	}
 }
 
-void	UAbility::Activate(FEffectParameters Parameters) {
+bool	UAbility::Activate(FEffectParameters Parameters) {
 	this->Cooldown->Use();
 	UGameplayStatics::PlaySound2D(this->Cooldown->World, this->ActivationSuccessSoundCue);
+	return true;
 }
 
 void	UAbility::SetNewMaterial(UObject* Outer, const FString MatPath) {

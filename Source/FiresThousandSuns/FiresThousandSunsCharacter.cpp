@@ -14,6 +14,7 @@
 #include "Engine/World.h"
 #include "FuncLib.h"
 #include "FiresThousandSunsGameInstance.h"
+#include "FiresThousandSunsPlayerController.h"
 
 AFiresThousandSunsCharacter::AFiresThousandSunsCharacter() {
 	// Set size for player capsule, and change collision preset
@@ -127,6 +128,17 @@ void	AFiresThousandSunsCharacter::ApplyLifeRegen(float DeltaSeconds) {
 }
 
 void	AFiresThousandSunsCharacter::Die() {
+	//this->Destroy();
+	this->CustomPlayerState->bIsDead = true;
+	AFiresThousandSunsPlayerController* playerCtrl = Cast<AFiresThousandSunsPlayerController>(this->GetNetOwningPlayer()->GetPlayerController(0));
+	if (UFuncLib::CheckObject(playerCtrl, "[AFiresThousandSunsCharacter::Die()] PlayerController is null or cast failed.")) {
+		playerCtrl->StopMovement();
+		playerCtrl->bBlockInput = true;
+		//this->GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	}
+	this->CustomPlayerState->PlayerStats.LifeRegeneration = 0;
+	this->GetMesh()->SetCollisionProfileName(TEXT("Ragdoll"));
+	this->GetMesh()->SetSimulatePhysics(true);
+
 	this->PlayerDied.Broadcast();
-	this->Destroy();
 }

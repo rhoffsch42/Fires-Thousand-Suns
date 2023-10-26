@@ -15,7 +15,7 @@ void	UAbilitySlot::NativeConstruct() {
 }
 
 void	UAbilitySlot::NativeTick(const FGeometry & MyGeometry, float InDeltaTime) {
-	Super::Tick(MyGeometry, InDeltaTime);
+	Super::NativeTick(MyGeometry, InDeltaTime);
 
 	this->UpdateWidget();
 }
