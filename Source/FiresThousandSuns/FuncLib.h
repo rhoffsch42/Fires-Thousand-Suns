@@ -74,12 +74,17 @@ public:
 };
 
 /*
-	- arena UI : some background ?
-	- Better Maven hairs...
-	- visual feedback on hitting save button in settings
-	- make key binding save, currently bugged ?
-	- patreon link ?
-	~ player death : sound
-	~ trade message (with fish312/CONCESOHO ref ?)
-	~ infos message (quin is the first to enter fetid pool, ben is the first to kill, carn is the first to hit lv100
+	UAbilityBar :
+		- check with the BP W_Play, if we can make a func UAbilityBar::UpdatePickerPosition()
+			handy way is to bind it with OnVisibilityChanged(), but it might not be the ideal way in some other context
+
+	Fires :
+		- arena UI : some background ?
+		- Better Maven hairs...
+		- visual feedback on hitting save button in settings
+		- make key binding save, currently bugged ?
+		- patreon link ?
+		~ player death : sound
+		~ trade message (with fish312/CONCESOHO ref ?)
+		~ infos message (quin is the first to enter fetid pool, ben is the first to kill, carn is the first to hit lv100
 */
