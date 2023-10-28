@@ -40,6 +40,20 @@ void	UAbilitySlotManager::LinkAbilityManager(UAbilityManager* InManager) {
 	}
 }
 
+void	UAbilitySlotManager::LinkSlotsWithInputActions(UInputMappingContext* InputMappingContext, TArray<UInputAction*> InputActionArray) {
+	if (!UFuncLib::CheckObject(InputMappingContext, FString(__func__).Append(" InputMappingContext is null."))) {
+		return;
+	}
+
+	int32 count = std::min(this->ContainerPanel->GetChildrenCount(), InputActionArray.Num());
+	for (int32 i = 0; i < count; i++) {
+		UAbilitySlot* ChildSlot = Cast<UAbilitySlot>(this->ContainerPanel->GetChildAt(i));
+		if (UFuncLib::CheckObject(ChildSlot, FString(__func__).Append(" Cast failed UAbilitySlot."))) {
+			ChildSlot->LinkInputAction(InputMappingContext, InputActionArray[i]);
+		}
+	}
+}
+
 void	UAbilitySlotManager::ClearContainer() const {
 	if (!this->ContainerPanel) {
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString("IAbilitySlotManager::ClearContainer() ContainerPanel is nullptr"));

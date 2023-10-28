@@ -26,8 +26,7 @@ void AFiresThousandSunsPlayerController::BeginPlay() {
 	Super::BeginPlay();
 
 	//Add Input Mapping Context
-	if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer()))
-	{
+	if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer()))	{
 		Subsystem->AddMappingContext(DefaultMappingContext, 0);
 	}
 }
@@ -37,8 +36,7 @@ void AFiresThousandSunsPlayerController::SetupInputComponent() {
 	Super::SetupInputComponent();
 
 	// Set up action bindings
-	if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(InputComponent))
-	{
+	if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(InputComponent))	{
 		// Setup mouse input events
 		EnhancedInputComponent->BindAction(SetDestinationClickAction, ETriggerEvent::Started, this, &AFiresThousandSunsPlayerController::OnInputStarted);
 		EnhancedInputComponent->BindAction(SetDestinationClickAction, ETriggerEvent::Triggered, this, &AFiresThousandSunsPlayerController::OnSetDestinationTriggered);
@@ -54,11 +52,9 @@ void AFiresThousandSunsPlayerController::SetupInputComponent() {
 }
 
 void AFiresThousandSunsPlayerController::OnInputStarted() {
-	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("OnImputStarted() %f"), GetWorld()->TimeSeconds));
 	StopMovement();
 }
 
-// Triggered every frame when the input is held down
 void AFiresThousandSunsPlayerController::OnSetDestinationTriggered() {
 	if (this->bBlockInput) { return; }
 
@@ -68,26 +64,29 @@ void AFiresThousandSunsPlayerController::OnSetDestinationTriggered() {
 	// We look for the location in the world where the player has pressed the input
 	FHitResult Hit;
 	bool bHitSuccessful = false;
-	if (bIsTouch)
-	{
-		bHitSuccessful = GetHitResultUnderFinger(ETouchIndex::Touch1, this->ClickCollisionChannel, true, Hit);
-	}
-	else
-	{
-		bHitSuccessful = GetHitResultUnderCursor(this->ClickCollisionChannel, true, Hit);
+	if (bIsTouch) {
+		//bHitSuccessful = GetHitResultUnderFinger(ETouchIndex::Touch1, this->ClickCollisionChannel, true, Hit);
+		bHitSuccessful = GetHitResultUnderFingerByChannel(ETouchIndex::Touch1, UEngineTypes::ConvertToTraceType(this->ClickCollisionChannel), true, Hit);
+	} else {
+		//bHitSuccessful = GetHitResultUnderCursor(this->ClickCollisionChannel, true, Hit);
+		bHitSuccessful = GetHitResultUnderCursorByChannel(UEngineTypes::ConvertToTraceType(this->ClickCollisionChannel), true, Hit);
 	}
 
 	// If we hit a surface, cache the location
-	if (bHitSuccessful)
-	{
-		//DKEY(this, Hit.GetActor()->GetName());
+	if (bHitSuccessful)	{
+		/*
+		DKEY(this, Hit.GetActor()->GetName());
+		auto parent = Hit.Component.Get()->GetAttachParent();
+		if (parent) { DKEY(this + 1, parent->GetName()); }
+		DKEY(this+2, Hit.BoneName.ToString());
+		DKEY(this+3, FString::FromInt(this->ClickCollisionChannel.GetIntValue()));
+		*/
 		CachedDestination = Hit.Location;
 	}
 	
 	// Move towards mouse pointer or touch
 	APawn* ControlledPawn = GetPawn();
-	if (ControlledPawn != nullptr)
-	{
+	if (ControlledPawn != nullptr) {
 		FVector	distance = CachedDestination - ControlledPawn->GetActorLocation();
 		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("dist: %f"), distance.Length()));
 		if (distance.Length() >= 110) {
@@ -110,7 +109,6 @@ void AFiresThousandSunsPlayerController::OnSetDestinationReleased() {
 	FollowTime = 0.f;
 }
 
-// Triggered every frame when the input is held down
 void AFiresThousandSunsPlayerController::OnTouchTriggered() {
 	bIsTouch = true;
 	OnSetDestinationTriggered();

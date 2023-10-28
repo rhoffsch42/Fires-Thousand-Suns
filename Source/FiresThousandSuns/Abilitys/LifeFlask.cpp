@@ -10,6 +10,8 @@ ULifeFlask::ULifeFlask() {
 	this->Cooldown->SetMaxUses(1);
 	this->Cooldown->SetDuration(6.0);
 	this->Cooldown->Reset();
+	this->TooltipName = "Life Flask";
+
 	this->SetNewMaterial(this->GetWorld(), FString("/Script/Engine.Material'/Game/LevelPrototyping/Materials/flask-life-transparent_100x100_UIMat.flask-life-transparent_100x100_UIMat'"));
 	this->ActivationSuccessSoundCue = LoadObject<USoundCue>(this->GetWorld(),
 		*FString("/Script/Engine.SoundCue'/Game/TopDown/Blueprints/Audio/fts-flask_Cue.fts-flask_Cue'"));
@@ -35,6 +37,8 @@ URubyFlask::URubyFlask() {
 	this->Cooldown->SetMaxUses(1);
 	this->Cooldown->SetDuration(10.0);
 	this->Cooldown->Reset();
+	this->TooltipName = "Ruby Flask";
+
 	this->SetNewMaterial(this->GetWorld(), FString("/Script/Engine.Material'/Game/LevelPrototyping/Materials/flask-fire-transparent_100x100_UIMat.flask-fire-transparent_100x100_UIMat'"));
 	this->ActivationSuccessSoundCue = LoadObject<USoundCue>(this->GetWorld(),
 		*FString("/Script/Engine.SoundCue'/Game/TopDown/Blueprints/Audio/fts-flask_Cue.fts-flask_Cue'"));

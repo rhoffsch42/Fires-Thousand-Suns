@@ -47,10 +47,12 @@ public:
 	UFUNCTION(BlueprintCallable)
 	virtual void	LinkAbilityManager(UAbilityManager* InManager);
 	UFUNCTION(BlueprintCallable)
+	void			LinkSlotsWithInputActions(UInputMappingContext* InputMappingContext, TArray<UInputAction*> InputActionArray);
+
+	UFUNCTION(BlueprintCallable)
 	virtual void	ClearContainer() const;
 	UFUNCTION(BlueprintCallable)
 	virtual UAbilitySlot* CreateNewSlot();
-	//UFUNCTION(BlueprintCallable)
 	virtual UPanelSlot* AddSlot(UAbilitySlot* NewSlot) override;
 	UFUNCTION(BlueprintCallable)
 	void	SetLayout(const TArray<EAbilityType> Layout, bool UsingCopys = false);

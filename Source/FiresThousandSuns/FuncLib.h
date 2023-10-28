@@ -14,7 +14,7 @@
 
 #define D_(x) x
 #define D(x) GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, x)
-#define DKEY(k, x) GEngine->AddOnScreenDebugMessage((int32)(int64)k, 5.0f, FColor::Yellow, x)
+#define DKEY(k, x) GEngine->AddOnScreenDebugMessage((int32)(int64)(k), 5.0f, FColor::Yellow, x)
 #define WHEREAMI(k) DKEY(k, FString(__FUNCSIG__))
 
 
@@ -79,11 +79,17 @@ public:
 			handy way is to bind it with OnVisibilityChanged(), but it might not be the ideal way in some other context
 
 	Fires :
+		! arena config more difficult
+		! click on self stops our movement ?!
+		- krangled
+		- phases num
+		~ patreon link
+
+		- real Widget for ability tooltips
 		- arena UI : some background ?
 		- Better Maven hairs...
 		- visual feedback on hitting save button in settings
 		- make key binding save, currently bugged ?
-		- patreon link ?
 		~ player death : sound
 		~ trade message (with fish312/CONCESOHO ref ?)
 		~ infos message (quin is the first to enter fetid pool, ben is the first to kill, carn is the first to hit lv100

@@ -16,7 +16,7 @@ class FIRESTHOUSANDSUNS_API UAbilityBar : public UUserWidget
 public:
 	UFUNCTION(BlueprintCallable)
 	void	LoadAbilityManager(UAbilityManager* Manager);
-	void	BuildFlasksWithLayout(TArray<EAbilityType> Layout);
+	//void	BuildFlasksWithLayout(TArray<EAbilityType> Layout);
 
 	UFUNCTION(BlueprintCallable)
 	virtual void	ManagerOnClick(UAbilitySlot* InSlot);

@@ -21,6 +21,8 @@ UGuardBase::UGuardBase() {
 	this->Cooldown->SetMaxUses(1);
 	this->Cooldown->SetDuration(1.0 + this->Duration); // This Skill's Cooldown does not recover during its effect
 	this->Cooldown->Reset();
+	this->TooltipName = "GuardBase";
+
 	this->SetNewMaterial(this->GetWorld(), FString("/Script/Engine.Material'/Game/LevelPrototyping/Materials/Default_UIMat.Default_UIMat'"));
 	this->BuffGuardClass = ABuffGuard::StaticClass();
 }
@@ -40,6 +42,9 @@ UAbilityMoltenShell::UAbilityMoltenShell() {
 	this->Cooldown->SetMaxUses(1);
 	this->Cooldown->SetDuration(4.0 + this->Duration); // This Skill's Cooldown does not recover during its effect
 	this->Cooldown->Reset();
+	this->TooltipName = "Molten Shield";
+
+
 	this->SetNewMaterial(this->GetWorld(), FString("/Script/Engine.Material'/Game/LevelPrototyping/Materials/FireShield_01_50x50_UIMat.FireShield_01_50x50_UIMat'"));
 	this->BuffGuardClass = ABuffMoltenShell::StaticClass();
 	this->ActivationSuccessSoundCue = LoadObject<USoundCue>(this->GetWorld(), *FString("/Script/Engine.SoundCue'/Game/TopDown/Blueprints/Audio/fts-molten-shell_Cue.fts-molten-shell_Cue'"));
@@ -75,6 +80,8 @@ UAbilityVaalMoltenShell::UAbilityVaalMoltenShell() {
 	this->Cooldown->SetMaxUses(1);
 	this->Cooldown->SetDuration(50.0 + this->Duration); // This Skill's Cooldown does not recover during its effect
 	this->Cooldown->Reset();
+	this->TooltipName = "Big Molten Shield";
+
 	this->SetNewMaterial(this->GetWorld(), FString("/Script/Engine.Material'/Game/LevelPrototyping/Materials/FireShield_red_01_50x50_UIMat.FireShield_red_01_50x50_UIMat'"));
 	this->BuffGuardClass = ABuffVaalMoltenShell::StaticClass();
 	this->ActivationSuccessSoundCue = LoadObject<USoundCue>(this->GetWorld(), *FString("/Script/Engine.SoundCue'/Game/TopDown/Blueprints/Audio/fts-molten-shell_Cue.fts-molten-shell_Cue'"));
@@ -110,6 +117,8 @@ UAbilitySteelskin::UAbilitySteelskin() {
 	this->Cooldown->SetMaxUses(1);
 	this->Cooldown->SetDuration(4.05 + this->Duration); // This Skill's Cooldown does not recover during its effect
 	this->Cooldown->Reset();
+	this->TooltipName = "Iron Skin";
+
 	this->SetNewMaterial(this->GetWorld(), FString("/Script/Engine.Material'/Game/LevelPrototyping/Materials/aura_100x100_UIMat.aura_100x100_UIMat'"));
 	this->BuffGuardClass = ABuffSteelskin::StaticClass();
 	this->ActivationSuccessSoundCue = LoadObject<USoundCue>(this->GetWorld(), *FString("/Script/Engine.SoundCue'/Game/TopDown/Blueprints/Audio/fts-steelskin_Cue.fts-steelskin_Cue'"));

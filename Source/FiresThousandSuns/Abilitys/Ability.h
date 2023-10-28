@@ -63,5 +63,7 @@ public:
 
 	UPROPERTY(BlueprintReadWrite)
 	EAbilityType	AbilityType = EAbilityType::None;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	FString			TooltipName = "Ability";
 private:
 };

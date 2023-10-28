@@ -22,7 +22,7 @@ UAbilityFlameDash::UAbilityFlameDash() {
 	this->Cooldown->SetMaxUses(3);
 	this->Cooldown->SetDuration(3.0);
 	this->Cooldown->Reset();
-
+	this->TooltipName = "Fire Dash";
 
 	this->SetNewMaterial(this->GetWorld(), FString("/Game/LevelPrototyping/Materials/fire-dash_UIMat.fire-dash_UIMat"));
 	this->NiagaraSystem = LoadObject<UNiagaraSystem>(this->GetWorld(), *FString("/Script/Niagara.NiagaraSystem'/Game/LevelPrototyping/Particles/NS_FlameDash.NS_FlameDash'"));

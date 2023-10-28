@@ -8,6 +8,8 @@
 #include "Components/ProgressBar.h"
 #include "Components/Image.h"
 #include "CommonTextBlock.h"
+#include "InputMappingContext.h"
+#include "InputAction.h"
 #include "../Abilitys/Ability.h"
 
 #include "AbilitySlot.generated.h"
@@ -30,6 +32,11 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void	UnLinkAbility();
 	UFUNCTION(BlueprintCallable)
+	bool	LinkInputAction(UPARAM(ref) UInputMappingContext* InputMappingContext, UPARAM(ref) UInputAction* InputAction);
+	UFUNCTION(BlueprintCallable)
+	void	UnLinkInputAction();
+
+	UFUNCTION(BlueprintCallable)
 	UAbility* GetLinkedAbility() const;
 	UFUNCTION(BlueprintCallable)
 	void	OnSlotClicked();
@@ -41,6 +48,8 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
 	UCommonTextBlock*	UseCountText;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
+	UCommonTextBlock*	KeyBindText;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
 	UImage*			Image;
 
 	UPROPERTY(BlueprintAssignable, EditDefaultsOnly)
@@ -51,6 +60,8 @@ protected:
 
 	UPROPERTY(BlueprintReadWrite)
 	UAbility* _Ability = nullptr;
+	UPROPERTY(BlueprintReadWrite)
+	UInputAction* _InputAction = nullptr;
 
 	FNumberFormattingOptions _FormatOptions;
 };
