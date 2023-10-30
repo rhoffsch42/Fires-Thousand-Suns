@@ -237,7 +237,7 @@ double	AFiresThousandSunsGameMode::_ApplyMitigation(double damage) const {
 	FPlayerStats	Stats = Fires_State->PlayerStats;
 	double rubyFlaskLess = RubyFlaskBuff ? RubyFlaskBuff->LessFireDamage : 0.0;
 	double sunFirePenetration = 0.00;
-	double finalFireRes = std::min(0.9,
+	double finalFireRes = std::min(std::max(Stats.FireResistance, 0.75), // required in case of fireRes < 75
 			Stats.FireResistance
 			+ (RubyFlaskBuff ? RubyFlaskBuff->BonusFireResistance : 0.0)
 			- sunFirePenetration

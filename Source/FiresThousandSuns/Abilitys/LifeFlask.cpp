@@ -35,7 +35,7 @@ bool	ULifeFlask::Activate(FEffectParameters Parameters) {
 URubyFlask::URubyFlask() {
 	this->AbilityType = EAbilityType::RubyFlask;
 	this->Cooldown->SetMaxUses(1);
-	this->Cooldown->SetDuration(10.0);
+	this->Cooldown->SetDuration(15.0);
 	this->Cooldown->Reset();
 	this->TooltipName = "Ruby Flask";
 
@@ -50,7 +50,7 @@ bool	URubyFlask::Activate(FEffectParameters Parameters) {
 	for (auto target : Parameters.Targets) {
 		ABuffRubyFlask* buff = UFuncLib::SafeSpawnActor<ABuffRubyFlask>(Parameters.World, ABuffRubyFlask::StaticClass());
 		if (UFuncLib::CheckObject(buff, "URubyFlask::Activate() buff failed to create ")) {
-			buff->SetBaseDuration(this->Cooldown->GetDuration());
+			buff->SetBaseDuration(10.0);
 			//buff->AttachToActor(Parameters.ActorInstigator, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, false));
 			buff->AttachToActor(target, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, false));
 			buff->ApplyTo(target);

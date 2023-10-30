@@ -79,12 +79,10 @@ public:
 			handy way is to bind it with OnVisibilityChanged(), but it might not be the ideal way in some other context
 
 	Fires :
-		! arena config more difficult
-		! click on self stops our movement ?!
-		- krangled
-		- phases num
-		~ patreon link
-
+		- krangled phases
+		- debug msg on logfiles
+		- exe icon
+		
 		- real Widget for ability tooltips
 		- arena UI : some background ?
 		- Better Maven hairs...
@@ -93,4 +91,5 @@ public:
 		~ player death : sound
 		~ trade message (with fish312/CONCESOHO ref ?)
 		~ infos message (quin is the first to enter fetid pool, ben is the first to kill, carn is the first to hit lv100
+		~ patreon link
 */
