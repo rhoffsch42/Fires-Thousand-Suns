@@ -13,7 +13,7 @@ AFiresThousandSunsPlayerState::AFiresThousandSunsPlayerState() {
 
 void	AFiresThousandSunsPlayerState::_InitPreBeginPlay() {
 	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, "AFiresThousandSunsPlayerState::_Init()");
-	
+
 	// Buffs
 	this->BuffManager = CreateDefaultSubobject<UBuffManager>(TEXT("BuffManager"));
 	// must be built in the constructor, has to be done in a valid world (when the owner has a world)

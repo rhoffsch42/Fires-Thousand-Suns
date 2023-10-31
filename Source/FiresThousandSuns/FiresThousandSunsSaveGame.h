@@ -22,6 +22,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	bool	Save();
 	UFUNCTION(BlueprintCallable)
+	void	TryUnlockKrangledMode(int32 PhasesSurvived);
+
+	UFUNCTION(BlueprintCallable)
 	FString	ToString() const;
 	UFUNCTION(BlueprintCallable)
 	FString	GetSlotName() const;
@@ -47,6 +50,8 @@ public:
 	TArray<EAbilityType>	AbilityLayout;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	TArray<EAbilityType>	FlaskLayout;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	bool	bKrangledUnlocked = false;
 protected:
 private:
 };

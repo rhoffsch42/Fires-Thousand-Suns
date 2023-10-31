@@ -115,8 +115,8 @@ void	AFiresThousandSunsCharacter::UpdateStats(const FPlayerStats& NewStats) {
 	//UFuncLib::PrintStats(this->CustomPlayerState->PlayerStats);
 	UCharacterMovementComponent* movcomp = this->GetCharacterMovement();
 	if (UFuncLib::CheckObject(movcomp, "AFiresThousandSunsCharacter GetCharacterMovement() returned nullptr")) {
-		movcomp->MaxWalkSpeed = 375.0 * (1.0 + NewStats.MovementSpeed);
-		movcomp->MinAnalogWalkSpeed = 375.0 * (1.0 + NewStats.MovementSpeed);
+		movcomp->MaxWalkSpeed = 375.0 * (1.0 + (NewStats.MovementSpeed / 100.0));
+		movcomp->MinAnalogWalkSpeed = 375.0 * (1.0 + (NewStats.MovementSpeed / 100.0));
 	}
 	this->CustomPlayerState->HealthManager->SetMaxHP(this->CustomPlayerState->PlayerStats.Life);
 	this->CustomPlayerState->HealthManager->SetHP(this->CustomPlayerState->PlayerStats.Life);

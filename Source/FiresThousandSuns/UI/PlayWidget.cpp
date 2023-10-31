@@ -11,6 +11,11 @@ void	UPlayWidget::NativeConstruct() {
 	this->InitSliders();
 	this->InitAbilitys();
 	this->InitFlasks();
+
+	FScriptDelegate script;
+	script.BindUFunction(this, "ApplyDefaultArenaConfiguration");
+	this->ButtonDefaultConfig->Button->OnClicked.Add(script);
+	this->ButtonDefaultConfig->ButtonText->SetText(FText::FromString("Default values"));
 }
 
 void	UPlayWidget::InitSliders() {
@@ -23,7 +28,7 @@ void	UPlayWidget::InitSliders() {
 	this->NVSlider_Fortify->SetTitleAndRange(			NSLOCTEXT("Fires", "NVSlider_Fortify_Name",			"Fortify Stacks"),				0.0f, 20.0f);
 	this->NVSlider_LessDamage->SetTitleAndRange(		NSLOCTEXT("Fires", "NVSlider_LessDamage_Name",		"Less Damage taken"),			0.0f, 20.0f);
 
-	this->ApplyPlayerStats(FPlayerStats());
+	this->ApplyDefaultArenaConfiguration();
 }
 
 static inline void	ClearAbilitySlot(UWidget* Slot) {
@@ -88,26 +93,29 @@ void	UPlayWidget::InitFlasks() {
 }
 
 void	UPlayWidget::ApplyPlayerStats(const FPlayerStats Stats) {
-	this->NVSlider_MovSpeed->UpdateWithValue(Stats.MovementSpeed * 100);
+	this->NVSlider_MovSpeed->UpdateWithValue(Stats.MovementSpeed);
 	this->NVSlider_Life->UpdateWithValue(Stats.Life);
 	this->NVSlider_LifeRegen->UpdateWithValue(Stats.LifeRegeneration);
-	this->NVSlider_FireRes->UpdateWithValue(Stats.FireResistance * 100);
-	this->NVSlider_SpellSuppChance->UpdateWithValue(Stats.SpellSuppressionChance * 100);
-	this->NVSlider_SpellSuppEffect->UpdateWithValue(Stats.SpellSuppressionEffect * 100);
-	this->NVSlider_Fortify->UpdateWithValue(Stats.FortifyEffect * 100);
-	this->NVSlider_LessDamage->UpdateWithValue(Stats.CustomLessDamage * 100);
+	this->NVSlider_FireRes->UpdateWithValue(Stats.FireResistance);
+	this->NVSlider_SpellSuppChance->UpdateWithValue(Stats.SpellSuppressionChance);
+	this->NVSlider_SpellSuppEffect->UpdateWithValue(Stats.SpellSuppressionEffect);
+	this->NVSlider_Fortify->UpdateWithValue(Stats.FortifyEffect);
+	this->NVSlider_LessDamage->UpdateWithValue(Stats.CustomLessDamage);
 }
 
+void	UPlayWidget::ApplyDefaultArenaConfiguration() {
+	this->ApplyPlayerStats(FPlayerStats());
+}
 
 FPlayerStats	UPlayWidget::GeneratePlayerStats() const {
 	return FPlayerStats{
-		this->NVSlider_MovSpeed->GetValue() / 100.0,
-		this->NVSlider_Life->GetValue(),
-		this->NVSlider_LifeRegen->GetValue(),
-		this->NVSlider_FireRes->GetValue() / 100,
-		this->NVSlider_SpellSuppChance->GetValue() / 100,
-		this->NVSlider_SpellSuppEffect->GetValue() / 100,
-		this->NVSlider_Fortify->GetValue() / 100,
-		this->NVSlider_LessDamage->GetValue() / 100,
+		(int32)this->NVSlider_MovSpeed->GetValue(),
+		(int32)this->NVSlider_Life->GetValue(),
+		(int32)this->NVSlider_LifeRegen->GetValue(),
+		(int32)this->NVSlider_FireRes->GetValue(),
+		(int32)this->NVSlider_SpellSuppChance->GetValue(),
+		(int32)this->NVSlider_SpellSuppEffect->GetValue(),
+		(int32)this->NVSlider_Fortify->GetValue(),
+		(int32)this->NVSlider_LessDamage->GetValue(),
 	};
 }

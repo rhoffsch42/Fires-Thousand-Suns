@@ -18,22 +18,38 @@ struct FPlayerStats
 	GENERATED_BODY()
 	//public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	double	MovementSpeed = 0.4;
+	int32	MovementSpeed = 40;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	double	Life = 6000.0;
+	int32	Life = 6000;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	double	LifeRegeneration = 200.0;
+	int32	LifeRegeneration = 200;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	double	FireResistance = 0.75;
+	int32	FireResistance = 75;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	double	SpellSuppressionChance = 1;
+	int32	SpellSuppressionChance = 100;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	double	SpellSuppressionEffect = 0.5;
+	int32	SpellSuppressionEffect = 50;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	double	FortifyEffect = 0.0;
+	int32	FortifyEffect = 0;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	double	CustomLessDamage = 0.0;
+	int32	CustomLessDamage = 0;
 };
+
+inline bool	operator==(const FPlayerStats& lhs, const FPlayerStats& rhs) {
+	bool res = (
+		(lhs.MovementSpeed				== rhs.MovementSpeed)
+		&& (lhs.Life					== rhs.Life)
+		&& (lhs.LifeRegeneration		== rhs.LifeRegeneration)
+		&& (lhs.FireResistance			== rhs.FireResistance)
+		&& (lhs.SpellSuppressionChance	== rhs.SpellSuppressionChance)
+		&& (lhs.SpellSuppressionEffect	== rhs.SpellSuppressionEffect)
+		&& (lhs.FortifyEffect			== rhs.FortifyEffect)
+		&& (lhs.CustomLessDamage		== rhs.CustomLessDamage)
+		);
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString(__func__).Append(res ? " True" : " False"));
+	return res;
+}
+inline bool operator!=(const FPlayerStats& lhs, const FPlayerStats& rhs) { return !(lhs == rhs); }
 
 
 /**

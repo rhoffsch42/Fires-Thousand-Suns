@@ -19,16 +19,16 @@ class FIRESTHOUSANDSUNS_API UNamedValueSlider : public UUserWidget
 public:
 
 	UFUNCTION(BlueprintCallable)
-	void	SetTitleAndRange(FText Text, float MinValue, float MaxValue);
+	void	SetTitleAndRange(FText Text, double MinValue, double MaxValue);
 	UFUNCTION(BlueprintCallable)
-	void	UpdateWithValue(float Value) const;
+	void	UpdateWithValue(double Value);
 	UFUNCTION(BlueprintCallable)
-	void	UpdateWithPercent(float Percent) const;
+	void	UpdateWithPercent(float Percent);
 
 	UFUNCTION(BlueprintCallable)
-	double	SliderPercentToValue(float Percent) const;
+	double	SliderPercentToValue(double Percent) const;
 	UFUNCTION(BlueprintCallable)
-	double	ValueToSliderPercent(float Value) const;
+	double	ValueToSliderPercent(double Value) const;
 	UFUNCTION(BlueprintCallable)
 	double	GetValue() const;
 
@@ -42,6 +42,8 @@ public:
 	double	Min = 0.0;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	double	Max = 100.0;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	double	Value = 100.0;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	FText	Unit;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)

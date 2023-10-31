@@ -18,29 +18,29 @@ void	UNamedValueSlider::_LinkSliderToFunc(USlider* Slider, const FName& FuncName
 	Slider->OnValueChanged.Add(script);
 }
 
-void	UNamedValueSlider::SetTitleAndRange(FText Text, float MinValue, float MaxValue) {
+void	UNamedValueSlider::SetTitleAndRange(FText Text, double MinValue, double MaxValue) {
 	this->TextTitle->SetText(Text);
 	this->Min = MinValue;
 	this->Max = MaxValue;
 	this->UpdateWithPercent(this->SliderWidget->GetValue());
 }
 
-void	UNamedValueSlider::UpdateWithValue(float Value) const {
-	Value = std::max(std::min(this->Max, (double)Value), this->Min);
+void	UNamedValueSlider::UpdateWithValue(double InValue) {
+	this->Value = std::max(std::min(this->Max, InValue), this->Min);
 	this->TextValue->SetText(FText::Format(
 		NSLOCTEXT("Fires", "key1", "{0}{1}"),
-		FText::AsNumber(this->bDisplayAsInteger ? (int32)Value : Value),
+		FText::AsNumber(this->bDisplayAsInteger ? (int32)this->Value : this->Value),
 		this->bDisplayUnit ? this->Unit : FText()
 	));
-	this->SliderWidget->SetValue(this->ValueToSliderPercent(Value));
+	this->SliderWidget->SetValue(this->ValueToSliderPercent(InValue));
 }
 
-void	UNamedValueSlider::UpdateWithPercent(float Percent) const {
+void	UNamedValueSlider::UpdateWithPercent(float Percent) {
 	this->SliderWidget->SetValue(Percent);
-	double v = this->SliderPercentToValue(Percent);
+	this->Value = this->SliderPercentToValue(Percent);
 	this->TextValue->SetText(FText::Format(
 		NSLOCTEXT("Fires", "key2", "{0}{1}"),
-		FText::AsNumber(this->bDisplayAsInteger ? (int32)v : v),
+		FText::AsNumber(this->bDisplayAsInteger ? (int32)this->Value : this->Value),
 		this->bDisplayUnit ? this->Unit : FText()
 	));
 	//FText::Format(NSLOCTEXT("Solus", "Solus", "HP "), FText::AsNumber(4));
@@ -48,14 +48,12 @@ void	UNamedValueSlider::UpdateWithPercent(float Percent) const {
 	//FText::Format(NSLOCTEXT("Solus", "Solus", "Day {0}"), FText::AsNumber(5)); // takes just the day number and formats it into the Day string
 }
 
-double	UNamedValueSlider::SliderPercentToValue(float Percent) const {
+double	UNamedValueSlider::SliderPercentToValue(double Percent) const {
 	return this->Min + Percent * (this->Max - this->Min);//this can overflow if user put min and max too far from each other
 }
 
-double	UNamedValueSlider::ValueToSliderPercent(float Value) const {
-	return (Value - this->Min) / (this->Max - this->Min);
+double	UNamedValueSlider::ValueToSliderPercent(double InValue) const {
+	return (InValue - this->Min) / (this->Max - this->Min);
 }
 
-double	UNamedValueSlider::GetValue() const {
-	return this->SliderPercentToValue(this->SliderWidget->GetValue());
-}
+double	UNamedValueSlider::GetValue() const { return this->Value; }

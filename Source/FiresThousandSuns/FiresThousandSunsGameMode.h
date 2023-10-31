@@ -3,6 +3,7 @@
 
 #include "Actors/Sun.h"
 #include "FiresThousandSunsCharacter.h"
+#include "FiresThousandSunsGameInstance.h"
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
@@ -38,10 +39,16 @@ public:
 	UFUNCTION(BlueprintCallable)
 	bool	IsInitDone() const;
 	UFUNCTION(BlueprintCallable)
+	bool	TrySpawnWave();
+	UFUNCTION(BlueprintCallable)
 	FVector	GetLastSpawnSideLocation() const;
+	UFUNCTION(BlueprintCallable)
+	int32	GetWavesCounter() const;//for the current phase
+	UFUNCTION(BlueprintCallable)
+	int32	GetPhasesSurvived() const;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
-	double MovementSpeedBonus = 0.38;
+	double MovementSpeedBonus = 0.38;//TODO: check if it's still in use, it shouldn't
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
 	bool bIsUber = true;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
@@ -53,11 +60,13 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
 	double	Normaldamage = 16557.0;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
-	int Waves = 17;
+	int WavesPerPhase = 17;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
 	int MavenCancelledSuns = 7;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
-	uint8	_SunsPerSide = 20;
+	int32	_SunsPerSide = 20;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
+	int32	WaitBetweenPhases = 7;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
 	TSubclassOf<ASun>  SunActorClass;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
@@ -76,6 +85,12 @@ protected:
 	FVector	_SidePos1[4];
 	FVector	_SidePos2[4];
 	FVector _LastSpawnSideLocation;
+	int32	_LastSpawnSideCounter = 0;
+	int32	_WaveCounter = 0;
+	int32	_PhasesSurvived = 0;
+	int32	_WaitCounter = 0;
+
+	UFiresThousandSunsGameInstance* Fires_GI = nullptr;
 	USoundCue* _SunExplosionSoundCue = nullptr;
 	USoundCue* _MavenCancelSoundCue = nullptr;
 private:
@@ -85,6 +100,6 @@ private:
 	double	_ApplyMitigation(double damage) const;
 	double	_ApplyGuardSkills(double damage) const;
 	void	_SelectSunsForMavenCancellation(TArray<ASun*>* wave) const;
+	TArray<int32> _GenerateDestinationIndexArray() const;
 
-	uint8	_SpawnSunsCounter = 0;
 };

@@ -36,17 +36,29 @@ public:
 	UFUNCTION(BlueprintCallable)
 	static FString	GetFromClipboard();
 
+	template<typename T>
+	static void	ShuffleArray(TArray<T>* arr) {
+		FRandomStream RandomStream;
+		RandomStream.GenerateNewSeed();
+		int32 len = arr->Num();
+
+		for (int32 i = 0; i < len; ++i) {
+			int32 SwapIdx = RandomStream.RandRange(i, len - 1);
+			arr->Swap(i, SwapIdx);
+		}
+	}
+
 	// https://docs.oracle.com/cd/E19205-01/819-5267/6n7c46du6/index.html
 	// https://nerivec.github.io/old-ue4-wiki/pages/templates-in-c.html
 	template <typename T>
 	static FORCEINLINE T* SafeSpawnActor(
-		UWorld*			TheWorld,
-		UClass*			ActorClass,
-		const FVector&	Loc = FVector(),
-		const FRotator&	Rot = FRotator(),
+		UWorld* TheWorld,
+		UClass* ActorClass,
+		const FVector& Loc = FVector(),
+		const FRotator& Rot = FRotator(),
 		//const bool		bNoCollisionFail = true,
-		AActor*			Owner = NULL,
-		APawn*			Instigator = NULL
+		AActor* Owner = NULL,
+		APawn* Instigator = NULL
 	) {
 		if (!TheWorld) {
 			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString("UFuncLib::SpawnBP() error : TheWorld is null"));
@@ -70,7 +82,6 @@ public:
 
 		return actor;
 	}
-
 };
 
 /*
@@ -79,9 +90,11 @@ public:
 			handy way is to bind it with OnVisibilityChanged(), but it might not be the ideal way in some other context
 
 	Fires :
-		- krangled phases
 		- debug msg on logfiles
 		- exe icon
+		- refacto BP / c++
+		- refacto GI GM SG interactions
+		- refacto inputs: migrate in PlayerController
 		
 		- real Widget for ability tooltips
 		- arena UI : some background ?

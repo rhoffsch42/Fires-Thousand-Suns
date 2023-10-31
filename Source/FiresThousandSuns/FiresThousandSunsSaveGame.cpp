@@ -11,6 +11,9 @@ UFiresThousandSunsSaveGame* UFiresThousandSunsSaveGame::LoadSave(FString InSlotN
         SaveGameObject = Cast<UFiresThousandSunsSaveGame>(LoadedGame);
         if (UFuncLib::CheckObject(SaveGameObject, "Cast failed UFiresThousandSunsSaveGame")) {
             D_(GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, TEXT("Saved game found. Loaded.")));
+            if (SaveGameObject->bKrangledUnlocked) {
+                D(FString("bKrangledUnlocked true"));
+            }
         }
     }
 
@@ -45,6 +48,14 @@ bool    UFiresThousandSunsSaveGame::Save() {
         UFuncLib::CheckObject(nullptr, "Failed to save game.");
     }
     return success;
+}
+
+void	UFiresThousandSunsSaveGame::TryUnlockKrangledMode(int32 PhasesSurvived) {
+    if (!this->bKrangledUnlocked && PhasesSurvived >= 5 && this->PlayerStats == FPlayerStats()) {
+        this->bKrangledUnlocked = true;
+        this->Save();
+        D(FString("bKrangledUnlocked true"));
+    }
 }
 
 FString	UFiresThousandSunsSaveGame::ToString() const {

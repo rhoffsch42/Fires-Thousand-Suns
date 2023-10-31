@@ -9,9 +9,7 @@
 
 #include "FiresThousandSunsGameInstance.generated.h"
 
-/**
- * 
- */
+
 UCLASS()
 class FIRESTHOUSANDSUNS_API UFiresThousandSunsGameInstance : public UGameInstance
 {
@@ -33,4 +31,6 @@ public:
 	TArray<EAbilityType>	AbilityLayout;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	TArray<EAbilityType>	FlaskLayout;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	bool	bKrangledWaves = false;
 };
