@@ -91,7 +91,6 @@ public:
 
 	Fires :
 		- debug msg on logfiles
-		- exe icon
 		- refacto BP / c++
 		- refacto GI GM SG interactions
 		- refacto inputs: migrate in PlayerController
