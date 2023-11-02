@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	
+	<Fragment>
+		
+		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+			<ComponentRef Id="Shortcut" />
+		</ComponentGroup>
+
+		<DirectoryRef Id="INSTALLFOLDER" FileSource="D:\DATA\dev\Unreal-out\FiresOfAThousandSuns\FiresThousandSuns_release-for-installer\">
+			<Component Id="Shortcut" Guid="{648C8861-98F5-434B-B3DF-E9E996A5E9C3}">
+
+				<!-- Shortcut In Start Menu -->
+				<Shortcut Id="ShortcutExe"
+						  Name="!(loc.ProductName_$(var.Platform))"
+						  Target="[INSTALLFOLDER]FiresThousandSuns.exe"
+						  Directory="InstallProgramMenuFolder"
+						  WorkingDirectory="INSTALLFOLDER"
+						  Icon="icon.ico"
+						  />
+				
+				<!-- Unique key for this component -->
+				<RegistryValue Id="RegShortcutKey" Root="HKCU" Key="SOFTWARE\!(loc.ProductFolderName)" Name="Shortcut" Value="1" Type="integer" KeyPath="yes" />
+				
+				<!-- Remove Start Menu folder -->
+				<RemoveFolder Id="RemoveStartMenu" Directory="InstallProgramMenuFolder" On="uninstall"/>
+			</Component>
+		</DirectoryRef>
+	
+	</Fragment>
+	
+
+</Wix>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" InitialTargets="EnsureWixToolsetInstalled" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>3.10</ProductVersion>
+    <ProjectGuid>f8b205d8-9da9-4259-a21a-f5645171f76b</ProjectGuid>
+    <SchemaVersion>2.0</SchemaVersion>
+    <OutputName>FiresThousandSuns-installer_$(Configuration)-$(Platform)</OutputName>
+    <OutputType>Package</OutputType>
+	  <Cultures>;</Cultures>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
+    <DefineConstants>Debug</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <DefineConstants>Debug</DefineConstants>
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Components.wxs" />
+    <Compile Include="ComponentsGenerated.wxs" />
+    <Compile Include="Directories.wxs" />
+    <Compile Include="Product.wxs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="loc.en-us.wxl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fts-icon-bold-450x450.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <WixExtension Include="WixUtilExtension">
+      <HintPath>$(WixExtDir)\WixUtilExtension.dll</HintPath>
+      <Name>WixUtilExtension</Name>
+    </WixExtension>
+    <WixExtension Include="WixUIExtension">
+      <HintPath>$(WixExtDir)\WixUIExtension.dll</HintPath>
+      <Name>WixUIExtension</Name>
+    </WixExtension>
+  </ItemGroup>
+  <Import Project="$(WixTargetsPath)" Condition=" '$(WixTargetsPath)' != '' " />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets" Condition=" '$(WixTargetsPath)' == '' AND Exists('$(MSBuildExtensionsPath32)\Microsoft\WiX\v3.x\Wix.targets') " />
+  <Target Name="EnsureWixToolsetInstalled" Condition=" '$(WixTargetsImported)' != 'true' ">
+    <Error Text="The WiX Toolset v3.11 build tools must be installed to build this project. To download the WiX Toolset, see https://wixtoolset.org/releases/v3.11/stable" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. -->
+  <!-- Other similar extension points exist, see Wix.targets. -->
+  <Target Name="BeforeBuild">
+    <!-- <Exec Command="Whatever command, it can build a project, or delete previous build." /> -->
+    <!-- Get assembly version -->
+    <!--
+		<GetAssemblyIdentity AssemblyFiles="whatever.dll">
+			<Output TaskParameter="Assemblies" ItemName="AssemblyVersion" />
+		</GetAssemblyIdentity>
+		<PropertyGroup>
+		    // used in thr project later
+			<DefineConstants>BuildVersion=%(AssemblyVersion.Verion)</DefineConstants>
+		</PropertyGroup>
+	    -->
+	  <PropertyGroup>
+		  <DefineConstants>BasePath=D:\DATA\dev\Unreal-out\FiresOfAThousandSuns\FiresThousandSuns_release-for-installer\</DefineConstants>
+	  </PropertyGroup>
+    <!-- Harvest file components -->
+    <HeatDirectory
+        Directory="D:\DATA\dev\Unreal-out\FiresOfAThousandSuns\FiresThousandSuns_release-for-installer\"
+        RunAsSeparateProcess="true"
+        OutputFile="ComponentsGenerated.wxs"
+        DirectoryRefId="INSTALLFOLDER"
+        ComponentGroupName="ReleaseComponents"
+        SuppressCom="true"
+        SuppressFragments="true"
+        SuppressRegistry="true"
+        SuppressRootDirectory="true"
+        AutoGenerateGuids="false"
+        GenerateGuidsNow="true"
+        ToolPath="$(WixToolPath)"
+		PreprocessorVariable="var.BasePath"
+    />
+  </Target>
+	
+  <Target Name="AfterBuild">
+	  <!--
+	  <GetAssemblyIdentity AssemblyFiles="whatever.dll">
+		  <Output TaskParameter="Assemblies" ItemName="AssemblyVersion" />
+	  </GetAssemblyIdentity>
+	  -->
+	  
+	  <!-- Rename and move final msi -->
+	  <Exec Command="if not exist Installs mkdir Installs" />
+	  <Exec Command="move bin\$(Platform)\$(Configuration)\$(OutputName).msi Installs\" />
+	  <!--
+	  <Exec Command="move bin\$(Platform)\$(Configuration)\$(OutputName).msi Installs\TheFiresofaThousandSuns-$(Configuration)-$(Platform).msi" />
+	  <Exec Command="move bin\$(Configuration)\$(OutputName) Installs\TheFiresofaThousandSuns-%(AssemblyVersion.Version)-$(Configuration)-$(Platform).msi" />
+	  -->
+  </Target>
+	
+</Project>

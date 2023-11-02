@@ -90,6 +90,7 @@ public:
 			handy way is to bind it with OnVisibilityChanged(), but it might not be the ideal way in some other context
 
 	Fires :
+		- installer
 		- debug msg on logfiles
 		- refacto BP / c++
 		- refacto GI GM SG interactions

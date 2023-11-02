@@ -72,3 +72,24 @@ Plugins/*/Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
+
+############################################
+
+## FiresThousandSuns-installer
+# Wix Toolset
+*.wixobj
+*.wixout
+*.wixlib
+*.wixpdb
+*.wixmsp
+*.wixmst
+*.msi
+*.msm
+*.mst
+
+# bin / obj / installs
+FiresThousandSuns-installer/Installs/*
+FiresThousandSuns-installer/bin/*
+FiresThousandSuns-installer/obj/*
+FiresThousandSuns.installer/bin/*
+FiresThousandSuns.installer/obj/*
