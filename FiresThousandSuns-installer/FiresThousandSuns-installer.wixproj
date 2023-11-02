@@ -70,11 +70,11 @@
 		</PropertyGroup>
 	    -->
 	  <PropertyGroup>
-		  <DefineConstants>BasePath=D:\DATA\dev\Unreal-out\FiresOfAThousandSuns\FiresThousandSuns_release-for-installer\</DefineConstants>
+		  <DefineConstants>BasePath=D:\DATA\dev\Unreal-out\FiresOfAThousandSuns\FiresThousandSuns_installer-sources\</DefineConstants>
 	  </PropertyGroup>
     <!-- Harvest file components -->
     <HeatDirectory
-        Directory="D:\DATA\dev\Unreal-out\FiresOfAThousandSuns\FiresThousandSuns_release-for-installer\"
+        Directory="D:\DATA\dev\Unreal-out\FiresOfAThousandSuns\FiresThousandSuns_installer-sources\"
         RunAsSeparateProcess="true"
         OutputFile="ComponentsGenerated.wxs"
         DirectoryRefId="INSTALLFOLDER"

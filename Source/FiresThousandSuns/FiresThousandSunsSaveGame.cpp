@@ -4,6 +4,8 @@
 #include "FuncLib.h"
 
 UFiresThousandSunsSaveGame* UFiresThousandSunsSaveGame::LoadSave(FString InSlotName) {
+    D(FString("Save Game Path : ").Append(FPaths::EngineSavedDir()));
+    D(FString("Save to user Dir ? ").Append(FPaths::ShouldSaveToUserDir() ? "yes" : "no"));
     USaveGame* LoadedGame = UGameplayStatics::LoadGameFromSlot(InSlotName, 0);
     UFiresThousandSunsSaveGame* SaveGameObject = nullptr;
     
@@ -21,7 +23,10 @@ UFiresThousandSunsSaveGame* UFiresThousandSunsSaveGame::LoadSave(FString InSlotN
     return SaveGameObject;
 }
 
-UFiresThousandSunsSaveGame* UFiresThousandSunsSaveGame::CreateSave(FString InSlotName) {
+UFiresThousandSunsSaveGame* UFiresThousandSunsSaveGame::CreateSave(FString InSlotName, TSubclassOf<UFiresThousandSunsSaveGame> SaveGameClass) {
+    D(FString("Save Game Path : ").Append(FPaths::EngineSavedDir()));
+    D(FString("Save to user Dir ? ").Append(FPaths::ShouldSaveToUserDir() ? "yes" : "no"));
+    //USaveGame* SaveGame = UGameplayStatics::CreateSaveGameObject(SaveGameClass ? SaveGameClass->StaticClass() : UFiresThousandSunsSaveGame::StaticClass());
     USaveGame* SaveGame = UGameplayStatics::CreateSaveGameObject(UFiresThousandSunsSaveGame::StaticClass());
     UFuncLib::CheckObject(SaveGame, "UFiresThousandSunsSaveGame::CreateSave() Failed to create USaveGame");
     UFiresThousandSunsSaveGame* Fires_SG = Cast<UFiresThousandSunsSaveGame>(SaveGame);

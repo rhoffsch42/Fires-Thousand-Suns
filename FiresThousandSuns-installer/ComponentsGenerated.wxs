@@ -2,30 +2,27 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
     <Fragment>
         <DirectoryRef Id="INSTALLFOLDER">
-            <Component Id="cmp8D5F02FE8C4D8FDBD30FF80828A96476" Guid="{2F80B4A8-0491-46EF-8751-941FB64A6701}">
+            <Component Id="cmp8D5F02FE8C4D8FDBD30FF80828A96476" Guid="{B89C5830-E049-42E2-8B5B-454ADAA19A92}">
                 <File Id="fil650659426BE8F33AD501B251A8549DA7" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns.exe" />
             </Component>
-            <Component Id="cmp5C343F1904A2B78819FFA6FC7BD88DAE" Guid="{223B44A8-BBA1-4771-A5D6-5FEE8AEB8222}">
-                <File Id="fil909D4349BA7FED0F1A616A0FEF53827D" KeyPath="yes" Source="$(var.BasePath)\Manifest_DebugFiles_Win64.txt" />
-            </Component>
-            <Component Id="cmpFF64DC5E6A88A04C95679A2F09A8AC2B" Guid="{4EE0B846-77C0-4FE6-9565-1635024FE16A}">
+            <Component Id="cmpFF64DC5E6A88A04C95679A2F09A8AC2B" Guid="{6FB88CFE-E99B-4922-92F7-B31F0B98C98F}">
                 <File Id="filE38704CD067FF8A17D55A10E4936C638" KeyPath="yes" Source="$(var.BasePath)\Manifest_NonUFSFiles_Win64.txt" />
             </Component>
-            <Component Id="cmp4415E7A8CF3B39C452B901DD5B93D01C" Guid="{94E22BAF-B3E5-4F01-B9EC-C8420D64B362}">
+            <Component Id="cmp4415E7A8CF3B39C452B901DD5B93D01C" Guid="{49BA58A9-DEF6-4845-99C6-47CC6D85C887}">
                 <File Id="filE38382B8C07314C5C5F33EA41AAE675C" KeyPath="yes" Source="$(var.BasePath)\Manifest_UFSFiles_Win64.txt" />
             </Component>
             <Directory Id="dir2AB38F46EAECCB94563A9BD0DCC148AD" Name="Engine">
                 <Directory Id="dirE1064A66121FDC1B281074C67B8982EF" Name="Binaries">
                     <Directory Id="dir8BC0E5C7C23909FC717BCFB9B59D2263" Name="ThirdParty">
                         <Directory Id="dirA9A7291130EBE98EFA3B599A2AAF8CA6" Name="DbgHelp">
-                            <Component Id="cmp41E9FCAD39B2BC5DDD61F3B41F56287C" Guid="{B4DD736C-8DBB-43C2-8D6A-DEE06C594A73}">
+                            <Component Id="cmp41E9FCAD39B2BC5DDD61F3B41F56287C" Guid="{654B0B64-358F-4F91-87E9-8FA93B32DE31}">
                                 <File Id="fil3AA84F49F067A8533F0124FA44458516" KeyPath="yes" Source="$(var.BasePath)\Engine\Binaries\ThirdParty\DbgHelp\dbghelp.dll" />
                             </Component>
                         </Directory>
                         <Directory Id="dirE6F848F59A4A27CA9D2D721824FE42F9" Name="NVIDIA">
                             <Directory Id="dirC7C782B6DD4896B898B6E5ABC9958384" Name="NVaftermath">
                                 <Directory Id="dirF47512E920F3DBEBFDA08E0C0775191A" Name="Win64">
-                                    <Component Id="cmp07B36CC1DA433970E21F82C76C3EE946" Guid="{6C1B3534-B575-485F-B533-275B2A45F8D2}">
+                                    <Component Id="cmp07B36CC1DA433970E21F82C76C3EE946" Guid="{0FAA81CC-0201-445E-9A42-7BAE1D87DFF7}">
                                         <File Id="filAC48AF5E99E0A583FE7E3C200BAC3491" KeyPath="yes" Source="$(var.BasePath)\Engine\Binaries\ThirdParty\NVIDIA\NVaftermath\Win64\GFSDK_Aftermath_Lib.x64.dll" />
                                     </Component>
                                 </Directory>
@@ -34,7 +31,7 @@
                         <Directory Id="dir5F7C3B1BF4F2CC2EA8704738C3EADF06" Name="Ogg">
                             <Directory Id="dirF6B7BD1950305043197EFF3AC6BDFB7D" Name="Win64">
                                 <Directory Id="dir9CAFE72DB8D1BF5A15E9F74DF00DD75C" Name="VS2015">
-                                    <Component Id="cmp379324C45B84FFBACB0A126DC16B952D" Guid="{2AFF5A50-45A7-4861-9B03-C12451C8EA87}">
+                                    <Component Id="cmp379324C45B84FFBACB0A126DC16B952D" Guid="{5D6E01AF-ECC2-4029-9E92-CA4F5FA16DDD}">
                                         <File Id="fil828A555B8606B91B1C45C2BBF1A074F1" KeyPath="yes" Source="$(var.BasePath)\Engine\Binaries\ThirdParty\Ogg\Win64\VS2015\libogg_64.dll" />
                                     </Component>
                                 </Directory>
@@ -43,26 +40,19 @@
                         <Directory Id="dirC9A2470D9B138B0AAA2AFE144D9ACE8A" Name="Vorbis">
                             <Directory Id="dirF3E7B2F843A4E6D1541B581FEB2B514A" Name="Win64">
                                 <Directory Id="dirA007A2AB6E22064666E4E225D34820D9" Name="VS2015">
-                                    <Component Id="cmp111CD54AFACEF48919FA128E813C9B8C" Guid="{66D2BD0F-C94B-449A-AC47-94600DC81A00}">
+                                    <Component Id="cmp111CD54AFACEF48919FA128E813C9B8C" Guid="{FFACFEDF-3915-41AD-883B-30A632D8BCA2}">
                                         <File Id="filE46926C1C834F70B9E8FF11C9C3FFF93" KeyPath="yes" Source="$(var.BasePath)\Engine\Binaries\ThirdParty\Vorbis\Win64\VS2015\libvorbisfile_64.dll" />
                                     </Component>
-                                    <Component Id="cmpACFE1F7D7FCEAF8C632BDB513D93312F" Guid="{F5D40F2C-0C05-4DB8-9DFA-FC6B6B49282B}">
+                                    <Component Id="cmpACFE1F7D7FCEAF8C632BDB513D93312F" Guid="{9DFF6A09-9B44-4F6E-A2BF-3CBA71103FB5}">
                                         <File Id="fil83984C3DFDAB8B636E34158C85ED49A2" KeyPath="yes" Source="$(var.BasePath)\Engine\Binaries\ThirdParty\Vorbis\Win64\VS2015\libvorbis_64.dll" />
                                     </Component>
                                 </Directory>
                             </Directory>
                         </Directory>
                         <Directory Id="dir174A0B006E56FAA439ED2812CD25BAD4" Name="Windows">
-                            <Directory Id="dirCA4D7C20DFEAF360960C8E98365E74B7" Name="WinPixEventRuntime">
-                                <Directory Id="dir3C772493F0EC1DFBDC060C478D37354E" Name="x64">
-                                    <Component Id="cmp388BBF358722AC7F73E978B20A10090F" Guid="{8F01BD44-776B-4FDE-A816-615D1BA95662}">
-                                        <File Id="filC15A1C66955F971DCFA887D22D1B99E4" KeyPath="yes" Source="$(var.BasePath)\Engine\Binaries\ThirdParty\Windows\WinPixEventRuntime\x64\WinPixEventRuntime.dll" />
-                                    </Component>
-                                </Directory>
-                            </Directory>
                             <Directory Id="dirEDDA24723B42505956C18F167079C4BB" Name="XAudio2_9">
                                 <Directory Id="dir0463DCA466B20A92F1FE51F9B358FBD6" Name="x64">
-                                    <Component Id="cmpA8F696FB2521CDBADB4BF91BFDF6D443" Guid="{BBD8979B-C26D-4865-9DBB-6E7757682294}">
+                                    <Component Id="cmpA8F696FB2521CDBADB4BF91BFDF6D443" Guid="{980E2BA9-B871-4516-B05A-24F0572AF7CC}">
                                         <File Id="fil03FE8C0CAD3D74C5744F0EB4CAF57ABD" KeyPath="yes" Source="$(var.BasePath)\Engine\Binaries\ThirdParty\Windows\XAudio2_9\x64\xaudio2_9redist.dll" />
                                     </Component>
                                 </Directory>
@@ -70,43 +60,11 @@
                         </Directory>
                     </Directory>
                 </Directory>
-                <Directory Id="dir902CD7758DA09DF63D30FF81A1B62AC0" Name="Content">
-                    <Directory Id="dirC0C597B2E6330294D145B729E0AC0BE9" Name="SlateDebug">
-                        <Directory Id="dir7CEF7D9A91052655813FAA1860CEFA0B" Name="Fonts">
-                            <Component Id="cmp311D0FD6D3726829E24A119AD8F07EC2" Guid="{786B9393-D86B-42DB-BD3E-0B6334C8136C}">
-                                <File Id="filEE0B270F0F71616ED6CB14C26B0BE7A9" KeyPath="yes" Source="$(var.BasePath)\Engine\Content\SlateDebug\Fonts\LastResort.tps" />
-                            </Component>
-                            <Component Id="cmp095886D2B5CF8DBA18B94F337CF8CC63" Guid="{F9D76717-FD55-4994-8817-EA3D5035218E}">
-                                <File Id="filFAC84F11B91C3B37D4199A64050D845E" KeyPath="yes" Source="$(var.BasePath)\Engine\Content\SlateDebug\Fonts\LastResort.ttf" />
-                            </Component>
-                        </Directory>
-                    </Directory>
-                </Directory>
                 <Directory Id="dir0AB687573E0F1DDCF719CD8C8D972B9D" Name="Extras">
-                    <Directory Id="dirACBC36EE8342E78866D16904884A7DAB" Name="GPUDumpViewer">
-                        <Component Id="cmp46391F841F6782B16313DEB7F75341CF" Guid="{780B1405-3E53-4CB3-8B2D-875B3CC78BE9}">
-                            <File Id="fil92489A162B39ADADCF3AE4D879F4B463" KeyPath="yes" Source="$(var.BasePath)\Engine\Extras\GPUDumpViewer\GPUDumpViewer.html" />
-                        </Component>
-                        <Component Id="cmp61536607D34EF840074D04B4DD9F6319" Guid="{8F6ED5D1-90BA-496F-B1C6-95272DCEDC2F}">
-                            <File Id="fil839D7220AB0826677FE14E3A8A26CD3F" KeyPath="yes" Source="$(var.BasePath)\Engine\Extras\GPUDumpViewer\OpenGPUDumpViewer.bat" />
-                        </Component>
-                        <Component Id="cmp643F9C9D3C45C1490C17732FA46B6960" Guid="{76A7C1BC-896B-4E50-811C-D6E9299C756A}">
-                            <File Id="fil976A1EA2F0C4798A2E13088A82FF9ED3" KeyPath="yes" Source="$(var.BasePath)\Engine\Extras\GPUDumpViewer\OpenGPUDumpViewer.sh" />
-                        </Component>
-                    </Directory>
                     <Directory Id="dir9E5EDDED8B8471C405E51F93139F5D90" Name="Redist">
                         <Directory Id="dirE91301220B9AA80B64DD1413292D4FD3" Name="en-us">
-                            <Component Id="cmpB8833BAF27DDF1BE6850104211BF6EB1" Guid="{F2F57CE6-5C27-4AE3-816A-029575E7A419}">
+                            <Component Id="cmpB8833BAF27DDF1BE6850104211BF6EB1" Guid="{91EF6FA6-3BE2-4CCE-8EB7-B0F70FE00D2B}">
                                 <File Id="fil16E2E026EC59F77AFB171D2AB79A7C23" KeyPath="yes" Source="$(var.BasePath)\Engine\Extras\Redist\en-us\UEPrereqSetup_x64.exe" />
-                            </Component>
-                        </Directory>
-                    </Directory>
-                </Directory>
-                <Directory Id="dir676F375691CC44FE52D8E3453B5CDD0B" Name="Saved">
-                    <Directory Id="dirC794FC9899A5538F246C12B8273BA167" Name="Config">
-                        <Directory Id="dir6DFBF7C7524AA3CB9E4E0ECF567DBB25" Name="Windows">
-                            <Component Id="cmp45D53E098B27E382D4043EA57FB18C12" Guid="{07B7FF12-CBD3-45B4-B149-8F20F938F5BE}">
-                                <File Id="fil1C0AE460C176F21ED837B04DAE468AFA" KeyPath="yes" Source="$(var.BasePath)\Engine\Saved\Config\Windows\Manifest.ini" />
                             </Component>
                         </Directory>
                     </Directory>
@@ -115,207 +73,74 @@
             <Directory Id="dirB391D4A0AFA1C3685374D0DC74B417E5" Name="FiresThousandSuns">
                 <Directory Id="dir7595EAC27137B28542408FA7BD061773" Name="Binaries">
                     <Directory Id="dirCF03F5A32D9CA4F2AC9F582BB80EE59B" Name="Win64">
-                        <Component Id="cmp4EE501304F81B1E08F6603D444DD4099" Guid="{CB220E5B-906B-4054-B285-7CAA9755ED1E}">
+                        <Component Id="cmp4EE501304F81B1E08F6603D444DD4099" Guid="{3126199B-9E3F-4B1C-A13F-228678EB6351}">
                             <File Id="fil1E57266EC86482368A817D6217B7BE72" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Binaries\Win64\boost_atomic-mt-x64.dll" />
                         </Component>
-                        <Component Id="cmp2D6FEB4E513B1B5D491292CA4874F24F" Guid="{54613ACD-011A-40C9-A57D-5C4F21DB0065}">
+                        <Component Id="cmp2D6FEB4E513B1B5D491292CA4874F24F" Guid="{01C4372B-4A9A-4EAE-BC56-ADCC26016A09}">
                             <File Id="fil4DD9F2D6E315D1858A4F7C78971637EF" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Binaries\Win64\boost_chrono-mt-x64.dll" />
                         </Component>
-                        <Component Id="cmp2744378559DB7EEA44A492482C29F196" Guid="{120F7964-29F0-4F76-B9EA-A29F0D548125}">
+                        <Component Id="cmp2744378559DB7EEA44A492482C29F196" Guid="{74C85C0B-775E-46EF-96E0-4ABE92316524}">
                             <File Id="filB2167A3C44897382516C177AC2774994" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Binaries\Win64\boost_filesystem-mt-x64.dll" />
                         </Component>
-                        <Component Id="cmp103E3966C9C6FF42FCAA655EB504DCA1" Guid="{398DE855-0752-4C93-9DA0-C09112972A19}">
+                        <Component Id="cmp103E3966C9C6FF42FCAA655EB504DCA1" Guid="{19758C84-A390-4703-9527-4B17287DB44E}">
                             <File Id="fil078BEB1326CCF4EDCF2AF9E365914A6B" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Binaries\Win64\boost_iostreams-mt-x64.dll" />
                         </Component>
-                        <Component Id="cmpF95FAA965EAE6134CAB1286E40B2C53E" Guid="{738A26E2-AD82-4361-B555-4BBE7A2EADB9}">
+                        <Component Id="cmpF95FAA965EAE6134CAB1286E40B2C53E" Guid="{357B4C89-6D07-4650-AB37-0559681D9880}">
                             <File Id="fil1EBC69D29291A90DC13952A72743FFB4" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Binaries\Win64\boost_program_options-mt-x64.dll" />
                         </Component>
-                        <Component Id="cmpDA5744C01A14AD211BA029F43361D0EC" Guid="{C63DC7BF-938A-4BCD-B480-A8BE1341A7EA}">
+                        <Component Id="cmpDA5744C01A14AD211BA029F43361D0EC" Guid="{98E17C40-7329-4CAB-B19D-98DD87A2F336}">
                             <File Id="filEEE5F44709A7F6C7BE3464BE7FE5A94C" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Binaries\Win64\boost_python39-mt-x64.dll" />
                         </Component>
-                        <Component Id="cmp100F949AA9DB900852952F25728D13D0" Guid="{FD94CE64-41AF-416E-8500-B3E02AE4C53C}">
+                        <Component Id="cmp100F949AA9DB900852952F25728D13D0" Guid="{BFC42E87-DB66-49EA-AEBC-147ABACE1181}">
                             <File Id="fil68F5B78A102743B762A418E0D0FD15F9" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Binaries\Win64\boost_regex-mt-x64.dll" />
                         </Component>
-                        <Component Id="cmpBBDE13536C0EA7FBCB17CE826AF666E6" Guid="{BB454758-4C94-4FEB-8EC3-EC2598A8E32C}">
+                        <Component Id="cmpBBDE13536C0EA7FBCB17CE826AF666E6" Guid="{ECAE655A-186F-4BDF-B93B-1D8562A4D305}">
                             <File Id="filF1C865B6A6F91E989197CB9E6AF5EA17" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Binaries\Win64\boost_system-mt-x64.dll" />
                         </Component>
-                        <Component Id="cmpF725E74248F400FBC084D05600D461EC" Guid="{EB71DFC9-5916-4EA4-8319-8C50EAD5BA7D}">
+                        <Component Id="cmpF725E74248F400FBC084D05600D461EC" Guid="{991C8B39-5338-4303-8DF9-F43D7B2009BA}">
                             <File Id="fil2DD44BFD6430837F9F79B92CE387934A" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Binaries\Win64\boost_thread-mt-x64.dll" />
                         </Component>
-                        <Component Id="cmpF66DA6F63F9ABC18626025D7B67ECF35" Guid="{636F478E-F71B-47B9-9D12-7B3CC94FD913}">
-                            <File Id="fil8D0E086DE5F87683D95A187F495FD628" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Binaries\Win64\FiresThousandSuns-Win64-DebugGame.exe" />
+                        <Component Id="cmpE1DCA46233B0C5967BE28EDC42923F99" Guid="{7F253BB1-CC87-4B7C-857B-0ADA17A22B3B}">
+                            <File Id="filD0A2CF4DBB728267B469527A9BB90399" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Binaries\Win64\FiresThousandSuns-Win64-Shipping.exe" />
                         </Component>
-                        <Component Id="cmpA277E8BDC14E79847509E3C1E167F521" Guid="{97497A5B-4776-4C36-947B-23A10CF88EF7}">
-                            <File Id="fil5472600161EE7DC88629261BBEE17705" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Binaries\Win64\FiresThousandSuns-Win64-DebugGame.pdb" />
-                        </Component>
-                        <Component Id="cmp8F853F92B78A34529293E1612209F856" Guid="{62B7DCAB-FFE5-4462-A20F-44C1E7032DDE}">
+                        <Component Id="cmp8F853F92B78A34529293E1612209F856" Guid="{E4401781-9506-44E6-86F7-5F56630E151F}">
                             <File Id="fil0C225E56BF7B09E6B3616B2FE56592E7" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Binaries\Win64\OpenImageDenoise.dll" />
                         </Component>
-                        <Component Id="cmpA8D7D26E73531F72DB5491A1D9A93B38" Guid="{463ADF09-6A73-4A98-8260-0313E0B08637}">
+                        <Component Id="cmpA8D7D26E73531F72DB5491A1D9A93B38" Guid="{0E2B6CD8-C70D-4363-8F4C-CDE96D493956}">
                             <File Id="fil20D8E1A817EBE4B5A7CEBFE565A23B75" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Binaries\Win64\tbb.dll" />
                         </Component>
-                        <Component Id="cmpB2DFED63109F948E46D5B1FCBFD58ED1" Guid="{BA348738-2FB6-46A5-83BD-F083BF05419B}">
+                        <Component Id="cmpB2DFED63109F948E46D5B1FCBFD58ED1" Guid="{F47A3E3F-CABB-4A40-81AD-893E307F85C4}">
                             <File Id="fil1B99CBEEA9230945B44464CCC468DDDB" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Binaries\Win64\tbb.pdb" />
                         </Component>
-                        <Component Id="cmp0DD34D4039948014E7DD7B536020DC41" Guid="{978323EF-BCED-4814-9C3D-0DFF7200213E}">
+                        <Component Id="cmp0DD34D4039948014E7DD7B536020DC41" Guid="{3EC47530-F1B9-4DB7-B2FB-011F753A200F}">
                             <File Id="fil3C6AE15FB5515B976FB1E9BC0E90FFB1" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Binaries\Win64\tbb12.dll" />
                         </Component>
                         <Directory Id="dir0DC18A2EC00CE688FA5CECB28503A7B1" Name="D3D12">
-                            <Component Id="cmp2450BEF8E55D60266A9C91D0A062E07B" Guid="{C8BDD1C9-E368-4FD6-AA53-684DA919E97C}">
+                            <Component Id="cmp2450BEF8E55D60266A9C91D0A062E07B" Guid="{24AC00D2-7984-46E1-AFC9-F1624A8A7814}">
                                 <File Id="fil696BA7243A2B7C461EA5845027EFCB47" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Binaries\Win64\D3D12\D3D12Core.dll" />
-                            </Component>
-                            <Component Id="cmpF56A9FC5E8FDDBB427C83064741DF985" Guid="{8A50E175-7EA1-411D-B49F-3612B0165BCF}">
-                                <File Id="fil51A5E45B05AE1489EA5FA6C1EB9354C6" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Binaries\Win64\D3D12\d3d12SDKLayers.dll" />
                             </Component>
                         </Directory>
                     </Directory>
                 </Directory>
                 <Directory Id="dirDF53E96848389AA48A6CC487366BB8C1" Name="Content">
                     <Directory Id="dir635EBABA7962D1E71B2F90EF72DC5CDD" Name="Paks">
-                        <Component Id="cmp17C26B68B2F8902C196E05EDED6E2265" Guid="{495F5084-6724-4ABE-BB3D-FDFC8C40C286}">
+                        <Component Id="cmp17C26B68B2F8902C196E05EDED6E2265" Guid="{ED7E12E7-E495-48C3-8BB4-696DF74CD2A9}">
                             <File Id="fil1FCD07F95E8A9CE5C879754D3A75EC4C" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Content\Paks\FiresThousandSuns-Windows.pak" />
                         </Component>
-                        <Component Id="cmp3E4A730C49B02F91698556561B87D8E8" Guid="{555C77F0-1F1E-43B7-95F1-2D2F7730F4D3}">
+                        <Component Id="cmp3E4A730C49B02F91698556561B87D8E8" Guid="{D2556CA8-A85A-476B-86C9-B52B36F6D6A6}">
                             <File Id="fil4909BDBF207FF5F10F2247B81E1B1DD1" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Content\Paks\FiresThousandSuns-Windows.sig" />
                         </Component>
-                        <Component Id="cmpA66E620DCC6425EDABECF02A726BE7E7" Guid="{BE0A9966-D293-401C-825E-262E526DD428}">
+                        <Component Id="cmpA66E620DCC6425EDABECF02A726BE7E7" Guid="{DED8B150-920A-48F5-9822-F40DEB4211CC}">
                             <File Id="filD58A14BEA29036E3C39BD3F5A5079FD5" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Content\Paks\FiresThousandSuns-Windows.ucas" />
                         </Component>
-                        <Component Id="cmpCA01F42EBF91D363CD97DE156C91D844" Guid="{51DE5B89-0E40-41F2-B607-A5F0058F5D46}">
+                        <Component Id="cmpCA01F42EBF91D363CD97DE156C91D844" Guid="{F230ACC7-E8BD-45D5-8F85-C291778F8083}">
                             <File Id="fil945F912FA75DCF3D09600234DF220776" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Content\Paks\FiresThousandSuns-Windows.utoc" />
                         </Component>
-                        <Component Id="cmp31DE34DE2F4FB5868E68DE1DFF2A9CC1" Guid="{D3475AD1-EE65-4160-9372-2F1AA4C7BB1D}">
+                        <Component Id="cmp31DE34DE2F4FB5868E68DE1DFF2A9CC1" Guid="{14FC032F-9E80-482E-B811-BEB09EDC2D78}">
                             <File Id="filCC86B059E34D2A1842DAF35D91D931BE" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Content\Paks\global.ucas" />
                         </Component>
-                        <Component Id="cmp480B165C12540012F569A516A8535231" Guid="{313D4DE2-9E05-4728-865B-429FEE16AF96}">
+                        <Component Id="cmp480B165C12540012F569A516A8535231" Guid="{59C10456-9D61-4D9F-8691-C2DFB1D9FF7F}">
                             <File Id="fil837435AE904E764CE29634BFAED045D7" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Content\Paks\global.utoc" />
-                        </Component>
-                    </Directory>
-                </Directory>
-                <Directory Id="dirD5EE7E87097760F01FDC04FC08FC5CF6" Name="Saved">
-                    <Directory Id="dirB8A1430EA01595BF56A4A4324B58724F" Name="Config">
-                        <Directory Id="dir8CD766369C9938D1047FD427AF552F88" Name="CrashReportClient">
-                            <Directory Id="dir9212436FDEA2C95CD22E0D17D182690F" Name="UECC-Windows-22280921466DC2C8A8200A87D8303C26">
-                                <Component Id="cmpDA53D13D226359B8CEF51B110897528D" Guid="{8D50E371-D0EC-4E11-AA9F-1C17F100D00A}">
-                                    <File Id="fil66F1A0202B7CE772233F913E8A932808" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Saved\Config\CrashReportClient\UECC-Windows-22280921466DC2C8A8200A87D8303C26\CrashReportClient.ini" />
-                                </Component>
-                            </Directory>
-                            <Directory Id="dir061B49EA363CD24371B14725AE89B808" Name="UECC-Windows-329264D74685D64CA181ECBFA01856D9">
-                                <Component Id="cmp5139A8CA0EE4AF04090FCCA04141DBAB" Guid="{88AA47B2-D684-44BD-A523-1993928CA5CA}">
-                                    <File Id="fil21CBC6742FC6E249C8310FF150BA7D4B" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Saved\Config\CrashReportClient\UECC-Windows-329264D74685D64CA181ECBFA01856D9\CrashReportClient.ini" />
-                                </Component>
-                            </Directory>
-                            <Directory Id="dirE77E1A355FDB85FB884ECF5DA7C874CA" Name="UECC-Windows-A683BFC14BDBC686EB5F07BFF6410231">
-                                <Component Id="cmp0A093FBFEB385038FEADD34BEB7F45B9" Guid="{C1DE4392-88A4-4B77-8695-88BDF79AB732}">
-                                    <File Id="fil6750C2CAE38E9F96C00DEA2793CD781B" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Saved\Config\CrashReportClient\UECC-Windows-A683BFC14BDBC686EB5F07BFF6410231\CrashReportClient.ini" />
-                                </Component>
-                            </Directory>
-                            <Directory Id="dirE61BC61BE9D356315EE318F8CF0FBA26" Name="UECC-Windows-B015685543FCD9B62500ABA828253D36">
-                                <Component Id="cmp6CE563109CFE7409C0592058C5CD90DF" Guid="{01BBECCF-615F-4EF4-BA21-9B1A56519A2D}">
-                                    <File Id="fil913508E9953DF802C4D562C1A85FD906" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Saved\Config\CrashReportClient\UECC-Windows-B015685543FCD9B62500ABA828253D36\CrashReportClient.ini" />
-                                </Component>
-                            </Directory>
-                            <Directory Id="dir8665A2BD8655F1BE8A917E1B698E25FC" Name="UECC-Windows-E4C25C554AF637E6704423940158C32F">
-                                <Component Id="cmp0A685ACC7EA34C7286F9E4E8BBD2E19A" Guid="{95C4F89B-FC66-4F1F-A9A8-C054E56C9CBC}">
-                                    <File Id="fil4392514E9AEAF9987406DBDAA717465C" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Saved\Config\CrashReportClient\UECC-Windows-E4C25C554AF637E6704423940158C32F\CrashReportClient.ini" />
-                                </Component>
-                            </Directory>
-                        </Directory>
-                        <Directory Id="dir36753AC6838C69FB1C7AF7E62BD4A023" Name="Windows">
-                            <Component Id="cmp71115A2B63E3974377FBA3BF65238426" Guid="{99212AEF-131F-4009-9C27-DE092EDF72C5}">
-                                <File Id="filEE77057360721A3A601F9124629A2DDF" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Saved\Config\Windows\Bridge.ini" />
-                            </Component>
-                            <Component Id="cmp011DC725B824AF0E8D0852FA6DADE638" Guid="{BAD4FA39-CBB4-4459-BD46-39CBD92631D5}">
-                                <File Id="fil4D82B12ED3B304653DDF08D0FCF2842B" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Saved\Config\Windows\CommonUI.ini" />
-                            </Component>
-                            <Component Id="cmp11BB8990702AFE256F111FD2ACB3E4CF" Guid="{7D5C2386-C52C-4AF6-A217-2C8D7B7BD5CB}">
-                                <File Id="fil86D6293CD5A6BA96EAC339FA277F800F" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Saved\Config\Windows\Compat.ini" />
-                            </Component>
-                            <Component Id="cmp80B4AC6B30818CA726E24BDA6E87300D" Guid="{B6A38CB7-716F-41CD-86AE-757A529EA0B8}">
-                                <File Id="fil801AAEDCB0F94F2552C79CA7E9743362" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Saved\Config\Windows\ControlRig.ini" />
-                            </Component>
-                            <Component Id="cmp99FBF74EAD308FA2A877FA414667A5F4" Guid="{D1E8EC97-4C94-4245-B49E-35F8F3778A17}">
-                                <File Id="filFCB934D7D771A68DAD5E3E9F10DABE0C" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Saved\Config\Windows\DatasmithContent.ini" />
-                            </Component>
-                            <Component Id="cmp74E44F4089BCDAFF8421AED039D3E9BD" Guid="{D6C5C5C8-3F72-487F-94FB-E05275FB16C8}">
-                                <File Id="fil8E9E379EC349BB43287ADF360094CB92" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Saved\Config\Windows\DeviceProfiles.ini" />
-                            </Component>
-                            <Component Id="cmpFCA31C79170995F1A7A9FA0774A70487" Guid="{9D0D3682-8615-4404-8B2A-5FD2750CD6D1}">
-                                <File Id="fil3514E385AF54B77BF8CD5F7DFBED04A8" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Saved\Config\Windows\EditorScriptingUtilities.ini" />
-                            </Component>
-                            <Component Id="cmp2D2B568D74D91DC4EC7778688236C98D" Guid="{452F616F-5E98-4432-8CD5-D7BE8786BA9B}">
-                                <File Id="fil46B9A0CCA6EC9D759BFDE8D83C27422E" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Saved\Config\Windows\Engine.ini" />
-                            </Component>
-                            <Component Id="cmpBB12965E956ECCE801C659D92F4581CB" Guid="{5005C06F-FC74-4538-BD0C-ACEFFC667F60}">
-                                <File Id="fil7213D0AF9649D72D549E7FB9498CACA0" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Saved\Config\Windows\EnhancedInput.ini" />
-                            </Component>
-                            <Component Id="cmp2C37342EC7370E6184FA6FA2CF323AC6" Guid="{0D686958-66E8-47F3-B287-260C1233B9FE}">
-                                <File Id="fil22C50248CE1B1D6941032A4ABC04EE80" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Saved\Config\Windows\FullBodyIK.ini" />
-                            </Component>
-                            <Component Id="cmp059DDCB4DF1A7583689587214A876F87" Guid="{92E37193-0226-4194-91A0-1F921FD8562D}">
-                                <File Id="fil6B93FF9320849505D7C51DB4A2C7F034" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Saved\Config\Windows\Game.ini" />
-                            </Component>
-                            <Component Id="cmp6BAFF4ED6A8516A49E65D6D487D2F56F" Guid="{2A3347F3-4B76-471D-9549-740ACF8A2E3C}">
-                                <File Id="fil48F8B5C058A56BBECA3E94C19207B76D" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Saved\Config\Windows\GameUserSettings.ini" />
-                            </Component>
-                            <Component Id="cmp09525E258EA649858DDE17A23F55A464" Guid="{3BDF8498-34A6-411E-B404-27E60681C2D5}">
-                                <File Id="fil3C87804E7614C8D85160D125CB4607BD" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Saved\Config\Windows\GLTFExporter.ini" />
-                            </Component>
-                            <Component Id="cmp71BD6B29BFA7FD39723135746357FB73" Guid="{AD42CE7E-C744-4AA3-9D16-89649969D371}">
-                                <File Id="fil7D93D27720B4CC5FBE79D3A26CAC30E4" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Saved\Config\Windows\Hardware.ini" />
-                            </Component>
-                            <Component Id="cmp6EC5452D83FABB5A2BAC396B394EE818" Guid="{4526C4FB-696F-47FC-B525-D829565A3560}">
-                                <File Id="filEAC315BD13E09DD6F23A699A3FFCDF94" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Saved\Config\Windows\IKRig.ini" />
-                            </Component>
-                            <Component Id="cmp029BC514A4D988B55B6FE09D814BF09B" Guid="{0700A730-AA93-48A7-83CB-E032E475ED8D}">
-                                <File Id="fil19E6494559EEF18706E5EE782618F455" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Saved\Config\Windows\InstallBundle.ini" />
-                            </Component>
-                            <Component Id="cmpA4B633E46857DB4AB13A331856BD0AA6" Guid="{E2595502-770C-40EE-BF56-7B69075AF78B}">
-                                <File Id="fil5A2C103C8EE085D57476EFB01CFCFBED" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Saved\Config\Windows\Metasound.ini" />
-                            </Component>
-                            <Component Id="cmp2AD25C21B0C4B5D1B3CA5DCC8346DCF6" Guid="{3C867500-6258-41EC-B4AA-BA03274C4FB4}">
-                                <File Id="fil46E21FC7259B9802CC617AB8F5E2D37B" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Saved\Config\Windows\Niagara.ini" />
-                            </Component>
-                            <Component Id="cmp48A1D96FBFABCD38BCEDBCA1EC228969" Guid="{0B84C489-F458-4A0A-8431-2FF599613055}">
-                                <File Id="fil46321286AFB84623F195BF31096CB779" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Saved\Config\Windows\Paper2D.ini" />
-                            </Component>
-                            <Component Id="cmp48182FE78229B4D685BD3B89D173A30E" Guid="{3B88854A-225B-4148-893F-8F4799F2C846}">
-                                <File Id="fil90EDBCAA5C70EC25B3C377666D7BDBD4" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Saved\Config\Windows\RuntimeOptions.ini" />
-                            </Component>
-                            <Component Id="cmpF056E53C2C964F348F045FB9E1C482EA" Guid="{633676B6-CFEF-47F4-8B67-4F3E6240A68C}">
-                                <File Id="fil830659FDDF97897C9C0FE2766D74CC56" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Saved\Config\Windows\Scalability.ini" />
-                            </Component>
-                            <Component Id="cmp13EA715FC716FF931D171ED477394938" Guid="{D4FEB1FC-0798-4E3D-B5C2-2138E13C1407}">
-                                <File Id="filB3F36CBAACFE8936D93DB9D74132C92F" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Saved\Config\Windows\Synthesis.ini" />
-                            </Component>
-                            <Component Id="cmp49BF6BB97FF443110B4623B1110F331B" Guid="{F4E50522-F651-41E8-963B-77AA98DA52D7}">
-                                <File Id="fil48CC5CD35C2AD441CBC3FEAAA2961954" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Saved\Config\Windows\TraceUtilities.ini" />
-                            </Component>
-                            <Component Id="cmp674286294E3BA4D2A5C01A9BE6CE5265" Guid="{0DA59D84-297B-4E08-A52C-650F74EBDF21}">
-                                <File Id="filCD81A719F34A11C4F8774972E0C87C3F" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Saved\Config\Windows\VariantManagerContent.ini" />
-                            </Component>
-                        </Directory>
-                    </Directory>
-                    <Directory Id="dirF375F5437F0C014276030A07B2BC79B5" Name="Logs">
-                        <Component Id="cmp083FFE882640FC231B7911520CD1DA46" Guid="{14997DF8-80CA-441E-914D-09757911ED33}">
-                            <File Id="fil415B412437CD0AB7734082E0FEBA57D8" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Saved\Logs\FiresThousandSuns-backup-2023.11.01-16.19.39.log" />
-                        </Component>
-                        <Component Id="cmp2AC07A9F0A53C380863510F0A0889C4E" Guid="{3FE130E1-91B3-4AB6-9407-E033E8D3B04E}">
-                            <File Id="filF74E8B8B399C8653151177ED08341123" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Saved\Logs\FiresThousandSuns-backup-2023.11.01-16.19.48.log" />
-                        </Component>
-                        <Component Id="cmp4AAF8A9CCD1EA8988A680B6DEF13CD08" Guid="{B0CA243E-1F61-4390-9709-D475FDA81B30}">
-                            <File Id="fil0E3172119062B6D4B969F0FFFA778B52" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Saved\Logs\FiresThousandSuns-backup-2023.11.01-16.20.01.log" />
-                        </Component>
-                        <Component Id="cmpECE2C75002B95ADFC6D8CF922244E97A" Guid="{93CA7192-7C0B-4613-B19C-53186967D0AF}">
-                            <File Id="fil3A89501F2562F006BB2BCF9D03CD4D9A" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Saved\Logs\FiresThousandSuns-backup-2023.11.01-16.20.09.log" />
-                        </Component>
-                        <Component Id="cmp5FBCCB95F9E295C1A1F3383D2DCD36C7" Guid="{3E65F58C-DB2A-41C3-88E8-D1ED0EC3062A}">
-                            <File Id="filF39D2B0CE56AF0DFC6DFF737F09404F5" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Saved\Logs\FiresThousandSuns.log" />
-                        </Component>
-                    </Directory>
-                    <Directory Id="dir9AEE3A5EAA8EA0F746F2575FEDCC1D9C" Name="SaveGames">
-                        <Component Id="cmp629565AE6FFEAF48D7D9C6CDF041DD64" Guid="{9072FE2D-29D7-40FD-AA94-875A9F71E0C8}">
-                            <File Id="fil96CADF310CC3AA1EF3FC9086CEF9654C" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Saved\SaveGames\DefaultProfile.sav" />
                         </Component>
                     </Directory>
                 </Directory>
@@ -325,7 +150,6 @@
     <Fragment>
         <ComponentGroup Id="ReleaseComponents">
             <ComponentRef Id="cmp8D5F02FE8C4D8FDBD30FF80828A96476" />
-            <ComponentRef Id="cmp5C343F1904A2B78819FFA6FC7BD88DAE" />
             <ComponentRef Id="cmpFF64DC5E6A88A04C95679A2F09A8AC2B" />
             <ComponentRef Id="cmp4415E7A8CF3B39C452B901DD5B93D01C" />
             <ComponentRef Id="cmp41E9FCAD39B2BC5DDD61F3B41F56287C" />
@@ -333,15 +157,8 @@
             <ComponentRef Id="cmp379324C45B84FFBACB0A126DC16B952D" />
             <ComponentRef Id="cmp111CD54AFACEF48919FA128E813C9B8C" />
             <ComponentRef Id="cmpACFE1F7D7FCEAF8C632BDB513D93312F" />
-            <ComponentRef Id="cmp388BBF358722AC7F73E978B20A10090F" />
             <ComponentRef Id="cmpA8F696FB2521CDBADB4BF91BFDF6D443" />
-            <ComponentRef Id="cmp311D0FD6D3726829E24A119AD8F07EC2" />
-            <ComponentRef Id="cmp095886D2B5CF8DBA18B94F337CF8CC63" />
-            <ComponentRef Id="cmp46391F841F6782B16313DEB7F75341CF" />
-            <ComponentRef Id="cmp61536607D34EF840074D04B4DD9F6319" />
-            <ComponentRef Id="cmp643F9C9D3C45C1490C17732FA46B6960" />
             <ComponentRef Id="cmpB8833BAF27DDF1BE6850104211BF6EB1" />
-            <ComponentRef Id="cmp45D53E098B27E382D4043EA57FB18C12" />
             <ComponentRef Id="cmp4EE501304F81B1E08F6603D444DD4099" />
             <ComponentRef Id="cmp2D6FEB4E513B1B5D491292CA4874F24F" />
             <ComponentRef Id="cmp2744378559DB7EEA44A492482C29F196" />
@@ -351,55 +168,18 @@
             <ComponentRef Id="cmp100F949AA9DB900852952F25728D13D0" />
             <ComponentRef Id="cmpBBDE13536C0EA7FBCB17CE826AF666E6" />
             <ComponentRef Id="cmpF725E74248F400FBC084D05600D461EC" />
-            <ComponentRef Id="cmpF66DA6F63F9ABC18626025D7B67ECF35" />
-            <ComponentRef Id="cmpA277E8BDC14E79847509E3C1E167F521" />
+            <ComponentRef Id="cmpE1DCA46233B0C5967BE28EDC42923F99" />
             <ComponentRef Id="cmp8F853F92B78A34529293E1612209F856" />
             <ComponentRef Id="cmpA8D7D26E73531F72DB5491A1D9A93B38" />
             <ComponentRef Id="cmpB2DFED63109F948E46D5B1FCBFD58ED1" />
             <ComponentRef Id="cmp0DD34D4039948014E7DD7B536020DC41" />
             <ComponentRef Id="cmp2450BEF8E55D60266A9C91D0A062E07B" />
-            <ComponentRef Id="cmpF56A9FC5E8FDDBB427C83064741DF985" />
             <ComponentRef Id="cmp17C26B68B2F8902C196E05EDED6E2265" />
             <ComponentRef Id="cmp3E4A730C49B02F91698556561B87D8E8" />
             <ComponentRef Id="cmpA66E620DCC6425EDABECF02A726BE7E7" />
             <ComponentRef Id="cmpCA01F42EBF91D363CD97DE156C91D844" />
             <ComponentRef Id="cmp31DE34DE2F4FB5868E68DE1DFF2A9CC1" />
             <ComponentRef Id="cmp480B165C12540012F569A516A8535231" />
-            <ComponentRef Id="cmpDA53D13D226359B8CEF51B110897528D" />
-            <ComponentRef Id="cmp5139A8CA0EE4AF04090FCCA04141DBAB" />
-            <ComponentRef Id="cmp0A093FBFEB385038FEADD34BEB7F45B9" />
-            <ComponentRef Id="cmp6CE563109CFE7409C0592058C5CD90DF" />
-            <ComponentRef Id="cmp0A685ACC7EA34C7286F9E4E8BBD2E19A" />
-            <ComponentRef Id="cmp71115A2B63E3974377FBA3BF65238426" />
-            <ComponentRef Id="cmp011DC725B824AF0E8D0852FA6DADE638" />
-            <ComponentRef Id="cmp11BB8990702AFE256F111FD2ACB3E4CF" />
-            <ComponentRef Id="cmp80B4AC6B30818CA726E24BDA6E87300D" />
-            <ComponentRef Id="cmp99FBF74EAD308FA2A877FA414667A5F4" />
-            <ComponentRef Id="cmp74E44F4089BCDAFF8421AED039D3E9BD" />
-            <ComponentRef Id="cmpFCA31C79170995F1A7A9FA0774A70487" />
-            <ComponentRef Id="cmp2D2B568D74D91DC4EC7778688236C98D" />
-            <ComponentRef Id="cmpBB12965E956ECCE801C659D92F4581CB" />
-            <ComponentRef Id="cmp2C37342EC7370E6184FA6FA2CF323AC6" />
-            <ComponentRef Id="cmp059DDCB4DF1A7583689587214A876F87" />
-            <ComponentRef Id="cmp6BAFF4ED6A8516A49E65D6D487D2F56F" />
-            <ComponentRef Id="cmp09525E258EA649858DDE17A23F55A464" />
-            <ComponentRef Id="cmp71BD6B29BFA7FD39723135746357FB73" />
-            <ComponentRef Id="cmp6EC5452D83FABB5A2BAC396B394EE818" />
-            <ComponentRef Id="cmp029BC514A4D988B55B6FE09D814BF09B" />
-            <ComponentRef Id="cmpA4B633E46857DB4AB13A331856BD0AA6" />
-            <ComponentRef Id="cmp2AD25C21B0C4B5D1B3CA5DCC8346DCF6" />
-            <ComponentRef Id="cmp48A1D96FBFABCD38BCEDBCA1EC228969" />
-            <ComponentRef Id="cmp48182FE78229B4D685BD3B89D173A30E" />
-            <ComponentRef Id="cmpF056E53C2C964F348F045FB9E1C482EA" />
-            <ComponentRef Id="cmp13EA715FC716FF931D171ED477394938" />
-            <ComponentRef Id="cmp49BF6BB97FF443110B4623B1110F331B" />
-            <ComponentRef Id="cmp674286294E3BA4D2A5C01A9BE6CE5265" />
-            <ComponentRef Id="cmp083FFE882640FC231B7911520CD1DA46" />
-            <ComponentRef Id="cmp2AC07A9F0A53C380863510F0A0889C4E" />
-            <ComponentRef Id="cmp4AAF8A9CCD1EA8988A680B6DEF13CD08" />
-            <ComponentRef Id="cmpECE2C75002B95ADFC6D8CF922244E97A" />
-            <ComponentRef Id="cmp5FBCCB95F9E295C1A1F3383D2DCD36C7" />
-            <ComponentRef Id="cmp629565AE6FFEAF48D7D9C6CDF041DD64" />
         </ComponentGroup>
     </Fragment>
 </Wix>

@@ -5,9 +5,9 @@
 UFiresThousandSunsGameInstance::UFiresThousandSunsGameInstance() {
 }
 
-void	UFiresThousandSunsGameInstance::InitSaveGame(FString SaveName) {
+void	UFiresThousandSunsGameInstance::InitSaveGame(FString SaveName, TSubclassOf<UFiresThousandSunsSaveGame> SaveGameClass) {
 	this->Fires_SG = UFiresThousandSunsSaveGame::LoadSave(SaveName);
 	if (!this->Fires_SG) {
-		this->Fires_SG = UFiresThousandSunsSaveGame::CreateSave(SaveName);
+		this->Fires_SG = UFiresThousandSunsSaveGame::CreateSave(SaveName, SaveGameClass);
 	}
 }

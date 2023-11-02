@@ -9,6 +9,9 @@
 			<Directory Id="ProgramMenuFolder">
 				<Directory Id="InstallProgramMenuFolder" Name="!(loc.ProductFolderName)" />
 			</Directory>
+			<Directory Id="TheDesktopFolder">
+				<Directory Id="DesktopFolder" Name="Desktop" />
+			</Directory>
 
 
 			<!-- Program Files folder -->

@@ -18,7 +18,6 @@
 	<!-- Can be defined in the project file (GetAssemblyIdentity). -->
 	<?define BuildVersion = 1.0.0.0 ?>
 
-
 	<!-- Main product -->
 	<Product
 		Id="$(var.ProductCode)"

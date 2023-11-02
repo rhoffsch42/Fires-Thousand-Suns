@@ -16,7 +16,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	static UFiresThousandSunsSaveGame* LoadSave(FString SlotName);
 	UFUNCTION(BlueprintCallable)
-	static UFiresThousandSunsSaveGame* CreateSave(FString SlotName);
+	static UFiresThousandSunsSaveGame* CreateSave(FString SlotName, TSubclassOf<UFiresThousandSunsSaveGame> SaveGameClass);
 	
 	UFiresThousandSunsSaveGame();
 	UFUNCTION(BlueprintCallable)

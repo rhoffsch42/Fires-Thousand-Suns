@@ -9,9 +9,7 @@
 
 #include "NamedValueSlider.generated.h"
 
-/**
- * 
- */
+
 UCLASS(Blueprintable)
 class FIRESTHOUSANDSUNS_API UNamedValueSlider : public UUserWidget
 {

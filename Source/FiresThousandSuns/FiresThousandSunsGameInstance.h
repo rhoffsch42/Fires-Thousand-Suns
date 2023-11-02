@@ -18,7 +18,7 @@ public:
 	UFiresThousandSunsGameInstance();
 
 	UFUNCTION(BlueprintCallable)
-	void	InitSaveGame(FString SaveName);
+	void	InitSaveGame(FString SaveName, TSubclassOf<UFiresThousandSunsSaveGame> SaveGameClass);
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	UFiresThousandSunsSaveGame* Fires_SG = nullptr;
