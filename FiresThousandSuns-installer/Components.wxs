@@ -17,16 +17,14 @@
 						  Directory="InstallProgramMenuFolder"
 						  WorkingDirectory="INSTALLFOLDER"
 						  Icon="icon.ico"
-						  Arguments="-SaveToUserDir"
 						  />
-				<!-- Shortcut In Desktop -->
+				<!-- Shortcut In Desktop Arguments="-SaveToUserDir" -->
 				<Shortcut Id="DesktopShortcutExe"
 						  Name="!(loc.ProductName_$(var.Platform))"
 						  Target="[INSTALLFOLDER]FiresThousandSuns.exe"
 						  WorkingDirectory="INSTALLFOLDER"
 						  Directory="DesktopFolder"
 						  Icon="icon.ico"
-						  Arguments="-SaveToUserDir"
 						  />
 	
 

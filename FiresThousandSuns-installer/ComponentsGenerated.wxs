@@ -2,27 +2,27 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
     <Fragment>
         <DirectoryRef Id="INSTALLFOLDER">
-            <Component Id="cmp8D5F02FE8C4D8FDBD30FF80828A96476" Guid="{B89C5830-E049-42E2-8B5B-454ADAA19A92}">
+            <Component Id="cmp8D5F02FE8C4D8FDBD30FF80828A96476" Guid="{247F0165-1B43-409C-9884-6B7E438D1DA8}">
                 <File Id="fil650659426BE8F33AD501B251A8549DA7" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns.exe" />
             </Component>
-            <Component Id="cmpFF64DC5E6A88A04C95679A2F09A8AC2B" Guid="{6FB88CFE-E99B-4922-92F7-B31F0B98C98F}">
+            <Component Id="cmpFF64DC5E6A88A04C95679A2F09A8AC2B" Guid="{F194E57C-4F45-4AF1-B90A-5710C6E2B85A}">
                 <File Id="filE38704CD067FF8A17D55A10E4936C638" KeyPath="yes" Source="$(var.BasePath)\Manifest_NonUFSFiles_Win64.txt" />
             </Component>
-            <Component Id="cmp4415E7A8CF3B39C452B901DD5B93D01C" Guid="{49BA58A9-DEF6-4845-99C6-47CC6D85C887}">
+            <Component Id="cmp4415E7A8CF3B39C452B901DD5B93D01C" Guid="{7FAA1F0D-F5B0-4877-B752-320B81ABE597}">
                 <File Id="filE38382B8C07314C5C5F33EA41AAE675C" KeyPath="yes" Source="$(var.BasePath)\Manifest_UFSFiles_Win64.txt" />
             </Component>
             <Directory Id="dir2AB38F46EAECCB94563A9BD0DCC148AD" Name="Engine">
                 <Directory Id="dirE1064A66121FDC1B281074C67B8982EF" Name="Binaries">
                     <Directory Id="dir8BC0E5C7C23909FC717BCFB9B59D2263" Name="ThirdParty">
                         <Directory Id="dirA9A7291130EBE98EFA3B599A2AAF8CA6" Name="DbgHelp">
-                            <Component Id="cmp41E9FCAD39B2BC5DDD61F3B41F56287C" Guid="{654B0B64-358F-4F91-87E9-8FA93B32DE31}">
+                            <Component Id="cmp41E9FCAD39B2BC5DDD61F3B41F56287C" Guid="{30B39F79-1FCA-49B4-8A64-098E98D81A6C}">
                                 <File Id="fil3AA84F49F067A8533F0124FA44458516" KeyPath="yes" Source="$(var.BasePath)\Engine\Binaries\ThirdParty\DbgHelp\dbghelp.dll" />
                             </Component>
                         </Directory>
                         <Directory Id="dirE6F848F59A4A27CA9D2D721824FE42F9" Name="NVIDIA">
                             <Directory Id="dirC7C782B6DD4896B898B6E5ABC9958384" Name="NVaftermath">
                                 <Directory Id="dirF47512E920F3DBEBFDA08E0C0775191A" Name="Win64">
-                                    <Component Id="cmp07B36CC1DA433970E21F82C76C3EE946" Guid="{0FAA81CC-0201-445E-9A42-7BAE1D87DFF7}">
+                                    <Component Id="cmp07B36CC1DA433970E21F82C76C3EE946" Guid="{9B749C6D-F1BB-49C8-A61F-8709573CA7E8}">
                                         <File Id="filAC48AF5E99E0A583FE7E3C200BAC3491" KeyPath="yes" Source="$(var.BasePath)\Engine\Binaries\ThirdParty\NVIDIA\NVaftermath\Win64\GFSDK_Aftermath_Lib.x64.dll" />
                                     </Component>
                                 </Directory>
@@ -31,7 +31,7 @@
                         <Directory Id="dir5F7C3B1BF4F2CC2EA8704738C3EADF06" Name="Ogg">
                             <Directory Id="dirF6B7BD1950305043197EFF3AC6BDFB7D" Name="Win64">
                                 <Directory Id="dir9CAFE72DB8D1BF5A15E9F74DF00DD75C" Name="VS2015">
-                                    <Component Id="cmp379324C45B84FFBACB0A126DC16B952D" Guid="{5D6E01AF-ECC2-4029-9E92-CA4F5FA16DDD}">
+                                    <Component Id="cmp379324C45B84FFBACB0A126DC16B952D" Guid="{B63D5231-0217-43E5-89D9-E0A80292A9F5}">
                                         <File Id="fil828A555B8606B91B1C45C2BBF1A074F1" KeyPath="yes" Source="$(var.BasePath)\Engine\Binaries\ThirdParty\Ogg\Win64\VS2015\libogg_64.dll" />
                                     </Component>
                                 </Directory>
@@ -40,10 +40,10 @@
                         <Directory Id="dirC9A2470D9B138B0AAA2AFE144D9ACE8A" Name="Vorbis">
                             <Directory Id="dirF3E7B2F843A4E6D1541B581FEB2B514A" Name="Win64">
                                 <Directory Id="dirA007A2AB6E22064666E4E225D34820D9" Name="VS2015">
-                                    <Component Id="cmp111CD54AFACEF48919FA128E813C9B8C" Guid="{FFACFEDF-3915-41AD-883B-30A632D8BCA2}">
+                                    <Component Id="cmp111CD54AFACEF48919FA128E813C9B8C" Guid="{8D34D452-77E7-4522-B123-B04996BDA3C0}">
                                         <File Id="filE46926C1C834F70B9E8FF11C9C3FFF93" KeyPath="yes" Source="$(var.BasePath)\Engine\Binaries\ThirdParty\Vorbis\Win64\VS2015\libvorbisfile_64.dll" />
                                     </Component>
-                                    <Component Id="cmpACFE1F7D7FCEAF8C632BDB513D93312F" Guid="{9DFF6A09-9B44-4F6E-A2BF-3CBA71103FB5}">
+                                    <Component Id="cmpACFE1F7D7FCEAF8C632BDB513D93312F" Guid="{0D27CB48-1503-4F7D-9D61-9E223F11C58D}">
                                         <File Id="fil83984C3DFDAB8B636E34158C85ED49A2" KeyPath="yes" Source="$(var.BasePath)\Engine\Binaries\ThirdParty\Vorbis\Win64\VS2015\libvorbis_64.dll" />
                                     </Component>
                                 </Directory>
@@ -52,7 +52,7 @@
                         <Directory Id="dir174A0B006E56FAA439ED2812CD25BAD4" Name="Windows">
                             <Directory Id="dirEDDA24723B42505956C18F167079C4BB" Name="XAudio2_9">
                                 <Directory Id="dir0463DCA466B20A92F1FE51F9B358FBD6" Name="x64">
-                                    <Component Id="cmpA8F696FB2521CDBADB4BF91BFDF6D443" Guid="{980E2BA9-B871-4516-B05A-24F0572AF7CC}">
+                                    <Component Id="cmpA8F696FB2521CDBADB4BF91BFDF6D443" Guid="{03FDB4EC-5F0C-44F7-9810-8A8084CF6CE4}">
                                         <File Id="fil03FE8C0CAD3D74C5744F0EB4CAF57ABD" KeyPath="yes" Source="$(var.BasePath)\Engine\Binaries\ThirdParty\Windows\XAudio2_9\x64\xaudio2_9redist.dll" />
                                     </Component>
                                 </Directory>
@@ -63,7 +63,7 @@
                 <Directory Id="dir0AB687573E0F1DDCF719CD8C8D972B9D" Name="Extras">
                     <Directory Id="dir9E5EDDED8B8471C405E51F93139F5D90" Name="Redist">
                         <Directory Id="dirE91301220B9AA80B64DD1413292D4FD3" Name="en-us">
-                            <Component Id="cmpB8833BAF27DDF1BE6850104211BF6EB1" Guid="{91EF6FA6-3BE2-4CCE-8EB7-B0F70FE00D2B}">
+                            <Component Id="cmpB8833BAF27DDF1BE6850104211BF6EB1" Guid="{2DD30CBD-5ED2-41FE-BFB4-C7EB2647916D}">
                                 <File Id="fil16E2E026EC59F77AFB171D2AB79A7C23" KeyPath="yes" Source="$(var.BasePath)\Engine\Extras\Redist\en-us\UEPrereqSetup_x64.exe" />
                             </Component>
                         </Directory>
@@ -73,50 +73,50 @@
             <Directory Id="dirB391D4A0AFA1C3685374D0DC74B417E5" Name="FiresThousandSuns">
                 <Directory Id="dir7595EAC27137B28542408FA7BD061773" Name="Binaries">
                     <Directory Id="dirCF03F5A32D9CA4F2AC9F582BB80EE59B" Name="Win64">
-                        <Component Id="cmp4EE501304F81B1E08F6603D444DD4099" Guid="{3126199B-9E3F-4B1C-A13F-228678EB6351}">
+                        <Component Id="cmp4EE501304F81B1E08F6603D444DD4099" Guid="{5C208EE2-DCDC-42D5-94AF-61FDA93445B3}">
                             <File Id="fil1E57266EC86482368A817D6217B7BE72" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Binaries\Win64\boost_atomic-mt-x64.dll" />
                         </Component>
-                        <Component Id="cmp2D6FEB4E513B1B5D491292CA4874F24F" Guid="{01C4372B-4A9A-4EAE-BC56-ADCC26016A09}">
+                        <Component Id="cmp2D6FEB4E513B1B5D491292CA4874F24F" Guid="{149608FB-FB20-4A32-AFE1-3B2FA96A37EE}">
                             <File Id="fil4DD9F2D6E315D1858A4F7C78971637EF" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Binaries\Win64\boost_chrono-mt-x64.dll" />
                         </Component>
-                        <Component Id="cmp2744378559DB7EEA44A492482C29F196" Guid="{74C85C0B-775E-46EF-96E0-4ABE92316524}">
+                        <Component Id="cmp2744378559DB7EEA44A492482C29F196" Guid="{BD93D571-634A-4F92-8D15-BA9173810DEA}">
                             <File Id="filB2167A3C44897382516C177AC2774994" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Binaries\Win64\boost_filesystem-mt-x64.dll" />
                         </Component>
-                        <Component Id="cmp103E3966C9C6FF42FCAA655EB504DCA1" Guid="{19758C84-A390-4703-9527-4B17287DB44E}">
+                        <Component Id="cmp103E3966C9C6FF42FCAA655EB504DCA1" Guid="{7F6BE8C7-FCA9-4AD4-8CFC-272B2405E644}">
                             <File Id="fil078BEB1326CCF4EDCF2AF9E365914A6B" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Binaries\Win64\boost_iostreams-mt-x64.dll" />
                         </Component>
-                        <Component Id="cmpF95FAA965EAE6134CAB1286E40B2C53E" Guid="{357B4C89-6D07-4650-AB37-0559681D9880}">
+                        <Component Id="cmpF95FAA965EAE6134CAB1286E40B2C53E" Guid="{FEC115AB-1A69-4DCF-BBF0-00FF937A3981}">
                             <File Id="fil1EBC69D29291A90DC13952A72743FFB4" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Binaries\Win64\boost_program_options-mt-x64.dll" />
                         </Component>
-                        <Component Id="cmpDA5744C01A14AD211BA029F43361D0EC" Guid="{98E17C40-7329-4CAB-B19D-98DD87A2F336}">
+                        <Component Id="cmpDA5744C01A14AD211BA029F43361D0EC" Guid="{7DE7C495-EBE9-42A3-A50C-CFCB713710CD}">
                             <File Id="filEEE5F44709A7F6C7BE3464BE7FE5A94C" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Binaries\Win64\boost_python39-mt-x64.dll" />
                         </Component>
-                        <Component Id="cmp100F949AA9DB900852952F25728D13D0" Guid="{BFC42E87-DB66-49EA-AEBC-147ABACE1181}">
+                        <Component Id="cmp100F949AA9DB900852952F25728D13D0" Guid="{23B85F8E-6FE2-4898-BA51-A73D68D94949}">
                             <File Id="fil68F5B78A102743B762A418E0D0FD15F9" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Binaries\Win64\boost_regex-mt-x64.dll" />
                         </Component>
-                        <Component Id="cmpBBDE13536C0EA7FBCB17CE826AF666E6" Guid="{ECAE655A-186F-4BDF-B93B-1D8562A4D305}">
+                        <Component Id="cmpBBDE13536C0EA7FBCB17CE826AF666E6" Guid="{BE1231AF-3AC4-4110-A981-A8BD4859CA2C}">
                             <File Id="filF1C865B6A6F91E989197CB9E6AF5EA17" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Binaries\Win64\boost_system-mt-x64.dll" />
                         </Component>
-                        <Component Id="cmpF725E74248F400FBC084D05600D461EC" Guid="{991C8B39-5338-4303-8DF9-F43D7B2009BA}">
+                        <Component Id="cmpF725E74248F400FBC084D05600D461EC" Guid="{6DB8C9EB-F660-4027-8180-2F0BE094E8A1}">
                             <File Id="fil2DD44BFD6430837F9F79B92CE387934A" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Binaries\Win64\boost_thread-mt-x64.dll" />
                         </Component>
-                        <Component Id="cmpE1DCA46233B0C5967BE28EDC42923F99" Guid="{7F253BB1-CC87-4B7C-857B-0ADA17A22B3B}">
+                        <Component Id="cmpE1DCA46233B0C5967BE28EDC42923F99" Guid="{A2209466-B651-49B0-9894-14D81DFD8FF8}">
                             <File Id="filD0A2CF4DBB728267B469527A9BB90399" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Binaries\Win64\FiresThousandSuns-Win64-Shipping.exe" />
                         </Component>
-                        <Component Id="cmp8F853F92B78A34529293E1612209F856" Guid="{E4401781-9506-44E6-86F7-5F56630E151F}">
+                        <Component Id="cmp8F853F92B78A34529293E1612209F856" Guid="{45C17E2A-B80F-4438-8127-340CE30CE73A}">
                             <File Id="fil0C225E56BF7B09E6B3616B2FE56592E7" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Binaries\Win64\OpenImageDenoise.dll" />
                         </Component>
-                        <Component Id="cmpA8D7D26E73531F72DB5491A1D9A93B38" Guid="{0E2B6CD8-C70D-4363-8F4C-CDE96D493956}">
+                        <Component Id="cmpA8D7D26E73531F72DB5491A1D9A93B38" Guid="{9E32A0A8-81A0-46AF-8E44-88A4D529D3DB}">
                             <File Id="fil20D8E1A817EBE4B5A7CEBFE565A23B75" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Binaries\Win64\tbb.dll" />
                         </Component>
-                        <Component Id="cmpB2DFED63109F948E46D5B1FCBFD58ED1" Guid="{F47A3E3F-CABB-4A40-81AD-893E307F85C4}">
+                        <Component Id="cmpB2DFED63109F948E46D5B1FCBFD58ED1" Guid="{8113D879-F813-43D6-9C5B-5C8523F7094D}">
                             <File Id="fil1B99CBEEA9230945B44464CCC468DDDB" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Binaries\Win64\tbb.pdb" />
                         </Component>
-                        <Component Id="cmp0DD34D4039948014E7DD7B536020DC41" Guid="{3EC47530-F1B9-4DB7-B2FB-011F753A200F}">
+                        <Component Id="cmp0DD34D4039948014E7DD7B536020DC41" Guid="{C118CF82-2D08-4F08-BCD3-74AD42AC2508}">
                             <File Id="fil3C6AE15FB5515B976FB1E9BC0E90FFB1" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Binaries\Win64\tbb12.dll" />
                         </Component>
                         <Directory Id="dir0DC18A2EC00CE688FA5CECB28503A7B1" Name="D3D12">
-                            <Component Id="cmp2450BEF8E55D60266A9C91D0A062E07B" Guid="{24AC00D2-7984-46E1-AFC9-F1624A8A7814}">
+                            <Component Id="cmp2450BEF8E55D60266A9C91D0A062E07B" Guid="{F6F90E94-3E86-49B8-B844-138F5E869EBF}">
                                 <File Id="fil696BA7243A2B7C461EA5845027EFCB47" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Binaries\Win64\D3D12\D3D12Core.dll" />
                             </Component>
                         </Directory>
@@ -124,22 +124,22 @@
                 </Directory>
                 <Directory Id="dirDF53E96848389AA48A6CC487366BB8C1" Name="Content">
                     <Directory Id="dir635EBABA7962D1E71B2F90EF72DC5CDD" Name="Paks">
-                        <Component Id="cmp17C26B68B2F8902C196E05EDED6E2265" Guid="{ED7E12E7-E495-48C3-8BB4-696DF74CD2A9}">
+                        <Component Id="cmp17C26B68B2F8902C196E05EDED6E2265" Guid="{C1C46064-9CC2-4945-8980-5BD198B381DF}">
                             <File Id="fil1FCD07F95E8A9CE5C879754D3A75EC4C" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Content\Paks\FiresThousandSuns-Windows.pak" />
                         </Component>
-                        <Component Id="cmp3E4A730C49B02F91698556561B87D8E8" Guid="{D2556CA8-A85A-476B-86C9-B52B36F6D6A6}">
+                        <Component Id="cmp3E4A730C49B02F91698556561B87D8E8" Guid="{8A036329-1F3E-44B7-94C1-61A33EA1E1F1}">
                             <File Id="fil4909BDBF207FF5F10F2247B81E1B1DD1" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Content\Paks\FiresThousandSuns-Windows.sig" />
                         </Component>
-                        <Component Id="cmpA66E620DCC6425EDABECF02A726BE7E7" Guid="{DED8B150-920A-48F5-9822-F40DEB4211CC}">
+                        <Component Id="cmpA66E620DCC6425EDABECF02A726BE7E7" Guid="{C36BFF36-FB97-4691-86CE-53A170BD3EBE}">
                             <File Id="filD58A14BEA29036E3C39BD3F5A5079FD5" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Content\Paks\FiresThousandSuns-Windows.ucas" />
                         </Component>
-                        <Component Id="cmpCA01F42EBF91D363CD97DE156C91D844" Guid="{F230ACC7-E8BD-45D5-8F85-C291778F8083}">
+                        <Component Id="cmpCA01F42EBF91D363CD97DE156C91D844" Guid="{E19903BE-60A4-4E5D-B1F7-C078A43C663B}">
                             <File Id="fil945F912FA75DCF3D09600234DF220776" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Content\Paks\FiresThousandSuns-Windows.utoc" />
                         </Component>
-                        <Component Id="cmp31DE34DE2F4FB5868E68DE1DFF2A9CC1" Guid="{14FC032F-9E80-482E-B811-BEB09EDC2D78}">
+                        <Component Id="cmp31DE34DE2F4FB5868E68DE1DFF2A9CC1" Guid="{F3A9C681-AD08-49C4-910B-CDFE3D7AF16A}">
                             <File Id="filCC86B059E34D2A1842DAF35D91D931BE" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Content\Paks\global.ucas" />
                         </Component>
-                        <Component Id="cmp480B165C12540012F569A516A8535231" Guid="{59C10456-9D61-4D9F-8691-C2DFB1D9FF7F}">
+                        <Component Id="cmp480B165C12540012F569A516A8535231" Guid="{0E685855-463A-4DFE-92A6-73521D1D3B1D}">
                             <File Id="fil837435AE904E764CE29634BFAED045D7" KeyPath="yes" Source="$(var.BasePath)\FiresThousandSuns\Content\Paks\global.utoc" />
                         </Component>
                     </Directory>
