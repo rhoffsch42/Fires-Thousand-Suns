@@ -28,6 +28,7 @@
 		Language="!(loc.Language)"
 	>
 		<!-- Package details -->
+		<!-- Comments="!(loc.Comments)" -->
 		<Package
 			InstallerVersion="200"
 			Compressed="yes"
@@ -35,21 +36,27 @@
 			Manufacturer="!(loc.Company)"
 			Description="!(loc.Description)"
 			Keywords="!(loc.Keywords)"
-			Comments="!(loc.Comments)"
 			Languages="!(loc.Language)"
 		/>
 		<MajorUpgrade DowngradeErrorMessage="!(loc.DowngradeError)" />
 		<!-- Include .cab file into .msi file-->
 		<MediaTemplate EmbedCab="yes" />
 
+		<!-- Program details in Windows -->
 		<Icon Id="icon.ico" SourceFile="$(var.ProjectDir)\fts-icon-bold-450x450.ico" />
 		<Property Id="ARPPRODUCTICON">icon.ico</Property>
-		<Property Id="APPURLINFOABOUT">https://github.com/rhoffsch42/Fires-Thousand-Suns</Property>
+		<Property Id="ARPURLINFOABOUT">https://github.com/rhoffsch42/Fires-Thousand-Suns</Property>
+		<Property Id="ARPURLUPDATEINFO">https://github.com/rhoffsch42/Fires-Thousand-Suns/releases</Property>
+		<Property Id="ARPHELPLINK">https://github.com/rhoffsch42/Fires-Thousand-Suns</Property>
 
+		<Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+		
 		<!-- Create a basic UI for the installer -->
 		<!-- Background: 493x312 -->
 		<!-- Banner: 493x58 -->
-		<UIRef Id="WixUI_Minimal" />
+		<!-- WixUI_Minimal WixUI_InstallDir-->
+		<UIRef Id="WixUI_InstallDir" />
+		
 		<WixVariable Id="WixUILicenseRtf" Value="$(var.ProjectDir)\assets\License.rtf" />
 		<WixVariable Id="WixUIDialogBmp" Value="$(var.ProjectDir)\assets\Background.bmp" />
 		<WixVariable Id="WixUIBannerBmp" Value="$(var.ProjectDir)\assets\Banner.bmp" />

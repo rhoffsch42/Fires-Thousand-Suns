@@ -8,10 +8,10 @@
 	<String Id="DowngradeError">A newer version of !(loc.ProductName_$(var.Platform)) is already installed.</String>
 
 	<String Id="Description">Training game for PoE</String>
-	<String Id="Comments">test comment</String>
+	<String Id="Comments">comment</String>
 	<String Id="Keywords">installer</String>
 
-	<String Id="ProductFolderName">TheFiresofaThousandSuns</String>
+	<String Id="ProductFolderName">FiresThousandSuns</String>
 
 
 </WixLocalization>
