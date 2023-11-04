@@ -3,6 +3,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+
 #include "Buff.generated.h"
 
 #define BUFF_DEFAULT_DURATION	0.0
@@ -14,7 +15,8 @@ enum class EBuffType : uint8 {
 	VaalMoltenShell UMETA(DisplayName = "VaalMoltenShell"),
 	Steelskin UMETA(DisplayName = "SteelSkin"),
 	DebuffLockedMovement UMETA(DisplayName = "DebuffLockedMovement"),
-	RubyFlask UMETA(DisplayName = "RubyFlask")
+	RubyFlask UMETA(DisplayName = "RubyFlask"),
+	FortifyStacks UMETA(DisplayName = "FortifyStacks")
 };
 
 UDELEGATE(BlueprintCallable)
@@ -28,6 +30,10 @@ class FIRESTHOUSANDSUNS_API ABuff : public AActor
 public:
 	ABuff();
 	virtual void Tick(float DeltaSeconds) override;
+
+	//TODO: allow buffwidgets to know what to display without knowing their data type
+	UFUNCTION(BlueprintCallable)
+	virtual FString	GetDisplayString() const;
 
 	UFUNCTION(BlueprintCallable)
 	virtual void	ApplyTo(AActor* Target);

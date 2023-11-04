@@ -8,10 +8,3 @@ ABuffRubyFlask::ABuffRubyFlask() {
 	this->IconMaterial = LoadObject<UMaterial>(this, *MatPath);
 	UFuncLib::CheckObject(this->IconMaterial, FString("LoadObject<UMaterial>() failed : ").Append(MatPath));
 }
-
-//void	ABuffRubyFlask::ApplyTo(AActor* Target) {
-//	Super::ApplyTo(Target);
-//}
-//
-//void	ABuffRubyFlask::Remove() {
-//}

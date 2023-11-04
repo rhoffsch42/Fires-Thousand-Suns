@@ -28,6 +28,18 @@ ABuff* UBuffWidget::GetLinkedBuff() const { return this->_LinkedBuff; }
 
 //////////////////////////////////////
 
+void	UBuffWidgetValue::NativeConstruct() {
+	Super::NativeConstruct();
+	this->_FormatOptions.MaximumFractionalDigits = 0;
+}
+
+void	UBuffWidgetValue::NativeTick(const FGeometry& MyGeometry, float InDeltaTime) {
+	Super::NativeTick(MyGeometry, InDeltaTime);
+	this->Text->SetText(FText::FromString(this->_LinkedBuff->GetDisplayString()));
+}
+
+//////////////////////////////////////
+
 void	UBuffWidgetDuration::NativeConstruct() {
 	Super::NativeConstruct();
 }

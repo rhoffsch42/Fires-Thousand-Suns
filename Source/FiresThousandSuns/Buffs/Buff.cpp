@@ -27,6 +27,11 @@ void	ABuff::Tick(float DeltaSeconds) {
 	Super::Tick(DeltaSeconds);
 }
 
+FString	ABuff::GetDisplayString() const {
+	return FString("");
+}
+
+
 void	ABuff::ApplyTo(AActor* Target) {
 	this->_Target = Target;
 	UBuffManager* bm = this->_Target->GetComponentByClass<UBuffManager>();// not mandatory

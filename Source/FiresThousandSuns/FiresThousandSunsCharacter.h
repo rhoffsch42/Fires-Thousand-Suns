@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "FiresThousandSunsPlayerState.h"
+#include "Buffs/BuffFortify.h"
 
 #include "FiresThousandSunsCharacter.generated.h"
 
@@ -38,6 +39,8 @@ public:
 	// Custom PlayerState
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	AFiresThousandSunsPlayerState* CustomPlayerState = nullptr;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	TSubclassOf<ABuffFortify>	BuffFortifyClass;
 
 	UPROPERTY(BlueprintAssignable, EditDefaultsOnly)
 	FPlayerDied	PlayerDied;

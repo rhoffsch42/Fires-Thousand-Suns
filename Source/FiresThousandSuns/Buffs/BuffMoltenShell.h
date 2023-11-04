@@ -14,7 +14,8 @@ class FIRESTHOUSANDSUNS_API ABuffGuard : public ABuff
 public:
 	ABuffGuard();
 	virtual void	OnConstruction(const FTransform& Transform) override;// todo check every UObject that need to constructs UObjects in ctor
-	virtual void	ApplyTo(AActor* Target);
+	virtual FString	GetDisplayString() const override;
+	virtual void	ApplyTo(AActor* Target) override;
 
 	UFUNCTION(BlueprintCallable)
 	virtual void	OnGuardHpEmpty();
@@ -54,8 +55,8 @@ class FIRESTHOUSANDSUNS_API ABuffSteelskin : public ABuffGuard
 	GENERATED_BODY()
 public:
 	ABuffSteelskin();
-	virtual void	ApplyTo(AActor* Target);
-	virtual void	Remove();
+	virtual void	ApplyTo(AActor* Target) override;
+	virtual void	Remove() override;
 private:
 
 };

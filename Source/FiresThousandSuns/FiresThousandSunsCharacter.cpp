@@ -71,6 +71,7 @@ void	AFiresThousandSunsCharacter::Debug_PlayerState() {
 
 void	AFiresThousandSunsCharacter::_InitPreBeginPlay() {
 	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, "AFiresThousandSunsCharacter::_InitPreBeginPlay()");
+	BuffFortifyClass = ABuffFortify::StaticClass();
 }
 
 void	AFiresThousandSunsCharacter::_InitPostBeginPlay() {
@@ -91,6 +92,16 @@ void	AFiresThousandSunsCharacter::_InitPostBeginPlay() {
 		FScriptDelegate delegateScript;
 		delegateScript.BindUFunction(this, "Die");
 		this->CustomPlayerState->HealthManager->HpEmpty.Add(delegateScript);
+
+		// Fortify Buff
+		if (this->CustomPlayerState->PlayerStatistics.FortifyEffect > 0) {
+			ABuffFortify* buff = UFuncLib::SafeSpawnActor<ABuffFortify>(this->GetWorld(), this->BuffFortifyClass);
+			if (UFuncLib::CheckObject(buff, "UAbilityMoltenShell::Activate() buff failed to create ")) {
+				buff->FortifyStacks = this->CustomPlayerState->PlayerStatistics.FortifyEffect;
+				buff->AttachToActor(this, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, false));
+				buff->ApplyTo(this->CustomPlayerState);
+			}
+		}
 	}
 }
 

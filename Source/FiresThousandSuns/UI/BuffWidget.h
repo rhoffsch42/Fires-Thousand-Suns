@@ -10,6 +10,8 @@
 
 #include "BuffWidget.generated.h"
 
+// todo: probably merge BuffValue in the BuffWidget, delete BuffGuard, inherit BuffDuration : public BuffValue. Adapt BP
+
 UCLASS(Blueprintable)
 class FIRESTHOUSANDSUNS_API UBuffWidget : public UUserWidget
 {
@@ -34,6 +36,20 @@ protected:
 	
 	ABuff* _LinkedBuff;
 private:
+};
+
+UCLASS(Blueprintable)
+class FIRESTHOUSANDSUNS_API UBuffWidgetValue : public UBuffWidget
+{
+	GENERATED_BODY()
+public:
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
+	UCommonTextBlock* Text;
+protected:
+	virtual void NativeConstruct() override;
+	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
+	
+	FNumberFormattingOptions _FormatOptions;
 };
 
 UCLASS(Blueprintable)

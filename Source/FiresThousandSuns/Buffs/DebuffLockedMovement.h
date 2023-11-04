@@ -14,8 +14,9 @@ class FIRESTHOUSANDSUNS_API ADebuffLockedMovement : public ABuff
 	GENERATED_BODY()
 public:
 	ADebuffLockedMovement();
-	virtual void	ApplyTo(AActor* Target);
-	virtual void	Remove();
+	//virtual FString	GetDisplayString() const override;
+	virtual void	ApplyTo(AActor* Target) override;
+	virtual void	Remove() override;
 
 private:
 };

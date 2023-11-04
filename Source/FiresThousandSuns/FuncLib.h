@@ -88,8 +88,11 @@ public:
 	UAbilityBar :
 		- check with the BP W_Play, if we can make a func UAbilityBar::UpdatePickerPosition()
 			handy way is to bind it with OnVisibilityChanged(), but it might not be the ideal way in some other context
+	TODO: check actors useless tick(). PrimaryComponentTick.bCanEverTick PrimaryComponentTick.SetTickFunctionEnable(true)
 
 	Fires :
+		- GM: take fortify stacks from the buff !
+		- refacto interraction buff <-> widgets (see Buff.h)
 		- debug msg on logfiles
 		- refacto BP / c++
 		- refacto GI GM SG interactions
@@ -100,8 +103,22 @@ public:
 		- visual feedback on hitting save button in settings
 		- make key binding save, currently bugged ?
 		~ arena UI : some background ?
-		~ totem skills to block suns
 		~ player death : sound
 		~ trade message (with fish312/CONCESOHO ref ?)
 		~ infos message (quin is the first to enter fetid pool, ben is the first to kill, carn is the first to hit lv100
+		x totem skills to block suns
+
+	cast time :
+		some skills are instant and will not register for the casting
+		other skills will start a delayed action that locks the player, can only have 1
+
+		cast cancel: the delayed action has a time window where it cannot be cancelled anymore (at the end)
+		determine what can be cancelled by what:
+			- skills can be cancelled by player movement
+			? skills can be cancelled by another skill
+		anim cancel: same thing, but the action isn't cancelled, only the lock
+
+	skill queue ? max amount or max cumulated cast time or both
 */
+
+

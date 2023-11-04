@@ -23,6 +23,11 @@ void ABuffGuard::OnConstruction(const FTransform& Transform) {
 	}
 }
 
+FString	ABuffGuard::GetDisplayString() const {
+	return FString::FromInt(this->HealthManager->GetHP());
+}
+
+
 void	ABuffGuard::ApplyTo(AActor* Target) {
 	Super::ApplyTo(Target);
 	APlayerState* PlayerState = Cast<APlayerState>(Target);
