@@ -30,7 +30,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	static bool	CheckObject(UObject* obj, FString ErrorMsg);
 	UFUNCTION(BlueprintCallable)
-	static void	PrintStats(const FPlayerStats& Stats);
+	static void	PrintStats(const FPlayerStatistics& Stats);
 	UFUNCTION(BlueprintCallable)
 	static void	CopyToClipboard(FString Input);
 	UFUNCTION(BlueprintCallable)
@@ -90,19 +90,18 @@ public:
 			handy way is to bind it with OnVisibilityChanged(), but it might not be the ideal way in some other context
 
 	Fires :
-		- installer
 		- debug msg on logfiles
 		- refacto BP / c++
 		- refacto GI GM SG interactions
 		- refacto inputs: migrate in PlayerController
-		
+		- flame dash drawback
 		- real Widget for ability tooltips
-		- arena UI : some background ?
 		- Better Maven hairs...
 		- visual feedback on hitting save button in settings
 		- make key binding save, currently bugged ?
+		~ arena UI : some background ?
+		~ totem skills to block suns
 		~ player death : sound
 		~ trade message (with fish312/CONCESOHO ref ?)
 		~ infos message (quin is the first to enter fetid pool, ben is the first to kill, carn is the first to hit lv100
-		~ patreon link
 */

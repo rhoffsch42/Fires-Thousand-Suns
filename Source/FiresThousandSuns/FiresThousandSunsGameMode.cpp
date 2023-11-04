@@ -1,5 +1,5 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
-
+// updated by rhoffsch42
 
 #include "FiresThousandSunsGameMode.h"
 #include "FiresThousandSunsPlayerController.h"
@@ -268,21 +268,21 @@ double	AFiresThousandSunsGameMode::_ApplyMitigation(double damage) const {
 	double suppRand = FMath::RandRange(0.0f, 1.0f);
 	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, FString::FormatAsNumber(suppRand*100));
 
-	FPlayerStats	Stats = Fires_State->PlayerStats;
+	FPlayerStatistics	Statistics = Fires_State->PlayerStatistics;
 	double rubyFlaskLess = RubyFlaskBuff ? RubyFlaskBuff->LessFireDamage : 0.0;
 	double sunFirePenetration = 0.00;
-	double fireRes = Stats.FireResistance / 100.0;
+	double fireRes = Statistics.FireResistance / 100.0;
 	double finalFireRes = std::min(std::max(fireRes, 0.75), // required in case of fireRes < 75
-			fireRes
-			+ (RubyFlaskBuff ? RubyFlaskBuff->BonusFireResistance : 0.0)
-			- sunFirePenetration
-		);
+		fireRes
+		+ (RubyFlaskBuff ? RubyFlaskBuff->BonusFireResistance : 0.0)
+		- sunFirePenetration
+	);
 	return damage
 		* (1.0 - finalFireRes)
 		* (1.0 - rubyFlaskLess)
-		* (1.0 - (suppRand <= (Stats.SpellSuppressionChance / 100.0) ? 1.0 : 0.0) * (Stats.SpellSuppressionEffect / 100.0)) 
-		* (1.0 - (Stats.FortifyEffect / 100.0))
-		* (1.0 - (Stats.CustomLessDamage / 100.0))
+		* (1.0 - (suppRand <= (Statistics.SpellSuppressionChance / 100.0) ? 1.0 : 0.0) * (Statistics.SpellSuppressionEffect / 100.0))
+		* (1.0 - (Statistics.FortifyEffect / 100.0))
+		* (1.0 - (Statistics.CustomLessDamage / 100.0))
 		;
 }
 

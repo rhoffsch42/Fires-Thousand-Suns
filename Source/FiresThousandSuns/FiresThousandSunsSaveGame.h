@@ -45,7 +45,7 @@ public:
 	float	AmbientVolume = 1.0f;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	FPlayerStats	PlayerStats;
+	FPlayerStatistics	PlayerStatistics;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	TArray<EAbilityType>	AbilityLayout;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)

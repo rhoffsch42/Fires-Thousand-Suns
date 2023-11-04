@@ -105,26 +105,26 @@ void AFiresThousandSunsCharacter::Tick(float DeltaSeconds) {
 	this->ApplyLifeRegen(DeltaSeconds);
 }
 
-void	AFiresThousandSunsCharacter::UpdateStats(const FPlayerStats& NewStats) {
+void	AFiresThousandSunsCharacter::UpdateStats(const FPlayerStatistics& NewStats) {
 	//AFiresThousandSunsPlayerState* state = Cast<AFiresThousandSunsPlayerState>(this->GetPlayerState());
 	if (!UFuncLib::CheckObject(this->CustomPlayerState, "AFiresThousandSunsCharacter UpdateStats() CustomPlayerState is nullptr")) {
 		return;
 	}
-	this->CustomPlayerState->PlayerStats = NewStats;
+	this->CustomPlayerState->PlayerStatistics = NewStats;
 	//UFuncLib::PrintStats(NewStats);
-	//UFuncLib::PrintStats(this->CustomPlayerState->PlayerStats);
+	//UFuncLib::PrintStats(this->CustomPlayerState->PlayerStatistics);
 	UCharacterMovementComponent* movcomp = this->GetCharacterMovement();
 	if (UFuncLib::CheckObject(movcomp, "AFiresThousandSunsCharacter GetCharacterMovement() returned nullptr")) {
 		movcomp->MaxWalkSpeed = 375.0 * (1.0 + (NewStats.MovementSpeed / 100.0));
 		movcomp->MinAnalogWalkSpeed = 375.0 * (1.0 + (NewStats.MovementSpeed / 100.0));
 	}
-	this->CustomPlayerState->HealthManager->SetMaxHP(this->CustomPlayerState->PlayerStats.Life);
-	this->CustomPlayerState->HealthManager->SetHP(this->CustomPlayerState->PlayerStats.Life);
+	this->CustomPlayerState->HealthManager->SetMaxHP(this->CustomPlayerState->PlayerStatistics.Life);
+	this->CustomPlayerState->HealthManager->SetHP(this->CustomPlayerState->PlayerStatistics.Life);
 }
 
 void	AFiresThousandSunsCharacter::ApplyLifeRegen(float DeltaSeconds) {
 	//this->CustomPlayerState->HealthManager->AddHP(50.0f * DeltaSeconds);
-	this->CustomPlayerState->HealthManager->AddHP(this->CustomPlayerState->PlayerStats.LifeRegeneration * DeltaSeconds);
+	this->CustomPlayerState->HealthManager->AddHP(this->CustomPlayerState->PlayerStatistics.LifeRegeneration * DeltaSeconds);
 }
 
 void	AFiresThousandSunsCharacter::Die() {
@@ -136,7 +136,7 @@ void	AFiresThousandSunsCharacter::Die() {
 		playerCtrl->bBlockInput = true;
 		//this->GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	}
-	this->CustomPlayerState->PlayerStats.LifeRegeneration = 0;
+	this->CustomPlayerState->PlayerStatistics.LifeRegeneration = 0;
 	this->GetMesh()->SetCollisionProfileName(TEXT("Ragdoll"));
 	this->GetMesh()->SetSimulatePhysics(true);
 

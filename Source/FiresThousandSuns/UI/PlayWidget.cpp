@@ -92,7 +92,7 @@ void	UPlayWidget::InitFlasks() {
 	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString("UPlayWidget::InitFlasks() done."));
 }
 
-void	UPlayWidget::ApplyPlayerStats(const FPlayerStats Stats) {
+void	UPlayWidget::ApplyPlayerStatistics(const FPlayerStatistics Stats) {
 	this->NVSlider_MovSpeed->UpdateWithValue(Stats.MovementSpeed);
 	this->NVSlider_Life->UpdateWithValue(Stats.Life);
 	this->NVSlider_LifeRegen->UpdateWithValue(Stats.LifeRegeneration);
@@ -104,11 +104,11 @@ void	UPlayWidget::ApplyPlayerStats(const FPlayerStats Stats) {
 }
 
 void	UPlayWidget::ApplyDefaultArenaConfiguration() {
-	this->ApplyPlayerStats(FPlayerStats());
+	this->ApplyPlayerStatistics(FPlayerStatistics());
 }
 
-FPlayerStats	UPlayWidget::GeneratePlayerStats() const {
-	return FPlayerStats{
+FPlayerStatistics	UPlayWidget::GeneratePlayerStatistics() const {
+	return FPlayerStatistics{
 		(int32)this->NVSlider_MovSpeed->GetValue(),
 		(int32)this->NVSlider_Life->GetValue(),
 		(int32)this->NVSlider_LifeRegen->GetValue(),

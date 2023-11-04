@@ -13,7 +13,7 @@
 
 
 USTRUCT(BlueprintType)
-struct FPlayerStats
+struct FPlayerStatistics
 {
 	GENERATED_BODY()
 	//public:
@@ -35,25 +35,25 @@ struct FPlayerStats
 	int32	CustomLessDamage = 0;
 };
 
-inline bool	operator==(const FPlayerStats& lhs, const FPlayerStats& rhs) {
+inline bool	operator==(const FPlayerStatistics& lhs, const FPlayerStatistics& rhs) {
 	bool res = (
-		(lhs.MovementSpeed				== rhs.MovementSpeed)
-		&& (lhs.Life					== rhs.Life)
-		&& (lhs.LifeRegeneration		== rhs.LifeRegeneration)
-		&& (lhs.FireResistance			== rhs.FireResistance)
-		&& (lhs.SpellSuppressionChance	== rhs.SpellSuppressionChance)
-		&& (lhs.SpellSuppressionEffect	== rhs.SpellSuppressionEffect)
-		&& (lhs.FortifyEffect			== rhs.FortifyEffect)
-		&& (lhs.CustomLessDamage		== rhs.CustomLessDamage)
+		(lhs.MovementSpeed == rhs.MovementSpeed)
+		&& (lhs.Life == rhs.Life)
+		&& (lhs.LifeRegeneration == rhs.LifeRegeneration)
+		&& (lhs.FireResistance == rhs.FireResistance)
+		&& (lhs.SpellSuppressionChance == rhs.SpellSuppressionChance)
+		&& (lhs.SpellSuppressionEffect == rhs.SpellSuppressionEffect)
+		&& (lhs.FortifyEffect == rhs.FortifyEffect)
+		&& (lhs.CustomLessDamage == rhs.CustomLessDamage)
 		);
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString(__func__).Append(res ? " True" : " False"));
 	return res;
 }
-inline bool operator!=(const FPlayerStats& lhs, const FPlayerStats& rhs) { return !(lhs == rhs); }
+inline bool operator!=(const FPlayerStatistics& lhs, const FPlayerStatistics& rhs) { return !(lhs == rhs); }
 
 
 /**
- * 
+ *
  */
 UCLASS(Blueprintable)
 class FIRESTHOUSANDSUNS_API AFiresThousandSunsPlayerState : public APlayerState
@@ -63,7 +63,7 @@ public:
 	AFiresThousandSunsPlayerState();
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	FPlayerStats	PlayerStats;
+	FPlayerStatistics	PlayerStatistics;
 
 	// HealtManager
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)

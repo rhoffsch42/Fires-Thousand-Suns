@@ -21,9 +21,9 @@ class FIRESTHOUSANDSUNS_API UPlayWidget : public UUserWidget
 	GENERATED_BODY()
 public:
 	UFUNCTION(BlueprintCallable)
-	void	ApplyPlayerStats(const FPlayerStats Stats);
+	void	ApplyPlayerStatistics(const FPlayerStatistics Stats);
 	UFUNCTION(BlueprintCallable)
-	FPlayerStats	GeneratePlayerStats() const;
+	FPlayerStatistics	GeneratePlayerStatistics() const;
 	UFUNCTION(BlueprintCallable)
 	void	InitSliders();
 	UFUNCTION(BlueprintCallable)

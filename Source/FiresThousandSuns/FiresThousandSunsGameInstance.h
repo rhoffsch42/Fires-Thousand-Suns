@@ -26,7 +26,7 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	UUserWidget*	UserWidgetRef = nullptr;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	FPlayerStats	BaseStats;
+	FPlayerStatistics	BaseStats;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	TArray<EAbilityType>	AbilityLayout;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)

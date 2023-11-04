@@ -29,7 +29,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void	Debug_PlayerState();
 	UFUNCTION(BlueprintCallable)
-	void	UpdateStats(const FPlayerStats& NewStats);
+	void	UpdateStats(const FPlayerStatistics& NewStats);
 	UFUNCTION(BlueprintCallable)
 	void	ApplyLifeRegen(float DeltaSeconds);
 	UFUNCTION(BlueprintCallable)

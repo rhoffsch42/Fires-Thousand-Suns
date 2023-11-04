@@ -56,7 +56,7 @@ bool    UFiresThousandSunsSaveGame::Save() {
 }
 
 void	UFiresThousandSunsSaveGame::TryUnlockKrangledMode(int32 PhasesSurvived) {
-    if (!this->bKrangledUnlocked && PhasesSurvived >= 5 && this->PlayerStats == FPlayerStats()) {
+    if (!this->bKrangledUnlocked && PhasesSurvived >= 5 && this->PlayerStatistics == FPlayerStatistics()) {
         this->bKrangledUnlocked = true;
         this->Save();
         D(FString("bKrangledUnlocked true"));
@@ -73,14 +73,14 @@ FString	UFiresThousandSunsSaveGame::ToString() const {
         this->DialoguesVolume,
         this->AmbientVolume,
 
-        this->PlayerStats.MovementSpeed,
-        (int32)this->PlayerStats.Life,
-        (int32)this->PlayerStats.LifeRegeneration,
-        this->PlayerStats.FireResistance,
-        this->PlayerStats.SpellSuppressionChance,
-        this->PlayerStats.SpellSuppressionEffect,
-        this->PlayerStats.FortifyEffect,
-        this->PlayerStats.CustomLessDamage
+        this->PlayerStatistics.MovementSpeed,
+        (int32)this->PlayerStatistics.Life,
+        (int32)this->PlayerStatistics.LifeRegeneration,
+        this->PlayerStatistics.FireResistance,
+        this->PlayerStatistics.SpellSuppressionChance,
+        this->PlayerStatistics.SpellSuppressionEffect,
+        this->PlayerStatistics.FortifyEffect,
+        this->PlayerStatistics.CustomLessDamage
     );
 }
 

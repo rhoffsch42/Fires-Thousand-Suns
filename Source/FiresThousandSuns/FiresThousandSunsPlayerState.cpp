@@ -20,8 +20,8 @@ void	AFiresThousandSunsPlayerState::_InitPreBeginPlay() {
 	
 	// HealthManager
 	this->HealthManager = NewObject<UHealthManager>();
-	this->HealthManager->SetMaxHP(this->PlayerStats.Life);
-	this->HealthManager->SetHP(this->PlayerStats.Life);
+	this->HealthManager->SetMaxHP(this->PlayerStatistics.Life);
+	this->HealthManager->SetHP(this->PlayerStatistics.Life);
 
 	// Abilitys
 	this->_FlameDash = NewObject<UAbilityFlameDash>();
