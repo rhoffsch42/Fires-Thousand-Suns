@@ -80,7 +80,7 @@ UAbilityVaalMoltenShell::UAbilityVaalMoltenShell() {
 	this->Cooldown->SetMaxUses(1);
 	this->Cooldown->SetDuration(50.0 + this->Duration); // This Skill's Cooldown does not recover during its effect
 	this->Cooldown->Reset();
-	this->TooltipName = "Big Molten Shield";
+	this->TooltipName = "Lava Molten Shield";
 
 	this->SetNewMaterial(this->GetWorld(), FString("/Script/Engine.Material'/Game/LevelPrototyping/Materials/FireShield_red_01_50x50_UIMat.FireShield_red_01_50x50_UIMat'"));
 	this->BuffGuardClass = ABuffVaalMoltenShell::StaticClass();

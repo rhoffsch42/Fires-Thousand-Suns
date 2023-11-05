@@ -1,6 +1,7 @@
 
 #include "FuncLib.h"
 #include "GenericPlatform/GenericPlatformMisc.h"
+//#include "Lumin/LuminPlatformApplicationMisc.h"
 
 constexpr float D_LEN = 5.0f;
 
@@ -13,7 +14,6 @@ bool	UFuncLib::CheckObject(UObject* obj, FString ErrorMsg) {
 }
 
 void	UFuncLib::PrintStats(const FPlayerStatistics& Stats) {
-	D_(GEngine->AddOnScreenDebugMessage(-1, D_LEN, FColor::Cyan, FString::Printf(TEXT("Less Damage Taken       : %lf"), Stats.CustomLessDamage)));
 	D_(GEngine->AddOnScreenDebugMessage(-1, D_LEN, FColor::Cyan, FString::Printf(TEXT("Fortify Stacks          : %lf"), Stats.FortifyEffect)));
 	D_(GEngine->AddOnScreenDebugMessage(-1, D_LEN, FColor::Cyan, FString::Printf(TEXT("Spell Supression Effect : %lf"), Stats.SpellSuppressionEffect)));
 	D_(GEngine->AddOnScreenDebugMessage(-1, D_LEN, FColor::Cyan, FString::Printf(TEXT("Spell Supression Chance : %lf"), Stats.SpellSuppressionChance)));
@@ -24,6 +24,7 @@ void	UFuncLib::PrintStats(const FPlayerStatistics& Stats) {
 }
 
 void	UFuncLib::CopyToClipboard(FString Input) {
+	// FGenericPlatformMisc FPlatformApplicationMisc
 	FGenericPlatformMisc::ClipboardCopy(*Input);
 }
 

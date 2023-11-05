@@ -79,8 +79,7 @@ FString	UFiresThousandSunsSaveGame::ToString() const {
         this->PlayerStatistics.FireResistance,
         this->PlayerStatistics.SpellSuppressionChance,
         this->PlayerStatistics.SpellSuppressionEffect,
-        this->PlayerStatistics.FortifyEffect,
-        this->PlayerStatistics.CustomLessDamage
+        this->PlayerStatistics.FortifyEffect
     );
 }
 

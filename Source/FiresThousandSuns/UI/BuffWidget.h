@@ -32,7 +32,7 @@ public:
 
 protected:
 	virtual void NativeConstruct() override;
-	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
+	//virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
 	
 	ABuff* _LinkedBuff;
 private:
@@ -48,8 +48,6 @@ public:
 protected:
 	virtual void NativeConstruct() override;
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
-	
-	FNumberFormattingOptions _FormatOptions;
 };
 
 UCLASS(Blueprintable)
@@ -65,18 +63,15 @@ protected:
 };
 
 UCLASS(Blueprintable)
-class FIRESTHOUSANDSUNS_API UBuffWidgetGuard: public UBuffWidgetDuration
+class FIRESTHOUSANDSUNS_API UBuffWidgetValueDuration : public UBuffWidget
 {
 	GENERATED_BODY()
 public:
-	virtual void	LinkBuff(UPARAM(ref) ABuff* Buff);
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
-	UCommonTextBlock* TextValue;
+	UCommonTextBlock* Text;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
+	UCommonTextBlock* TextDuration;
 protected:
 	virtual void NativeConstruct() override;
 	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
-	
-	FNumberFormattingOptions _FormatOptions;
-	ABuffGuard* _BuffGuard;
-private:
 };

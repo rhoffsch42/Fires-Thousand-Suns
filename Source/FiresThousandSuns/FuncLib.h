@@ -91,13 +91,17 @@ public:
 	TODO: check actors useless tick(). PrimaryComponentTick.bCanEverTick PrimaryComponentTick.SetTickFunctionEnable(true)
 
 	Fires :
-		- GM: take fortify stacks from the buff !
-		- refacto interraction buff <-> widgets (see Buff.h)
+		- flame dash drawback
+		v uber/normal option
+		v remove less damage statistic 
+
 		- debug msg on logfiles
 		- refacto BP / c++
+			UPlayWidget::SaveArenaConfig()
+			UPlayWidget::TransferArenaConfigToGameInstance()
+			UPlayWidget::LoadArenaConfigFromSaveGame()
 		- refacto GI GM SG interactions
 		- refacto inputs: migrate in PlayerController
-		- flame dash drawback
 		- real Widget for ability tooltips
 		- Better Maven hairs...
 		- visual feedback on hitting save button in settings

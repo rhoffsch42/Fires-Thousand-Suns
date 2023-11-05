@@ -35,12 +35,11 @@ AFiresThousandSunsGameMode::AFiresThousandSunsGameMode() {
 
 
 	this->World = this->GetWorld();
+
 }
 
 void AFiresThousandSunsGameMode::BeginPlay() {
 	WHEREAMI(this);
-	this->Fires_GI = Cast<UFiresThousandSunsGameInstance>(this->GetGameInstance());
-	UFuncLib::CheckObject(this->Fires_GI, FString(__func__).Append(" failed to get/cast game instance"));
 }
 
 void	AFiresThousandSunsGameMode::Init(
@@ -49,7 +48,16 @@ void	AFiresThousandSunsGameMode::Init(
 	UPARAM(ref) AFiresThousandSunsCharacter* PlayerCharacter,
 	UPARAM(ref) AActor* MavenActor)
 {
-	
+	this->Fires_GI = Cast<UFiresThousandSunsGameInstance>(this->GetGameInstance());// must be outside of ctor
+	if (UFuncLib::CheckObject(this->Fires_GI, FString(__func__).Append(" failed to get/cast game instance"))) {
+		this->bIsUber = this->Fires_GI->bUberMode;
+		this->bIsKrangled = this->Fires_GI->bKrangledWaves;
+	}
+	if (!this->bIsUber) {
+		this->WavesPerPhase = 13;
+		this->WavesSkippedBetweenPhases = 4;
+	}
+
 	this->Player = PlayerCharacter;
 	this->SunActorClass = ActorClassForSuns;
 	this->Maven = MavenActor;
@@ -77,13 +85,14 @@ void	AFiresThousandSunsGameMode::Init(
 	UFuncLib::CheckObject(this->_SunExplosionSoundCue, "AFiresThousandSunsGameMode::init() Failed to load sun explosion SoundCue");
 	UFuncLib::CheckObject(this->_MavenCancelSoundCue, "AFiresThousandSunsGameMode::init() Failed to load Maven cancel SoundCue");
 
-	this->_IsInit = true;
+	this->_bIsInit = true;
 }
 
 
 bool	AFiresThousandSunsGameMode::TrySpawnWave() {
+	if (!this->_bIsInit) { return false; }
 	if (this->_WaveCounter == this->WavesPerPhase) {
-		if (this->_WaitCounter < this->WaitBetweenPhases) {
+		if (this->_WaitCounter < this->WavesSkippedBetweenPhases) {
 			this->_WaitCounter++;
 		} else {
 			this->_PhasesSurvived++;
@@ -126,7 +135,7 @@ void	AFiresThousandSunsGameMode::SpawnSunsRegular() {
 
 #define OFFSET 5.0f
 void	AFiresThousandSunsGameMode::SpawnSunsSides(Side Start, Side End) {
-	if (!this->_IsInit) {
+	if (!this->_bIsInit) {
 		D("[Fires..GameMode] Spawn positions are not initialized. Aborting.");
 		return;
 	}
@@ -211,7 +220,7 @@ FVector	AFiresThousandSunsGameMode::ClampLocationToArenaBounds(FVector HitLocati
 	return finalIntersectionPoint;
 }
 
-bool	AFiresThousandSunsGameMode::IsInitDone() const { return this->_IsInit; }
+bool	AFiresThousandSunsGameMode::IsInitDone() const { return this->_bIsInit; }
 FVector	AFiresThousandSunsGameMode::GetLastSpawnSideLocation() const { return this->_LastSpawnSideLocation; }
 //for the current phase
 int32	AFiresThousandSunsGameMode::GetWavesCounter() const { return this->_WaveCounter; }
@@ -225,7 +234,7 @@ TArray<int32>	AFiresThousandSunsGameMode::_GenerateDestinationIndexArray() const
 	for (int32 i = 0; i < this->_SunsPerSide; ++i) {
 		destIndex[i] = i;
 	}
-	if (this->Fires_GI->bKrangledWaves) {
+	if (this->bIsKrangled) {
 		UFuncLib::ShuffleArray<int32>(&destIndex);
 	}
 	return destIndex;
@@ -262,6 +271,7 @@ double	AFiresThousandSunsGameMode::_ApplyMitigation(double damage) const {
 		return damage; // unmitigated damage
 	}
 	ABuffRubyFlask* RubyFlaskBuff = Cast<ABuffRubyFlask>(Fires_State->BuffManager->GetBuff(EBuffType::RubyFlask));
+	ABuffFortify* FortifyBuff = Cast<ABuffFortify>(Fires_State->BuffManager->GetBuff(EBuffType::FortifyStacks));
 
 	FRandomStream RandomStream;
 	RandomStream.GenerateNewSeed();
@@ -269,7 +279,6 @@ double	AFiresThousandSunsGameMode::_ApplyMitigation(double damage) const {
 	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, FString::FormatAsNumber(suppRand*100));
 
 	FPlayerStatistics	Statistics = Fires_State->PlayerStatistics;
-	double rubyFlaskLess = RubyFlaskBuff ? RubyFlaskBuff->LessFireDamage : 0.0;
 	double sunFirePenetration = 0.00;
 	double fireRes = Statistics.FireResistance / 100.0;
 	double finalFireRes = std::min(std::max(fireRes, 0.75), // required in case of fireRes < 75
@@ -277,12 +286,14 @@ double	AFiresThousandSunsGameMode::_ApplyMitigation(double damage) const {
 		+ (RubyFlaskBuff ? RubyFlaskBuff->BonusFireResistance : 0.0)
 		- sunFirePenetration
 	);
+	double rubyFlaskLess = RubyFlaskBuff ? RubyFlaskBuff->LessFireDamage : 0.0;
+	double fortifyLess = FortifyBuff ? FortifyBuff->FortifyStacks / 100.0 : 0.0;
+	double supressLess = (suppRand <= (Statistics.SpellSuppressionChance / 100.0) ? 1.0 : 0.0) * (Statistics.SpellSuppressionEffect / 100.0);
 	return damage
 		* (1.0 - finalFireRes)
 		* (1.0 - rubyFlaskLess)
-		* (1.0 - (suppRand <= (Statistics.SpellSuppressionChance / 100.0) ? 1.0 : 0.0) * (Statistics.SpellSuppressionEffect / 100.0))
-		* (1.0 - (Statistics.FortifyEffect / 100.0))
-		* (1.0 - (Statistics.CustomLessDamage / 100.0))
+		* (1.0 - supressLess)
+		* (1.0 - fortifyLess)
 		;
 }
 

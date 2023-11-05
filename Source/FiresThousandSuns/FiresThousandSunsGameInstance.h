@@ -32,5 +32,7 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	TArray<EAbilityType>	FlaskLayout;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	bool	bUberMode = false;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	bool	bKrangledWaves = false;
 };

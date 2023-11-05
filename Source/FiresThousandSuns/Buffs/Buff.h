@@ -31,7 +31,6 @@ public:
 	ABuff();
 	virtual void Tick(float DeltaSeconds) override;
 
-	//TODO: allow buffwidgets to know what to display without knowing their data type
 	UFUNCTION(BlueprintCallable)
 	virtual FString	GetDisplayString() const;
 

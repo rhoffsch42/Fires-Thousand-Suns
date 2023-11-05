@@ -3,6 +3,7 @@
 #include "../Abilitys/AbilityMoltenShell.h"
 #include "../Abilitys/LifeFlask.h"
 //#include "../Abilitys/RubyFlask.h"
+#include "../FiresThousandSunsSaveGame.h"
 #include "../FuncLib.h"
 
 void	UPlayWidget::NativeConstruct() {
@@ -11,6 +12,7 @@ void	UPlayWidget::NativeConstruct() {
 	this->InitSliders();
 	this->InitAbilitys();
 	this->InitFlasks();
+	this->CheckBoxUberMode->SetIsChecked(true);
 
 	FScriptDelegate script;
 	script.BindUFunction(this, "ApplyDefaultArenaConfiguration");
@@ -26,7 +28,6 @@ void	UPlayWidget::InitSliders() {
 	this->NVSlider_SpellSuppChance->SetTitleAndRange(	NSLOCTEXT("Fires", "NVSlider_SpellSuppChance_Name",	"Spell Suppression Chance"),	0.0f, 100.0f);
 	this->NVSlider_SpellSuppEffect->SetTitleAndRange(	NSLOCTEXT("Fires", "NVSlider_SpellSuppEffect_Name",	"Spell Suppression Effect"),	40.0f, 60.0f);
 	this->NVSlider_Fortify->SetTitleAndRange(			NSLOCTEXT("Fires", "NVSlider_Fortify_Name",			"Fortify Stacks"),				0.0f, 20.0f);
-	this->NVSlider_LessDamage->SetTitleAndRange(		NSLOCTEXT("Fires", "NVSlider_LessDamage_Name",		"Less Damage taken"),			0.0f, 20.0f);
 
 	this->ApplyDefaultArenaConfiguration();
 }
@@ -100,7 +101,6 @@ void	UPlayWidget::ApplyPlayerStatistics(const FPlayerStatistics Stats) {
 	this->NVSlider_SpellSuppChance->UpdateWithValue(Stats.SpellSuppressionChance);
 	this->NVSlider_SpellSuppEffect->UpdateWithValue(Stats.SpellSuppressionEffect);
 	this->NVSlider_Fortify->UpdateWithValue(Stats.FortifyEffect);
-	this->NVSlider_LessDamage->UpdateWithValue(Stats.CustomLessDamage);
 }
 
 void	UPlayWidget::ApplyDefaultArenaConfiguration() {
@@ -116,6 +116,37 @@ FPlayerStatistics	UPlayWidget::GeneratePlayerStatistics() const {
 		(int32)this->NVSlider_SpellSuppChance->GetValue(),
 		(int32)this->NVSlider_SpellSuppEffect->GetValue(),
 		(int32)this->NVSlider_Fortify->GetValue(),
-		(int32)this->NVSlider_LessDamage->GetValue(),
 	};
+}
+
+void	UPlayWidget::LoadArenaConfigFromSaveGame(UPARAM(ref) UFiresThousandSunsSaveGame* SaveGame) {
+	if (UFuncLib::CheckObject(SaveGame, FString(__func__).Append(" SaveGame is null"))) {
+		this->ApplyPlayerStatistics(SaveGame->PlayerStatistics);
+		this->AbilityBar->UI_Manager->SetLayout(SaveGame->AbilityLayout);
+		this->FlaskBar->UI_Manager->SetLayout(SaveGame->FlaskLayout, true);
+	}
+}
+
+
+void	UPlayWidget::SaveArenaConfig(UPARAM(ref) UFiresThousandSunsSaveGame* SaveGame) {
+	if (UFuncLib::CheckObject(SaveGame, FString(__func__).Append(" SaveGame is null"))) {
+		SaveGame->PlayerStatistics = this->GeneratePlayerStatistics();
+		SaveGame->AbilityLayout = this->AbilityBar->UI_Manager->GetLayoutAsAbilityType();
+		SaveGame->FlaskLayout = this->FlaskBar->UI_Manager->GetLayoutAsAbilityType();
+		SaveGame->Save();
+	}
+}
+
+// repetitive with SaveArenaConfig. Use SaveGame for all shared values and only transfer unsaved values ?
+void	UPlayWidget::TransferArenaConfigToGameInstance() {
+	UFiresThousandSunsGameInstance* Fires_GI = Cast<UFiresThousandSunsGameInstance>(this->GetGameInstance());
+	if (UFuncLib::CheckObject(Fires_GI, FString(__func__).Append(" Game instance is null or cast failed "))) {
+		// shared with SaveGame
+		Fires_GI->BaseStats = this->GeneratePlayerStatistics();
+		Fires_GI->AbilityLayout = this->AbilityBar->UI_Manager->GetLayoutAsAbilityType();
+		Fires_GI->FlaskLayout = this->FlaskBar->UI_Manager->GetLayoutAsAbilityType();
+		// not saved, thus not shared
+		Fires_GI->bUberMode = this->CheckBoxUberMode->IsChecked();
+		Fires_GI->bKrangledWaves = this->CheckBoxKrangledMode->IsChecked();
+	}
 }

@@ -5,12 +5,13 @@
 
 void	UBuffWidget::NativeConstruct() {
 	Super::NativeConstruct();
+	this->bHasScriptImplementedTick = false;
 	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString("UHealthWidget::NativeConstruct()"));
 }
 
-void	UBuffWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime) {
-	Super::NativeTick(MyGeometry, InDeltaTime);
-}
+//void	UBuffWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime) {
+//	Super::NativeTick(MyGeometry, InDeltaTime);
+//}
 
 void	UBuffWidget::LinkBuff(UPARAM(ref) ABuff* Buff) {
 	this->_LinkedBuff = Buff;
@@ -30,18 +31,21 @@ ABuff* UBuffWidget::GetLinkedBuff() const { return this->_LinkedBuff; }
 
 void	UBuffWidgetValue::NativeConstruct() {
 	Super::NativeConstruct();
-	this->_FormatOptions.MaximumFractionalDigits = 0;
+	this->bHasScriptImplementedTick = true;
 }
 
 void	UBuffWidgetValue::NativeTick(const FGeometry& MyGeometry, float InDeltaTime) {
 	Super::NativeTick(MyGeometry, InDeltaTime);
-	this->Text->SetText(FText::FromString(this->_LinkedBuff->GetDisplayString()));
+	if (this->_LinkedBuff) {
+		this->Text->SetText(FText::FromString(this->_LinkedBuff->GetDisplayString()));
+	}
 }
 
 //////////////////////////////////////
 
 void	UBuffWidgetDuration::NativeConstruct() {
 	Super::NativeConstruct();
+	this->bHasScriptImplementedTick = true;
 }
 
 void	UBuffWidgetDuration::NativeTick(const FGeometry& MyGeometry, float InDeltaTime) {
@@ -56,20 +60,18 @@ void	UBuffWidgetDuration::NativeTick(const FGeometry& MyGeometry, float InDeltaT
 
 //////////////////////////////////////
 
-void	UBuffWidgetGuard::NativeConstruct() {
+void	UBuffWidgetValueDuration::NativeConstruct() {
 	Super::NativeConstruct();
-	this->_FormatOptions.MaximumFractionalDigits = 0;
+	this->bHasScriptImplementedTick = true;
 }
 
-void	UBuffWidgetGuard::NativeTick(const FGeometry& MyGeometry, float InDeltaTime) {
+void	UBuffWidgetValueDuration::NativeTick(const FGeometry& MyGeometry, float InDeltaTime) {
 	Super::NativeTick(MyGeometry, InDeltaTime);
-	if (this->_BuffGuard) {
-		this->TextValue->SetText(FText::AsNumber(this->_BuffGuard->HealthManager->GetHP(), &this->_FormatOptions));
+	if (this->_LinkedBuff) {
+		this->Text->SetText(FText::FromString(this->_LinkedBuff->GetDisplayString()));
+		FTimespan time(0, 0, this->_LinkedBuff->GetLifeSpan());
+		FString timestring(time.ToString(TEXT("%m:%s")));
+		timestring.RemoveAt(0, 2);
+		this->TextDuration->SetText(FText::FromString(timestring));
 	}
-}
-
-void	UBuffWidgetGuard::LinkBuff(UPARAM(ref) ABuff* Buff) {
-	Super::LinkBuff(Buff);
-	this->_BuffGuard = Cast<ABuffGuard>(Buff);
-	UFuncLib::CheckObject(this->_BuffGuard, "UBuffWidgetGuard::LinkBuff() Cast<ABuffGuard>() failed");
 }

@@ -21,17 +21,30 @@ class FIRESTHOUSANDSUNS_API UPlayWidget : public UUserWidget
 	GENERATED_BODY()
 public:
 	UFUNCTION(BlueprintCallable)
-	void	ApplyPlayerStatistics(const FPlayerStatistics Stats);
-	UFUNCTION(BlueprintCallable)
-	FPlayerStatistics	GeneratePlayerStatistics() const;
-	UFUNCTION(BlueprintCallable)
 	void	InitSliders();
 	UFUNCTION(BlueprintCallable)
 	void	InitAbilitys();
 	UFUNCTION(BlueprintCallable)
 	void	InitFlasks();
+
+	UFUNCTION(BlueprintCallable)
+	void	ApplyPlayerStatistics(const FPlayerStatistics Stats);
 	UFUNCTION(BlueprintCallable)
 	void	ApplyDefaultArenaConfiguration();
+	UFUNCTION(BlueprintCallable)
+	FPlayerStatistics	GeneratePlayerStatistics() const;
+	UFUNCTION(BlueprintCallable)
+	void	LoadArenaConfigFromSaveGame(UPARAM(ref) UFiresThousandSunsSaveGame* SaveGame);
+
+
+	UFUNCTION(BlueprintCallable)
+	void	SaveArenaConfig(UPARAM(ref) UFiresThousandSunsSaveGame* SaveGame);
+	UFUNCTION(BlueprintCallable)
+	void	TransferArenaConfigToGameInstance();
+
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
+	UMenuContentButton* ButtonDefaultConfig;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
 	UNamedValueSlider*	NVSlider_MovSpeed;
@@ -47,13 +60,11 @@ public:
 	UNamedValueSlider*	NVSlider_SpellSuppEffect;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
 	UNamedValueSlider*	NVSlider_Fortify;
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
-	UNamedValueSlider*	NVSlider_LessDamage;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
 	UCheckBox*	CheckBoxKrangledMode;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
-	UMenuContentButton*	ButtonDefaultConfig;
+	UCheckBox*	CheckBoxUberMode;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (BindWidget))
 	UAbilityBar* AbilityBar;

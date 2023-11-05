@@ -31,8 +31,6 @@ struct FPlayerStatistics
 	int32	SpellSuppressionEffect = 50;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	int32	FortifyEffect = 0;
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	int32	CustomLessDamage = 0;
 };
 
 inline bool	operator==(const FPlayerStatistics& lhs, const FPlayerStatistics& rhs) {
@@ -44,7 +42,6 @@ inline bool	operator==(const FPlayerStatistics& lhs, const FPlayerStatistics& rh
 		&& (lhs.SpellSuppressionChance == rhs.SpellSuppressionChance)
 		&& (lhs.SpellSuppressionEffect == rhs.SpellSuppressionEffect)
 		&& (lhs.FortifyEffect == rhs.FortifyEffect)
-		&& (lhs.CustomLessDamage == rhs.CustomLessDamage)
 		);
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString(__func__).Append(res ? " True" : " False"));
 	return res;

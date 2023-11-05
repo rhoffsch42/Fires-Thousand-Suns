@@ -7,13 +7,10 @@
 #include "FuncLib.h"
 
 AFiresThousandSunsPlayerState::AFiresThousandSunsPlayerState() {
-	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, "AFiresThousandSunsPlayerState()");
 	this->_InitPreBeginPlay();
 }
 
 void	AFiresThousandSunsPlayerState::_InitPreBeginPlay() {
-	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, "AFiresThousandSunsPlayerState::_Init()");
-
 	// Buffs
 	this->BuffManager = CreateDefaultSubobject<UBuffManager>(TEXT("BuffManager"));
 	// must be built in the constructor, has to be done in a valid world (when the owner has a world)
@@ -59,20 +56,7 @@ void	AFiresThousandSunsPlayerState::_InitPreBeginPlay() {
 }
 
 void	AFiresThousandSunsPlayerState::_InitPostBeginPlay() {
-	// Abilitys
-	//UGameInstance* GI = this->GetGameInstance();
-	//if (UFuncLib::CheckObject(GI, "AFiresThousandSunsPlayerState::_Init() Couldn't get the GI")) {
-	//	UFiresThousandSunsGameInstance* FiresGI = Cast<UFiresThousandSunsGameInstance>(GI);
-	//	if (UFuncLib::CheckObject(FiresGI, "AFiresThousandSunsPlayerState::_Init() Couldn't cast as FiresGI")) {
-	//		this->AbilityManager = FiresGI->AbilityManager;
-	//	}
-	//	else {
-	//	}
-	//}
-
-
 	// Buffs
-	//this->BuffManager = CreateDefaultSubobject<UBuffManager>(TEXT("BuffManager"));//has to be done in a valid world (so when the actor has a world)
 	this->AddOwnedComponent(this->BuffManager);
 	//this->BuffManager->RegisterComponent();
 }
@@ -87,5 +71,4 @@ void	AFiresThousandSunsPlayerState::_InitPostBeginPlay() {
 	UFuncLib::CheckObject(this->_Steelskin->Cooldown->World, "AFires..PlayerState:: Missing Cooldown->World on _Steelskin");
 	UFuncLib::CheckObject(this->_MoltenShell->Cooldown->World, "AFires..PlayerState:: Missing Cooldown->World on _MoltenShell");
 	UFuncLib::CheckObject(this->_VaalMoltenShell->Cooldown->World, "AFires..PlayerState:: Missing Cooldown->World on _VaalMoltenShell");
-
 }

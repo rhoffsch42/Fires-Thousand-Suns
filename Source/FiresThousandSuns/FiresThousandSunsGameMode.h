@@ -48,9 +48,9 @@ public:
 	int32	GetPhasesSurvived() const;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
-	double MovementSpeedBonus = 0.38;//TODO: check if it's still in use, it shouldn't
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
 	bool bIsUber = true;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
+	bool bIsKrangled = false;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
 	double WavesDelayNormal = 1.5;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
@@ -60,17 +60,17 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
 	double	Normaldamage = 16557.0;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
-	int WavesPerPhase = 17;
+	int32 WavesPerPhase = 17;//13 for normal mode
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
-	int MavenCancelledSuns = 7;
+	int32 MavenCancelledSuns = 7;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
 	int32	_SunsPerSide = 20;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
-	int32	WaitBetweenPhases = 7;
+	int32	WavesSkippedBetweenPhases = 7;//4 for normal mode
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
 	TSubclassOf<ASun>  SunActorClass;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
-	AFiresThousandSunsCharacter* Player;
+	AFiresThousandSunsCharacter* Player = nullptr;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	UWorld*	World = nullptr;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
@@ -79,7 +79,7 @@ public:
 protected:
 	virtual void BeginPlay();
 
-	bool	_IsInit = false;
+	bool	_bIsInit = false;
 	FVector	_MinPos;
 	FVector	_MaxPos;
 	FVector	_SidePos1[4];
