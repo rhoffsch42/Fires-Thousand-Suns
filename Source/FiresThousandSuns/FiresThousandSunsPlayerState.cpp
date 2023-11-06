@@ -16,21 +16,18 @@ void	AFiresThousandSunsPlayerState::_InitPreBeginPlay() {
 	// must be built in the constructor, has to be done in a valid world (when the owner has a world)
 	
 	// HealthManager
-	this->HealthManager = NewObject<UHealthManager>();
+	this->HealthManager = NewObject<UHealthManager>(this, GEN_UNAME(this));
 	this->HealthManager->SetMaxHP(this->PlayerStatistics.Life);
 	this->HealthManager->SetHP(this->PlayerStatistics.Life);
 
 	// Abilitys
-	this->_FlameDash = NewObject<UAbilityFlameDash>();
-	this->_MoltenShell = NewObject<UAbilityMoltenShell>();
-	this->_VaalMoltenShell = NewObject<UAbilityVaalMoltenShell>();
-	this->_Steelskin = NewObject<UAbilitySteelskin>();
-	this->_FlameDash->Cooldown->World = this->GetWorld();
-	this->_MoltenShell->Cooldown->World = this->GetWorld();
-	this->_VaalMoltenShell->Cooldown->World = this->GetWorld();
-	this->_Steelskin->Cooldown->World = this->GetWorld();
+	this->_FlameDash = NewObject<UAbilityFlameDash>(this, GEN_UNAME(this));
+	this->_MoltenShell = NewObject<UAbilityMoltenShell>(this, GEN_UNAME(this));
+	this->_VaalMoltenShell = NewObject<UAbilityVaalMoltenShell>(this, GEN_UNAME(this));
+	this->_Steelskin = NewObject<UAbilitySteelskin>(this, GEN_UNAME(this));
 
-	this->AbilityManager = NewObject<UAbilityManager>();
+
+	this->AbilityManager = NewObject<UAbilityManager>(this, GEN_UNAME(this));
 	this->AbilityManager->SetAbilityAmount(5);
 	this->AbilityManager->SetAbility(0, nullptr); // used as a 'slot clearer'
 	this->AbilityManager->SetAbility(1, this->_FlameDash);
@@ -41,12 +38,10 @@ void	AFiresThousandSunsPlayerState::_InitPreBeginPlay() {
 	// shieldCharge // /Script/Engine.Material'/Game/LevelPrototyping/Materials/shield-bash_100x100_UIMat.shield-bash_100x100_UIMat'
 
 	// Flask
-	ULifeFlask* LifeFlask = NewObject<ULifeFlask>();
-	URubyFlask* RubyFlask = NewObject<URubyFlask>();
-	LifeFlask->Cooldown->World = this->GetWorld();
-	RubyFlask->Cooldown->World = this->GetWorld();
+	ULifeFlask* LifeFlask = NewObject<ULifeFlask>(this, GEN_UNAME(this));
+	URubyFlask* RubyFlask = NewObject<URubyFlask>(this, GEN_UNAME(this));
 
-	this->FlaskManager = NewObject<UAbilityManager>();
+	this->FlaskManager = NewObject<UAbilityManager>(this, GEN_UNAME(this));
 	this->FlaskManager->SetAbilityAmount(5);
 	this->FlaskManager->SetAbility(0, nullptr); // used as a 'slot clearer'
 	this->FlaskManager->SetAbility(1, LifeFlask);
@@ -71,4 +66,9 @@ void	AFiresThousandSunsPlayerState::_InitPostBeginPlay() {
 	UFuncLib::CheckObject(this->_Steelskin->Cooldown->World, "AFires..PlayerState:: Missing Cooldown->World on _Steelskin");
 	UFuncLib::CheckObject(this->_MoltenShell->Cooldown->World, "AFires..PlayerState:: Missing Cooldown->World on _MoltenShell");
 	UFuncLib::CheckObject(this->_VaalMoltenShell->Cooldown->World, "AFires..PlayerState:: Missing Cooldown->World on _VaalMoltenShell");
+
+	UFuncLib::CheckObject(this->_FlameDash->CastTime->World, "AFires..PlayerState:: Missing CastTime->World on _FlameDash");
+	UFuncLib::CheckObject(this->_Steelskin->CastTime->World, "AFires..PlayerState:: Missing CastTime->World on _Steelskin");
+	UFuncLib::CheckObject(this->_MoltenShell->CastTime->World, "AFires..PlayerState:: Missing CastTime->World on _MoltenShell");
+	UFuncLib::CheckObject(this->_VaalMoltenShell->CastTime->World, "AFires..PlayerState:: Missing CastTime->World on _VaalMoltenShell");
 }

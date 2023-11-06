@@ -1,6 +1,6 @@
 
 #include "DebuffLockedMovement.h"
-//#include "../AFiresThousandSunsPlayerController.h"
+#include "../FuncLib.h"
 
 ADebuffLockedMovement::ADebuffLockedMovement() {
 	this->BuffType = EBuffType::DebuffLockedMovement;
@@ -8,16 +8,16 @@ ADebuffLockedMovement::ADebuffLockedMovement() {
 }
 
 void	ADebuffLockedMovement::ApplyTo(AActor* Target) {
-	//APlayerController* playerCtrl = Cast<APlayerController>(Target->GetInstigatorController());
-	AController* ctrl = Target->GetInstigatorController();
-	ctrl->bBlockInput = true;
-
+	this->PlayerController = Cast<AFiresThousandSunsPlayerController>(Target->GetInstigatorController());
+	if (UFuncLib::CheckObject(this->PlayerController, "[ADebuffLockedMovement] PlayerController is null or cast failed.")) {
+		this->PlayerController->IncrementBlockInputCounter();
+	}
 	Super::ApplyTo(Target);
 }
 
 void	ADebuffLockedMovement::Remove() {
-	AController* ctrl = this->_Target->GetInstigatorController();
-	ctrl->bBlockInput = false;
-
+	if (this->PlayerController) {
+		this->PlayerController->DecrementBlockInputCounter();
+	}
 	Super::Remove();
 }

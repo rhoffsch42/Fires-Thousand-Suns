@@ -25,7 +25,6 @@ class FIRESTHOUSANDSUNS_API ASun : public AActor
 	
 public:	
 	ASun();
-	virtual void Tick(float DeltaSeconds) override;
 	UFUNCTION(BlueprintCallable)
 	void	SetDestination(FVector Desto);
 	UFUNCTION(BlueprintCallable)
@@ -54,6 +53,7 @@ public:
 	bool	bMavenCancelled = false;
 protected:
 	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaSeconds) override;
 
 private:
 	//UPROPERTY(BlueprintReadOnly, VisibleAnywhere)

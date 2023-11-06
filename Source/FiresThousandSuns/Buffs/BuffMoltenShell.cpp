@@ -9,11 +9,9 @@ ABuffGuard::ABuffGuard() {
 
 void ABuffGuard::OnConstruction(const FTransform& Transform) {
 	Super::OnConstruction(Transform);
-	this->HealthManager = NewObject<UHealthManager>(this->GetWorld(), FName(FString::FromInt((int64)this))); //::FormatAsNumber((int32)(int64)this).); // check all NewObject outers
+	this->HealthManager = NewObject<UHealthManager>(this->GetWorld(), GEN_UNAME(this)); // TODO: check all NewObject outers
 
 	if (UFuncLib::CheckObject(this->HealthManager, "ABuffGuard() failed to create HealthManager")) {
-		//D(FString::FromInt((int64)this->HealthManager));
-		//D(FString::FromInt((int64)this->GetWorld()));
 		this->HealthManager->SetMaxHP(100);
 		this->HealthManager->SetHP(100);
 

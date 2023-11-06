@@ -19,7 +19,8 @@ class FIRESTHOUSANDSUNS_API UAbilityFlameDash : public UAbility
 	GENERATED_BODY()
 public:
 	UAbilityFlameDash();
-	virtual bool	Activate(FEffectParameters Parameters) override;
+	virtual bool	IsActivatable(FEffectParameters Parameters) override;
+	virtual bool	Activate(FEffectParameters Parameters, bool bCheckActivatable = false) override;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	UNiagaraSystem* NiagaraSystem = nullptr;
@@ -27,4 +28,10 @@ protected:
 	double	_maxRange = 600.0;
 	double	_minRange = 250.0;
 	double	_lockMovementDuration = 0.12;
+private:
+	// calculated in IsActivatable(), used in Activate()
+	FVector	_direction;
+	double	_len;
+	FVector	_targetDest;
+
 };

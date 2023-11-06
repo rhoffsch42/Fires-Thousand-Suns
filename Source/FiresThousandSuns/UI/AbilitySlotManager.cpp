@@ -90,10 +90,8 @@ void	UAbilitySlotManager::SetLayout(const TArray<EAbilityType> Layout, bool Usin
 				
 				UAbility* Linked = this->_Manager->GetAbilityByType(Layout[i]);
 				if (UsingCopys && Linked) {
-					Linked = NewObject<UAbility>(this, Linked->GetClass());
-					if (UFuncLib::CheckObject(Linked, "UAbilitySlotManager::SetLayout() NewObject() failed ")) {
-						Linked->Cooldown->World = this->GetWorld();
-					}
+					Linked = NewObject<UAbility>(this, Linked->GetClass(), GEN_UNAME(this));
+					UFuncLib::CheckObject(Linked, "UAbilitySlotManager::SetLayout() NewObject() failed ");
 				}
 				slot->LinkAbility(Linked);
 

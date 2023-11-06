@@ -3,6 +3,8 @@
 
 #include "CoreMinimal.h"
 #include "Buff.h"
+#include "../FiresThousandSunsPlayerController.h"
+
 #include "DebuffLockedMovement.generated.h"
 
 /**
@@ -17,6 +19,6 @@ public:
 	//virtual FString	GetDisplayString() const override;
 	virtual void	ApplyTo(AActor* Target) override;
 	virtual void	Remove() override;
-
 private:
+	AFiresThousandSunsPlayerController* PlayerController = nullptr;
 };

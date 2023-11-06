@@ -47,13 +47,22 @@ public:
 	UAbility();
 
 	UFUNCTION(BlueprintCallable)
-	void	TryActivate(FEffectParameters Parameters);
+	bool	TryActivate(FEffectParameters Parameters);
 	UFUNCTION(BlueprintCallable)
-	virtual bool	Activate(FEffectParameters Parameters); // todo : could return bool, Ability can have reasons to fail (ex with TP to invalid location)
+	virtual bool	IsActivatable(FEffectParameters Parameters);
+
+	UFUNCTION(BlueprintCallable)
+	bool	StartCasting(FEffectParameters Parameters);
+	UFUNCTION(BlueprintCallable)
+	virtual bool	Activate(FEffectParameters Parameters, bool CheckActivatable = false);
+
 	void	SetNewMaterial(UObject* Outer, const FString MatPath);
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	UCooldown*	Cooldown = nullptr;
+	UCooldown*	CastTime = nullptr;
+	bool		bIsInstant = true;
+
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	UMaterial*	IconMaterial = nullptr;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)

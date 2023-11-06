@@ -19,12 +19,13 @@ ULifeFlask::ULifeFlask() {
 	UFuncLib::CheckObject(this->ActivationSuccessSoundCue, "ULifeFlask::ULifeFlask() failed to LoadObject() USoundCue");
 }
 
-bool	ULifeFlask::Activate(FEffectParameters Parameters) {
+bool	ULifeFlask::Activate(FEffectParameters Parameters, bool bCheckActivatable) {
 	for (auto target : Parameters.Targets) {
 		AFiresThousandSunsPlayerState* state = Cast<AFiresThousandSunsPlayerState>(target);
 		if (UFuncLib::CheckObject(state, "ULifeFlask::Activate() target is not player state")) {
 			state->HealthManager->AddHP(this->HealValue);
-		} else { return false; }
+		}
+		else { return false; }
 	}
 
 	return this->UAbility::Activate(Parameters);
@@ -46,7 +47,7 @@ URubyFlask::URubyFlask() {
 	UFuncLib::CheckObject(this->ActivationSuccessSoundCue, "URubyFlask::URubyFlask() failed to LoadObject() USoundCue");
 }
 
-bool	URubyFlask::Activate(FEffectParameters Parameters) {
+bool	URubyFlask::Activate(FEffectParameters Parameters, bool bCheckActivatable) {
 	for (auto target : Parameters.Targets) {
 		ABuffRubyFlask* buff = UFuncLib::SafeSpawnActor<ABuffRubyFlask>(Parameters.World, ABuffRubyFlask::StaticClass());
 		if (UFuncLib::CheckObject(buff, "URubyFlask::Activate() buff failed to create ")) {

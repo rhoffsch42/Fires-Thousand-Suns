@@ -33,13 +33,11 @@ void	UAbilityBar::LoadAbilityManager(UAbilityManager* Manager) {
 }
 
 void	UAbilityBar::ManagerOnClick(UAbilitySlot* InSlot) {
-	//GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Purple, FString("UAbilityBar::ManagerOnClick()"));
 	this->_LastSlotClicked = InSlot;
 	this->UI_Picker->SetVisibility(ESlateVisibility::SelfHitTestInvisible);
 }
 
 void	UAbilityBar::PickerOnClick(UAbilitySlot* InSlot) {
-	//GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Purple, FString("UAbilityBar::PickerOnClick()"));
 	this->_LastSlotClicked->LinkAbility(InSlot->GetLinkedAbility());
 	this->UI_Picker->SetVisibility(ESlateVisibility::Hidden);
 }
@@ -51,21 +49,17 @@ void	UFlaskBar::NativeConstruct() {
 }
 
 void	UFlaskBar::ManagerOnClick(UAbilitySlot* InSlot) {
-	//GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Purple, FString("UFlaskBar::ManagerOnClick()"));
 	this->_LastSlotClicked = InSlot;
 	this->UI_Picker->SetVisibility(ESlateVisibility::SelfHitTestInvisible);
 }
 
 void	UFlaskBar::PickerOnClick(UAbilitySlot* InSlot) {
-	//GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Purple, FString("UFlaskBar::PickerOnClick()"));
 	
 	UAbility* Flask = nullptr;
-	UAbility* ab = InSlot->GetLinkedAbility();
-	if (ab) {
-		Flask = NewObject<UAbility>(this, ab->GetClass());
-		if (UFuncLib::CheckObject(Flask, "UFlaskBar::PickerOnClick() NewObject() failed ")) {
-			Flask->Cooldown->World = this->GetWorld();
-		}
+	UAbility* Ability = InSlot->GetLinkedAbility();
+	if (Ability) {
+		Flask = NewObject<UAbility>(this, Ability->GetClass(), GEN_UNAME(this));
+		UFuncLib::CheckObject(Flask, "UFlaskBar::PickerOnClick() NewObject() failed ");
 	}
 	
 	this->_LastSlotClicked->LinkAbility(Flask);

@@ -6,6 +6,8 @@
 #include "Templates/SubclassOf.h"
 #include "GameFramework/PlayerController.h"
 #include "InputActionValue.h"
+#include "Abilitys/Ability.h"
+
 #include "FiresThousandSunsPlayerController.generated.h"
 
 
@@ -13,9 +15,17 @@ UCLASS()
 class AFiresThousandSunsPlayerController : public APlayerController
 {
 	GENERATED_BODY()
-
 public:
 	AFiresThousandSunsPlayerController();
+	virtual void Tick(float DeltaSeconds) override;
+	UFUNCTION(BlueprintCallable)
+	void	SetCastedAbility(UAbility* Ability, const FEffectParameters& InParameters);
+	UFUNCTION(BlueprintCallable)
+	void	FinalizeCastedAbility();
+	UFUNCTION(BlueprintCallable)
+	void	IncrementBlockInputCounter();
+	UFUNCTION(BlueprintCallable)
+	void	DecrementBlockInputCounter();
 
 	/** Time Threshold to know if it was a short press */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
@@ -32,6 +42,7 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Input, meta = (AllowPrivateAccess = "true"))
 	TEnumAsByte<ECollisionChannel>	ClickCollisionChannel = ECollisionChannel::ECC_Visibility;
+
 protected:
 	/** True if the controlled character should navigate to the mouse cursor. */
 	uint32 bMoveToMouseCursor : 1;
@@ -39,7 +50,7 @@ protected:
 	virtual void SetupInputComponent() override;
 	
 	// To add mapping context
-	virtual void BeginPlay();
+	virtual void BeginPlay() override;
 
 	/** Input handlers for SetDestination action. */
 	void OnInputStarted();
@@ -49,8 +60,13 @@ protected:
 	void OnTouchReleased();
 
 private:
-	FVector CachedDestination;
+	FVector	CachedDestination;
+	bool	bIsTouch; // Is it a touch device
+	float	FollowTime; // For how long it has been pressed
+	int32	_BlockInputCounter = 0;
 
-	bool bIsTouch; // Is it a touch device
-	float FollowTime; // For how long it has been pressed
+	UAbility* _CastedAbility;
+	FEffectParameters _Parameters;
+	bool _bIsCasting = false;
+	float _CastingRemaining = 1.0f;
 };

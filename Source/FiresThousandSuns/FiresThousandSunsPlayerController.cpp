@@ -10,6 +10,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "FuncLib.h"
+#include "Kismet/KismetSystemLibrary.h"
 
 #include "GenericPlatform/GenericPlatformMath.h"
 
@@ -19,6 +20,7 @@ AFiresThousandSunsPlayerController::AFiresThousandSunsPlayerController() {
 	CachedDestination = FVector::ZeroVector;
 	FollowTime = 0.f;
 
+	this->PrimaryActorTick.bCanEverTick = true;
 }
 
 void AFiresThousandSunsPlayerController::BeginPlay() {
@@ -30,6 +32,53 @@ void AFiresThousandSunsPlayerController::BeginPlay() {
 		Subsystem->AddMappingContext(DefaultMappingContext, 0);
 	}
 }
+
+void AFiresThousandSunsPlayerController::Tick(float DeltaSeconds) {
+	Super::Tick(DeltaSeconds);
+	if (this->_bIsCasting) {
+		//UKismetSystemLibrary::Delay(this->GetWorld(), this->_CastingRemaining, FLatentActionInfo());
+		//const UObject * WorldContextObject, float Duration, FLatentActionInfo LatentInfo
+	}
+}
+
+void	AFiresThousandSunsPlayerController::SetCastedAbility(UAbility* Ability, const FEffectParameters& InParameters) {
+	if (!this->_bIsCasting && Ability) {
+		this->_CastedAbility = Ability;
+		this->_Parameters = InParameters;
+		this->_CastingRemaining = Ability->CastTime->Remaining();
+		this->_bIsCasting = true;
+		this->IncrementBlockInputCounter();
+		this->StopMovement();
+		D(FString::SanitizeFloat(this->_CastingRemaining).Append("s remaining until cast ends"));
+		UKismetSystemLibrary::Delay(this->GetWorld(), this->_CastingRemaining,
+			FLatentActionInfo(0, (int64)this, *FString("FinalizeCastedAbility"), this));
+	}
+}
+
+void	AFiresThousandSunsPlayerController::FinalizeCastedAbility() {
+	this->_CastedAbility->Activate(this->_Parameters);
+	this->_CastedAbility = nullptr;
+	this->_bIsCasting = false;
+	this->DecrementBlockInputCounter();
+}
+
+void	AFiresThousandSunsPlayerController::IncrementBlockInputCounter() {
+	this->_BlockInputCounter++;
+	if (this->_BlockInputCounter > 0) {
+		this->bBlockInput = true;
+	}
+}
+
+void	AFiresThousandSunsPlayerController::DecrementBlockInputCounter() {
+	this->_BlockInputCounter--;
+	if (this->_BlockInputCounter == 0) {
+		this->bBlockInput = false;
+	} else if (this->_BlockInputCounter < 0) {
+		UFuncLib::CheckObject(nullptr, FString(__func__).Append(" BlockInputCounter is negative"));
+	}
+}
+
+////////////////////////// protected ////////////////////
 
 void AFiresThousandSunsPlayerController::SetupInputComponent() {
 	// set up gameplay key bindings

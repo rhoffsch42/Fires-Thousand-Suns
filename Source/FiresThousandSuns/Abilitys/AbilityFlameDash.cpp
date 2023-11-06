@@ -19,10 +19,15 @@ template ADebuffLockedMovement* UFuncLib::SafeSpawnActor<ADebuffLockedMovement>(
 
 UAbilityFlameDash::UAbilityFlameDash() {
 	this->AbilityType = EAbilityType::FlameDash;
+	this->TooltipName = "Fire Dash";
+
 	this->Cooldown->SetMaxUses(3);
 	this->Cooldown->SetDuration(3.0);
 	this->Cooldown->Reset();
-	this->TooltipName = "Fire Dash";
+
+	this->bIsInstant = false;
+	this->CastTime->SetDuration(0.8);
+	this->CastTime->Reset();
 
 	this->SetNewMaterial(this->GetWorld(), FString("/Game/LevelPrototyping/Materials/fire-dash_UIMat.fire-dash_UIMat"));
 	this->NiagaraSystem = LoadObject<UNiagaraSystem>(this->GetWorld(), *FString("/Script/Niagara.NiagaraSystem'/Game/LevelPrototyping/Particles/NS_FlameDash.NS_FlameDash'"));
@@ -33,48 +38,55 @@ UAbilityFlameDash::UAbilityFlameDash() {
 }
 
 #include "NavigationSystem.h"
-//#include "Engine/World.h"
 #include "CollisionQueryParams.h"
 
-// currently cannot flame dash through static even if maxrange allows it.
-bool	UAbilityFlameDash::Activate(FEffectParameters Parameters) {
+bool	UAbilityFlameDash::IsActivatable(FEffectParameters Parameters) {
 	FVector instigatorLocation = Parameters.ActorInstigator->GetActorLocation();
 	Parameters.CursorHitLocation.Z = instigatorLocation.Z;
-	FVector direction = Parameters.CursorHitLocation - instigatorLocation;
-	double len = std::max(this->_minRange, std::min(this->_maxRange, direction.Length()));
-	direction.Normalize();
-	FVector targetDest = instigatorLocation + direction * len;
+	this->_direction = Parameters.CursorHitLocation - instigatorLocation;
+	this->_len = std::max(this->_minRange, std::min(this->_maxRange, this->_direction.Length()));
+	this->_direction.Normalize();
+	this->_targetDest = instigatorLocation + this->_direction * this->_len;
 
 	// line trace to check blocking volumes
 	UWorld* world = Parameters.ActorInstigator->GetWorld();
 	FHitResult Hit;
 	FCollisionQueryParams QueryParams;
 	QueryParams.AddIgnoredActor(Parameters.ActorInstigator);
-	world->LineTraceSingleByChannel(Hit, instigatorLocation, targetDest, ECollisionChannel::ECC_WorldStatic, QueryParams);
+	world->LineTraceSingleByChannel(Hit, instigatorLocation, this->_targetDest, ECollisionChannel::ECC_WorldStatic, QueryParams);
 	if (Hit.bBlockingHit) {
 		double hitlen = (Hit.Location - instigatorLocation).Length();
 		if (hitlen < this->_minRange / 4.0)//too close from a wall
 			return false;
-		len = std::min(len, hitlen);
-		targetDest = instigatorLocation + direction * len;
+		this->_len = std::min(this->_len, hitlen);
+		this->_targetDest = instigatorLocation + this->_direction * this->_len;
 	}
 
 	// place back the targetDest in the navSys
 	UNavigationSystemV1* navSys = UNavigationSystemV1::GetCurrent(Parameters.ActorInstigator->GetWorld());
 	if (UFuncLib::CheckObject(navSys, "UAbilityFlameDash::Activate() navSys not found")) {
 		FNavLocation result;
-		navSys->ProjectPointToNavigation(targetDest, result);
-		result.Location.Z = instigatorLocation.Z;
+		navSys->ProjectPointToNavigation(this->_targetDest, result);
 		if (result.HasNodeRef()) {
-			targetDest = result.Location;
+			this->_targetDest = result.Location;
+			this->_targetDest.Z = instigatorLocation.Z;
 		} else {
 			D(FString("UAbilityFlameDash::Activate() navSys no location found"));
 			return false;
 		}
 	}
+	return true;
+}
+
+// currently cannot flame dash through static even if maxrange allows it.
+bool	UAbilityFlameDash::Activate(FEffectParameters Parameters, bool bCheckActivatable) {
+	if (bCheckActivatable && !this->IsActivatable(Parameters)) { return false; }
+
+	FVector instigatorLocation = Parameters.ActorInstigator->GetActorLocation();
+	Parameters.CursorHitLocation.Z = instigatorLocation.Z;
 
 	// place and rotate the actor
-	Parameters.ActorInstigator->SetActorLocation(targetDest);
+	Parameters.ActorInstigator->SetActorLocation(this->_targetDest);
 	FRotator rot = UKismetMathLibrary::FindLookAtRotation(instigatorLocation, Parameters.CursorHitLocation);
 	Parameters.ActorInstigator->SetActorRotation(rot);
 	UPlayer* owner = Parameters.ActorInstigator->GetNetOwningPlayer();
@@ -86,18 +98,19 @@ bool	UAbilityFlameDash::Activate(FEffectParameters Parameters) {
 
 	// Movement debuff
 	ADebuffLockedMovement* buff = UFuncLib::SafeSpawnActor<ADebuffLockedMovement>(Parameters.World, ADebuffLockedMovement::StaticClass());
+	if (!UFuncLib::CheckObject(buff, " [AbilityFlameDash] buff is null")) { return false; }
 	buff->SetBaseDuration(this->_lockMovementDuration);
 	buff->AttachToActor(Parameters.ActorInstigator, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, false));
 	buff->ApplyTo(Parameters.ActorInstigator);
 	
 	// Niagara visual effect
 	UNiagaraComponent* Ncomp = UNiagaraFunctionLibrary::SpawnSystemAtLocation(
-		Parameters.ActorInstigator->GetWorld(), this->NiagaraSystem, instigatorLocation + len * 0.5 * direction);
+		Parameters.ActorInstigator->GetWorld(), this->NiagaraSystem, instigatorLocation + this->_len * 0.5 * this->_direction);
 	if (UFuncLib::CheckObject(Ncomp, "[UAbilityFlameDash] Niagara SpawnSystemAtLocation() failed ")) {
-		Ncomp->SetVariableVec2("InSpriteScale", FVector2D(len * 0.95, 580));
-		Ncomp->SetVectorParameter("InSprite1FacingVector", direction.Cross(FVector(0, 0, 1)));
-		Ncomp->SetVectorParameter("InSprite2AlignVector", direction.Cross(FVector(0, 0, -1)));
+		Ncomp->SetVariableVec2("InSpriteScale", FVector2D(this->_len * 0.95, 580));
+		Ncomp->SetVectorParameter("InSprite1FacingVector", this->_direction.Cross(FVector(0, 0, 1)));
+		Ncomp->SetVectorParameter("InSprite2AlignVector", this->_direction.Cross(FVector(0, 0, -1)));
 	}
 
-	return this->UAbility::Activate(Parameters);
+	return Super::Activate(Parameters);
 }

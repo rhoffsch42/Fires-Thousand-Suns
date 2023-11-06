@@ -17,6 +17,7 @@
 #define DKEY(k, x) GEngine->AddOnScreenDebugMessage((int32)(int64)(k), 5.0f, FColor::Yellow, x)
 #define WHEREAMI(k) DKEY(k, FString(__FUNCSIG__))
 
+#define GEN_UNAME(x) MakeUniqueObjectName(x, x->StaticClass(), FName())
 
 UCLASS(Blueprintable)
 class FIRESTHOUSANDSUNS_API UFuncLib : public UBlueprintFunctionLibrary
@@ -89,17 +90,13 @@ public:
 		- check with the BP W_Play, if we can make a func UAbilityBar::UpdatePickerPosition()
 			handy way is to bind it with OnVisibilityChanged(), but it might not be the ideal way in some other context
 	TODO: check actors useless tick(). PrimaryComponentTick.bCanEverTick PrimaryComponentTick.SetTickFunctionEnable(true)
+	TODO: check every NewObject(), they must have an Outer argument!
 
 	Fires :
-		- flame dash drawback
-		v uber/normal option
-		v remove less damage statistic 
-
+		- abilities delayed cast animation
 		- debug msg on logfiles
 		- refacto BP / c++
-			UPlayWidget::SaveArenaConfig()
-			UPlayWidget::TransferArenaConfigToGameInstance()
-			UPlayWidget::LoadArenaConfigFromSaveGame()
+		- func to place point back on NavSys, in GM or GI
 		- refacto GI GM SG interactions
 		- refacto inputs: migrate in PlayerController
 		- real Widget for ability tooltips
@@ -109,7 +106,7 @@ public:
 		~ arena UI : some background ?
 		~ player death : sound
 		~ trade message (with fish312/CONCESOHO ref ?)
-		~ infos message (quin is the first to enter fetid pool, ben is the first to kill, carn is the first to hit lv100
+		~ infos message (quin is the first to enter fetid pool, ben is the first to kill, carn is the first to hit lv100, the realm is shutting down in 1min
 		x totem skills to block suns
 
 	cast time :
@@ -124,5 +121,3 @@ public:
 
 	skill queue ? max amount or max cumulated cast time or both
 */
-
-

@@ -88,7 +88,7 @@ double	UCooldown::GetDuration() const {
 
 double	UCooldown::_safeGetTimeSeconds() const {
 	if (!this->World) {
-		GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Red, FString("Cooldown::World is nullptr! Abort."));
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString("Cooldown::World is nullptr! Abort."));
 		return -2;
 	} else {
 		return UGameplayStatics::GetTimeSeconds(this->World);
