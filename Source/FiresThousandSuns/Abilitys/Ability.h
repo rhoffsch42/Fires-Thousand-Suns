@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -45,6 +43,7 @@ class FIRESTHOUSANDSUNS_API UAbility : public UObject
 	GENERATED_BODY()
 public:
 	UAbility();
+	virtual void	PostInitProperties() override;
 
 	UFUNCTION(BlueprintCallable)
 	bool	TryActivate(FEffectParameters Parameters);
@@ -60,7 +59,9 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	UCooldown*	Cooldown = nullptr;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	UCooldown*	CastTime = nullptr;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	bool		bIsInstant = true;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)

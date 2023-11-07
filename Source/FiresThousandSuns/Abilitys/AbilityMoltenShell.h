@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -15,6 +14,7 @@ class FIRESTHOUSANDSUNS_API UGuardBase : public UAbility
 	GENERATED_BODY()
 public:
 	UGuardBase();
+	virtual void	PostInitProperties() override;
 	virtual bool	Activate(FEffectParameters Parameters, bool bCheckActivatable = false) override;
 
 	double	HP = 1000;

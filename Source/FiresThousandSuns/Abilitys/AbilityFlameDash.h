@@ -7,6 +7,8 @@
 #include "NiagaraFunctionLibrary.h"
 #include "NiagaraComponent.h"
 #include "NiagaraSystem.h"
+#include "Kismet/GameplayStatics.h"
+#include "NavigationSystem.h"
 
 #include "AbilityFlameDash.generated.h"
 
@@ -19,6 +21,7 @@ class FIRESTHOUSANDSUNS_API UAbilityFlameDash : public UAbility
 	GENERATED_BODY()
 public:
 	UAbilityFlameDash();
+	virtual void	PostInitProperties() override;
 	virtual bool	IsActivatable(FEffectParameters Parameters) override;
 	virtual bool	Activate(FEffectParameters Parameters, bool bCheckActivatable = false) override;
 
@@ -33,5 +36,6 @@ private:
 	FVector	_direction;
 	double	_len;
 	FVector	_targetDest;
+	UNavigationSystemV1* _NavSys = nullptr;
 
 };

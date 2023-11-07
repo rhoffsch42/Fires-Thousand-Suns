@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -7,9 +6,6 @@
 
 #include "DebuffLockedMovement.generated.h"
 
-/**
- * 
- */
 UCLASS(Blueprintable)
 class FIRESTHOUSANDSUNS_API ADebuffLockedMovement : public ABuff
 {

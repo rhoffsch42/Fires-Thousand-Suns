@@ -35,4 +35,5 @@ public:
 	bool	bUberMode = false;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	bool	bKrangledWaves = false;
+
 };

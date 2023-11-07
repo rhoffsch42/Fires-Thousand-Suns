@@ -23,9 +23,14 @@ UGuardBase::UGuardBase() {
 	this->Cooldown->Reset();
 	this->TooltipName = "GuardBase";
 
-	this->SetNewMaterial(this->GetWorld(), FString("/Script/Engine.Material'/Game/LevelPrototyping/Materials/Default_UIMat.Default_UIMat'"));
+	this->SetNewMaterial(this, FString("/Script/Engine.Material'/Game/LevelPrototyping/Materials/Default_UIMat.Default_UIMat'"));
 	this->BuffGuardClass = ABuffGuard::StaticClass();
 }
+
+void	UGuardBase::PostInitProperties() {
+	Super::PostInitProperties();
+}
+
 
 bool	UGuardBase::Activate(FEffectParameters Parameters, bool bCheckActivatable) {
 	return this->UAbility::Activate(Parameters);

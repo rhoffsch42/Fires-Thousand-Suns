@@ -5,16 +5,23 @@
 
 UAbility::UAbility() {
 	this->Cooldown = CreateDefaultSubobject<UCooldown>(GEN_UNAME(this));
+	this->CastTime = CreateDefaultSubobject<UCooldown>(GEN_UNAME(this));
+	this->ActivationFailedSoundCue = LoadObject<USoundCue>(this->GetWorld(), *FString("/Script/Engine.SoundCue'/Game/TopDown/Blueprints/Audio/mixkit-old-camera-shutter-click-1137_Cue.mixkit-old-camera-shutter-click-1137_Cue'"));
+}
+
+void	UAbility::PostInitProperties() {
+	Super::PostInitProperties();
+
 	if (UFuncLib::CheckObject(this->Cooldown, FString("UAbility() NewObject<UCooldown>() failed : "))) {
 		this->Cooldown->World = this->GetWorld();
 	}
-	this->CastTime = CreateDefaultSubobject<UCooldown>(GEN_UNAME(this));
 	if (UFuncLib::CheckObject(this->Cooldown, FString("UAbility() NewObject<UCooldown>() failed : "))) {
 		this->CastTime->World = this->GetWorld();
 	}
-	this->ActivationFailedSoundCue = LoadObject<USoundCue>(this->GetWorld(), *FString("/Script/Engine.SoundCue'/Game/TopDown/Blueprints/Audio/mixkit-old-camera-shutter-click-1137_Cue.mixkit-old-camera-shutter-click-1137_Cue'"));
-	
-	UFuncLib::CheckObject(this->ActivationFailedSoundCue, "UAbilityFlameDash::UAbilitySteelskin() failed to LoadObject() USoundCue");
+
+	UFuncLib::CheckObject(this->ActivationFailedSoundCue, "UAbility() failed to LoadObject() USoundCue");
+	UFuncLib::CheckObject(this->Cooldown->World, "UAbility() Cooldown->World null");
+	UFuncLib::CheckObject(this->CastTime->World, "UAbility() CastTime->World null");
 }
 
 bool	UAbility::TryActivate(FEffectParameters Parameters) {
@@ -43,12 +50,12 @@ bool	UAbility::StartCasting(FEffectParameters Parameters) {
 		if (!UFuncLib::CheckObject(playerCtrl, "[AbilityFlameDash] PlayerController is null or cast failed.")) {
 			return false;
 		}
-		playerCtrl->SetCastedAbility(this, Parameters);
-		return true;
+		return playerCtrl->SetCastedAbility(this, Parameters);
 	}
 }
 
 bool	UAbility::Activate(FEffectParameters Parameters, bool CheckActivatable) {
+	// D(FString(__func__).Append(this->CastTime->ToString()));
 	this->Cooldown->Use();
 	this->CastTime->Use();
 	UGameplayStatics::PlaySound2D(this->Cooldown->World, this->ActivationSuccessSoundCue);

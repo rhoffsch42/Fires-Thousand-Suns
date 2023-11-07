@@ -1,12 +1,9 @@
-
-
 #pragma once
 
 #include "CoreMinimal.h"
 #include "Buff.h"
 
 #include "BuffFortify.generated.h"
-
 
 UCLASS(Blueprintable)
 class FIRESTHOUSANDSUNS_API ABuffFortify : public ABuff

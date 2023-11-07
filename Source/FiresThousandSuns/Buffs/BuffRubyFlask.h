@@ -1,10 +1,8 @@
-
 #pragma once
 
 #include "CoreMinimal.h"
 #include "Buff.h"
 #include "BuffRubyFlask.generated.h"
-
 
 UCLASS(Blueprintable)
 class FIRESTHOUSANDSUNS_API ABuffRubyFlask : public ABuff

@@ -12,10 +12,10 @@
 //#define LOG(msg) UE_LOG(LogTemp, Warning, TEXT("[%s@line: %d] - %s"), TEXT(__FUNCTION__), __LINE__, *FString(msg))
 #define LOG(func, msg) UE_LOG(LogTemp, Warning, TEXT("[%s@line: %d] %s"), *FString(func), __LINE__, *FString(msg))
 
-#define D_(x) x
-#define D(x) GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, x)
-#define DKEY(k, x) GEngine->AddOnScreenDebugMessage((int32)(int64)(k), 5.0f, FColor::Yellow, x)
-#define WHEREAMI(k) DKEY(k, FString(__FUNCSIG__))
+#define D_(x)		x
+#define D(x)		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, x)
+#define DKEY(k, x)	GEngine->AddOnScreenDebugMessage((int32)(int64)(k), 5.0f, FColor::Yellow, x)
+#define WHEREAMI(k)	DKEY(k, FString(__FUNCSIG__))
 
 #define GEN_UNAME(x) MakeUniqueObjectName(x, x->StaticClass(), FName())
 
@@ -93,10 +93,8 @@ public:
 	TODO: check every NewObject(), they must have an Outer argument!
 
 	Fires :
-		- abilities delayed cast animation
 		- debug msg on logfiles
 		- refacto BP / c++
-		- func to place point back on NavSys, in GM or GI
 		- refacto GI GM SG interactions
 		- refacto inputs: migrate in PlayerController
 		- real Widget for ability tooltips
@@ -113,11 +111,11 @@ public:
 		some skills are instant and will not register for the casting
 		other skills will start a delayed action that locks the player, can only have 1
 
-		cast cancel: the delayed action has a time window where it cannot be cancelled anymore (at the end)
+		cast cancel: the delayed action has a time window where it cannot be cancelled anymore
 		determine what can be cancelled by what:
 			- skills can be cancelled by player movement
 			? skills can be cancelled by another skill
 		anim cancel: same thing, but the action isn't cancelled, only the lock
 
-	skill queue ? max amount or max cumulated cast time or both
+	skill queue ? max amount, or max cumulated cast time, or both
 */

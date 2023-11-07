@@ -40,12 +40,12 @@ static inline void	ClearAbilitySlot(UWidget* Slot) {
 }
 
 void	UPlayWidget::InitAbilitys() {
-	UAbilityFlameDash* FlameDash = NewObject<UAbilityFlameDash>();
-	UAbilityMoltenShell* MoltenShell = NewObject<UAbilityMoltenShell>();
-	UAbilityVaalMoltenShell* VaalMoltenShell = NewObject<UAbilityVaalMoltenShell>();
-	UAbilitySteelskin* Steelskin = NewObject<UAbilitySteelskin>();
+	UAbilityFlameDash* FlameDash = NewObject<UAbilityFlameDash>(this, GEN_UNAME(this));
+	UAbilityMoltenShell* MoltenShell = NewObject<UAbilityMoltenShell>(this, GEN_UNAME(this));
+	UAbilityVaalMoltenShell* VaalMoltenShell = NewObject<UAbilityVaalMoltenShell>(this, GEN_UNAME(this));
+	UAbilitySteelskin* Steelskin = NewObject<UAbilitySteelskin>(this, GEN_UNAME(this));
 
-	this->AbilityManager = NewObject<UAbilityManager>();
+	this->AbilityManager = NewObject<UAbilityManager>(this, GEN_UNAME(this));
 	this->AbilityManager->SetAbilityAmount(5);
 	this->AbilityManager->SetAbility(0, nullptr); // used as a 'slot clearer'
 	this->AbilityManager->SetAbility(1, FlameDash);
@@ -66,10 +66,10 @@ void	UPlayWidget::InitAbilitys() {
 }
 
 void	UPlayWidget::InitFlasks() {
-	ULifeFlask* LifeFlask = NewObject<ULifeFlask>();
-	URubyFlask* RubyFlask = NewObject<URubyFlask>();
+	ULifeFlask* LifeFlask = NewObject<ULifeFlask>(this, GEN_UNAME(this));
+	URubyFlask* RubyFlask = NewObject<URubyFlask>(this, GEN_UNAME(this));
 
-	this->FlaskManager = NewObject<UAbilityManager>();
+	this->FlaskManager = NewObject<UAbilityManager>(this, GEN_UNAME(this));
 	this->FlaskManager->SetAbilityAmount(5);
 	this->FlaskManager->SetAbility(0, nullptr);
 	this->FlaskManager->SetAbility(1, LifeFlask);

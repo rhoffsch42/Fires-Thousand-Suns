@@ -9,7 +9,7 @@ ABuffGuard::ABuffGuard() {
 
 void ABuffGuard::OnConstruction(const FTransform& Transform) {
 	Super::OnConstruction(Transform);
-	this->HealthManager = NewObject<UHealthManager>(this->GetWorld(), GEN_UNAME(this)); // TODO: check all NewObject outers
+	this->HealthManager = NewObject<UHealthManager>(this, GEN_UNAME(this)); // TODO: check all NewObject outers
 
 	if (UFuncLib::CheckObject(this->HealthManager, "ABuffGuard() failed to create HealthManager")) {
 		this->HealthManager->SetMaxHP(100);
@@ -19,6 +19,8 @@ void ABuffGuard::OnConstruction(const FTransform& Transform) {
 		script.BindUFunction(this, "OnGuardHpEmpty");
 		this->HealthManager->HpEmpty.Add(script);
 	}
+
+	UFuncLib::CheckObject(this->GetWorld(), FString(__func__).Append(" GetWorld() null"));
 }
 
 FString	ABuffGuard::GetDisplayString() const {

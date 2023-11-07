@@ -16,6 +16,11 @@ ULifeFlask::ULifeFlask() {
 	this->ActivationSuccessSoundCue = LoadObject<USoundCue>(this->GetWorld(),
 		*FString("/Script/Engine.SoundCue'/Game/TopDown/Blueprints/Audio/fts-flask_Cue.fts-flask_Cue'"));
 
+}
+
+void	ULifeFlask::PostInitProperties() {
+	Super::PostInitProperties();
+
 	UFuncLib::CheckObject(this->ActivationSuccessSoundCue, "ULifeFlask::ULifeFlask() failed to LoadObject() USoundCue");
 }
 
@@ -43,6 +48,11 @@ URubyFlask::URubyFlask() {
 	this->SetNewMaterial(this->GetWorld(), FString("/Script/Engine.Material'/Game/LevelPrototyping/Materials/flask-fire-transparent_100x100_UIMat.flask-fire-transparent_100x100_UIMat'"));
 	this->ActivationSuccessSoundCue = LoadObject<USoundCue>(this->GetWorld(),
 		*FString("/Script/Engine.SoundCue'/Game/TopDown/Blueprints/Audio/fts-flask_Cue.fts-flask_Cue'"));
+
+}
+
+void	URubyFlask::PostInitProperties() {
+	Super::PostInitProperties();
 
 	UFuncLib::CheckObject(this->ActivationSuccessSoundCue, "URubyFlask::URubyFlask() failed to LoadObject() USoundCue");
 }

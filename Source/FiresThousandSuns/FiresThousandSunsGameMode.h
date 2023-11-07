@@ -4,6 +4,7 @@
 #include "Actors/Sun.h"
 #include "FiresThousandSunsCharacter.h"
 #include "FiresThousandSunsGameInstance.h"
+#include "NavigationSystem.h"
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
@@ -27,19 +28,23 @@ class AFiresThousandSunsGameMode : public AGameModeBase
 public:
 	AFiresThousandSunsGameMode();
 
+
+	UFUNCTION(BlueprintCallable)
+	void	Init(UPARAM(ref) TSubclassOf<AActor> ActorClassForSuns, FVector MinPosition, FVector MaxPosition,
+		UPARAM(ref) AFiresThousandSunsCharacter* PlayerCharacter, UPARAM(ref) AActor* MavenActor);
+	UFUNCTION(BlueprintCallable)
+	FVector	PlaceBackLocationOnNavSys(FVector Location);
+	UFUNCTION(BlueprintCallable)
+	FVector	ClampLocationToArenaBounds(FVector HitLocation, FVector PlayerLocation) const;
+
+	UFUNCTION(BlueprintCallable)
+	bool	TrySpawnWave();
 	UFUNCTION(BlueprintCallable)
 	void	SpawnSunsRegular();
 	UFUNCTION(BlueprintCallable)
 	void	SpawnSunsSides(Side Start, Side End);
 	UFUNCTION(BlueprintCallable)
-	void	Init(UPARAM(ref) TSubclassOf<AActor> ActorClassForSuns, FVector MinPosition, FVector MaxPosition,
-		UPARAM(ref) AFiresThousandSunsCharacter* PlayerCharacter, UPARAM(ref) AActor* MavenActor);
-	UFUNCTION(BlueprintCallable)
-	FVector	ClampLocationToArenaBounds(FVector HitLocation, FVector PlayerLocation) const;
-	UFUNCTION(BlueprintCallable)
 	bool	IsInitDone() const;
-	UFUNCTION(BlueprintCallable)
-	bool	TrySpawnWave();
 	UFUNCTION(BlueprintCallable)
 	FVector	GetLastSpawnSideLocation() const;
 	UFUNCTION(BlueprintCallable)
@@ -90,6 +95,7 @@ protected:
 	int32	_PhasesSurvived = 0;
 	int32	_WaitCounter = 0;
 
+	UNavigationSystemV1* NavSys = nullptr;
 	UFiresThousandSunsGameInstance* Fires_GI = nullptr;
 	USoundCue* _SunExplosionSoundCue = nullptr;
 	USoundCue* _MavenCancelSoundCue = nullptr;

@@ -17,15 +17,17 @@ class AFiresThousandSunsPlayerController : public APlayerController
 	GENERATED_BODY()
 public:
 	AFiresThousandSunsPlayerController();
-	virtual void Tick(float DeltaSeconds) override;
 	UFUNCTION(BlueprintCallable)
-	void	SetCastedAbility(UAbility* Ability, const FEffectParameters& InParameters);
+	bool	SetCastedAbility(UAbility* Ability, const FEffectParameters& InParameters);
 	UFUNCTION(BlueprintCallable)
 	void	FinalizeCastedAbility();
 	UFUNCTION(BlueprintCallable)
 	void	IncrementBlockInputCounter();
 	UFUNCTION(BlueprintCallable)
 	void	DecrementBlockInputCounter();
+
+	UFUNCTION(BlueprintCallable)
+	bool	GetIsCasting() const;
 
 	/** Time Threshold to know if it was a short press */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
@@ -68,5 +70,4 @@ private:
 	UAbility* _CastedAbility;
 	FEffectParameters _Parameters;
 	bool _bIsCasting = false;
-	float _CastingRemaining = 1.0f;
 };

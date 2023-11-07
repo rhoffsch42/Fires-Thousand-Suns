@@ -11,6 +11,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "FuncLib.h"
 #include "Kismet/KismetSystemLibrary.h"
+#include "Kismet/KismetMathLibrary.h"
 
 #include "GenericPlatform/GenericPlatformMath.h"
 
@@ -19,8 +20,6 @@ AFiresThousandSunsPlayerController::AFiresThousandSunsPlayerController() {
 	DefaultMouseCursor = EMouseCursor::Default;
 	CachedDestination = FVector::ZeroVector;
 	FollowTime = 0.f;
-
-	this->PrimaryActorTick.bCanEverTick = true;
 }
 
 void AFiresThousandSunsPlayerController::BeginPlay() {
@@ -33,29 +32,31 @@ void AFiresThousandSunsPlayerController::BeginPlay() {
 	}
 }
 
-void AFiresThousandSunsPlayerController::Tick(float DeltaSeconds) {
-	Super::Tick(DeltaSeconds);
-	if (this->_bIsCasting) {
-		//UKismetSystemLibrary::Delay(this->GetWorld(), this->_CastingRemaining, FLatentActionInfo());
-		//const UObject * WorldContextObject, float Duration, FLatentActionInfo LatentInfo
+bool	AFiresThousandSunsPlayerController::SetCastedAbility(UAbility* Ability, const FEffectParameters& InParameters) {
+	if (this->_bIsCasting || !Ability) {
+		return false;
 	}
-}
 
-void	AFiresThousandSunsPlayerController::SetCastedAbility(UAbility* Ability, const FEffectParameters& InParameters) {
-	if (!this->_bIsCasting && Ability) {
-		this->_CastedAbility = Ability;
-		this->_Parameters = InParameters;
-		this->_CastingRemaining = Ability->CastTime->Remaining();
-		this->_bIsCasting = true;
-		this->IncrementBlockInputCounter();
-		this->StopMovement();
-		D(FString::SanitizeFloat(this->_CastingRemaining).Append("s remaining until cast ends"));
-		UKismetSystemLibrary::Delay(this->GetWorld(), this->_CastingRemaining,
-			FLatentActionInfo(0, (int64)this, *FString("FinalizeCastedAbility"), this));
-	}
+	this->_CastedAbility = Ability;
+	this->_Parameters = InParameters;
+	this->_bIsCasting = true;
+	this->IncrementBlockInputCounter();
+	this->StopMovement();
+
+	FVector	location = InParameters.CursorHitLocation;
+	location.Z = InParameters.ActorInstigator->GetActorLocation().Z;
+	FRotator rot = UKismetMathLibrary::FindLookAtRotation(
+		InParameters.ActorInstigator->GetActorLocation(),
+		location);
+	InParameters.ActorInstigator->SetActorRotation(rot);
+	//D(FString::SanitizeFloat(this->_CastingRemaining).Append("s remaining until cast ends"));
+	UKismetSystemLibrary::Delay(this->GetWorld(), Ability->CastTime->Remaining(),
+		FLatentActionInfo(0, (int64)this, *FString("FinalizeCastedAbility"), this));
+	return true;
 }
 
 void	AFiresThousandSunsPlayerController::FinalizeCastedAbility() {
+	this->_CastedAbility->CastTime->Reset();// Delay() will not match perfectly the CastTime recharge, so we force reset
 	this->_CastedAbility->Activate(this->_Parameters);
 	this->_CastedAbility = nullptr;
 	this->_bIsCasting = false;
@@ -77,6 +78,9 @@ void	AFiresThousandSunsPlayerController::DecrementBlockInputCounter() {
 		UFuncLib::CheckObject(nullptr, FString(__func__).Append(" BlockInputCounter is negative"));
 	}
 }
+
+bool	AFiresThousandSunsPlayerController::GetIsCasting() const { return this->_bIsCasting; }
+
 
 ////////////////////////// protected ////////////////////
 

@@ -10,9 +10,9 @@
 
 	<!-- Give package a unique ID per platform -->
 	<?if $(var.Platform) = x64?>
-	<?define ProductCode = "{75F8B1EB-57F7-498E-9371-65CA5FDAA20F}"?>
+	<?define ProductCode = "{CAFE3D17-EADD-49EA-AFE3-FB693760B22B}"?>
 	<?else?>
-	<?define ProductCode = "{96C38B2A-E78D-45FC-BA2E-526D9C786137}"?>
+	<?define ProductCode = "{71178173-A205-452C-8095-568FF1463C0C}"?>
 	<?endif?>
 
 	<!-- Can be defined in the project file (GetAssemblyIdentity). -->

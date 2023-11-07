@@ -41,6 +41,8 @@ public:
 	void	SetDuration(const double Duration);
 	UFUNCTION(BlueprintCallable)
 	double	GetDuration() const;
+	UFUNCTION(BlueprintCallable)
+	FString	ToString();
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Default", meta = (ExposeOnSpawn = "true"))
 	UObject* World = nullptr;

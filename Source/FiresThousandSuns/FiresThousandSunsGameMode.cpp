@@ -35,7 +35,7 @@ AFiresThousandSunsGameMode::AFiresThousandSunsGameMode() {
 
 
 	this->World = this->GetWorld();
-
+	this->NavSys = UNavigationSystemV1::GetCurrent(this->GetWorld());
 }
 
 void AFiresThousandSunsGameMode::BeginPlay() {
@@ -88,6 +88,18 @@ void	AFiresThousandSunsGameMode::Init(
 	this->_bIsInit = true;
 }
 
+FVector	AFiresThousandSunsGameMode::PlaceBackLocationOnNavSys(FVector Location) {
+	if (UFuncLib::CheckObject(this->NavSys, FString(__func__).Append(" NavSys not found"))) {
+		FNavLocation result;
+		this->NavSys->ProjectPointToNavigation(Location, result);
+		if (result.HasNodeRef()) {
+			Location = result.Location;
+		} else {
+			D(FString("AFiresThousandSunsGameMode NavSys no location found"));
+		}
+	}
+	return Location;
+}
 
 bool	AFiresThousandSunsGameMode::TrySpawnWave() {
 	if (!this->_bIsInit) { return false; }

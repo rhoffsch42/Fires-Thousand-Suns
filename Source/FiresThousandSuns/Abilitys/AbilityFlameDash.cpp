@@ -4,6 +4,7 @@
 #include "../FuncLib.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "CollisionQueryParams.h"
 
 
 // explicit instanciation
@@ -26,20 +27,27 @@ UAbilityFlameDash::UAbilityFlameDash() {
 	this->Cooldown->Reset();
 
 	this->bIsInstant = false;
+	this->CastTime->SetMaxUses(1);
 	this->CastTime->SetDuration(0.8);
 	this->CastTime->Reset();
 
-	this->SetNewMaterial(this->GetWorld(), FString("/Game/LevelPrototyping/Materials/fire-dash_UIMat.fire-dash_UIMat"));
-	this->NiagaraSystem = LoadObject<UNiagaraSystem>(this->GetWorld(), *FString("/Script/Niagara.NiagaraSystem'/Game/LevelPrototyping/Particles/NS_FlameDash.NS_FlameDash'"));
-	this->ActivationSuccessSoundCue = LoadObject<USoundCue>(this->GetWorld(), *FString("/Script/Engine.SoundCue'/Game/TopDown/Blueprints/Audio/fts-flame-dash_Cue.fts-flame-dash_Cue'"));
-	
-	UFuncLib::CheckObject(this->NiagaraSystem, FString("UAbilityFlameDash::LoadObject<UNiagaraSystem>() failed"));
-	UFuncLib::CheckObject(this->ActivationSuccessSoundCue, "UAbilityFlameDash::UAbilitySteelskin() failed to LoadObject() USoundCue");
+
+	this->SetNewMaterial(this, FString("/Game/LevelPrototyping/Materials/fire-dash_UIMat.fire-dash_UIMat"));
+	this->NiagaraSystem = LoadObject<UNiagaraSystem>(this, *FString("/Script/Niagara.NiagaraSystem'/Game/LevelPrototyping/Particles/NS_FlameDash.NS_FlameDash'"));
+	this->ActivationSuccessSoundCue = LoadObject<USoundCue>(this, *FString("/Script/Engine.SoundCue'/Game/TopDown/Blueprints/Audio/fts-flame-dash_Cue.fts-flame-dash_Cue'"));
+	this->_NavSys = UNavigationSystemV1::GetCurrent(this->GetWorld());
+
 }
 
-#include "NavigationSystem.h"
-#include "CollisionQueryParams.h"
+void	UAbilityFlameDash::PostInitProperties() {
+	Super::PostInitProperties();
+	UFuncLib::CheckObject(this->GetWorld(), "UAbilityFlameDash()::PostInitProperties() this->GetWorld() is null");
+	UFuncLib::CheckObject(this->NiagaraSystem, FString("UAbilityFlameDash LoadObject<UNiagaraSystem>() failed"));
+	UFuncLib::CheckObject(this->ActivationSuccessSoundCue, "UAbilityFlameDash UAbilitySteelskin() failed to LoadObject() USoundCue");
+	UFuncLib::CheckObject(this->_NavSys, "UAbilityFlameDash()::PostInitProperties() could not get NavSys");
+}
 
+//DrawDebugLine(this->GetWorld(), instigatorLocation, Hit.Location, FColor::Red, false, 5.0f, 0, 1.0f);
 bool	UAbilityFlameDash::IsActivatable(FEffectParameters Parameters) {
 	FVector instigatorLocation = Parameters.ActorInstigator->GetActorLocation();
 	Parameters.CursorHitLocation.Z = instigatorLocation.Z;
@@ -54,6 +62,7 @@ bool	UAbilityFlameDash::IsActivatable(FEffectParameters Parameters) {
 	FCollisionQueryParams QueryParams;
 	QueryParams.AddIgnoredActor(Parameters.ActorInstigator);
 	world->LineTraceSingleByChannel(Hit, instigatorLocation, this->_targetDest, ECollisionChannel::ECC_WorldStatic, QueryParams);
+
 	if (Hit.bBlockingHit) {
 		double hitlen = (Hit.Location - instigatorLocation).Length();
 		if (hitlen < this->_minRange / 4.0)//too close from a wall
@@ -63,15 +72,14 @@ bool	UAbilityFlameDash::IsActivatable(FEffectParameters Parameters) {
 	}
 
 	// place back the targetDest in the navSys
-	UNavigationSystemV1* navSys = UNavigationSystemV1::GetCurrent(Parameters.ActorInstigator->GetWorld());
-	if (UFuncLib::CheckObject(navSys, "UAbilityFlameDash::Activate() navSys not found")) {
+	if (UFuncLib::CheckObject(this->_NavSys, "UAbilityFlameDash::Activate() NavSys not found")) {
 		FNavLocation result;
-		navSys->ProjectPointToNavigation(this->_targetDest, result);
+		this->_NavSys->ProjectPointToNavigation(this->_targetDest, result);
 		if (result.HasNodeRef()) {
 			this->_targetDest = result.Location;
 			this->_targetDest.Z = instigatorLocation.Z;
 		} else {
-			D(FString("UAbilityFlameDash::Activate() navSys no location found"));
+			D(FString("UAbilityFlameDash::Activate() NavSys: no location found"));
 			return false;
 		}
 	}
