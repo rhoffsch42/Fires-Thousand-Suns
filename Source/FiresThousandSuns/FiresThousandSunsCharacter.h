@@ -19,6 +19,11 @@ class AFiresThousandSunsCharacter : public ACharacter
 
 public:
 	AFiresThousandSunsCharacter();
+	UFUNCTION(BlueprintCallable)
+	void	InitAllBuffActorClasses(TSubclassOf<ABuffFortify> Fortify,
+									TSubclassOf<ABuffMoltenShell> MoltenShell,
+									TSubclassOf<ABuffVaalMoltenShell> VaalMoltenShell,
+									TSubclassOf<ABuffSteelskin> Steelskin);
 
 	virtual void Tick(float DeltaSeconds) override;
 
@@ -30,11 +35,13 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void	Debug_PlayerState();
 	UFUNCTION(BlueprintCallable)
-	void	UpdateStats(const FPlayerStatistics& NewStats);
+	void	UpdateStatistics(const FPlayerStatistics& NewStats);
 	UFUNCTION(BlueprintCallable)
 	void	ApplyLifeRegen(float DeltaSeconds);
 	UFUNCTION(BlueprintCallable)
 	void	Die();
+	UFUNCTION(BlueprintCallable)
+	void	SpawnFortifyBuff();
 
 	// Custom PlayerState
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)

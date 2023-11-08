@@ -22,13 +22,13 @@ AFiresThousandSunsGameMode::AFiresThousandSunsGameMode() {
 	PlayerStateClass = AFiresThousandSunsPlayerState::StaticClass();
 
 	// set default pawn class to our Blueprinted character
-	static ConstructorHelpers::FClassFinder<APawn> PlayerPawnBPClass(TEXT("/Game/TopDown/Blueprints/BP_TopDownCharacter"));
+	static ConstructorHelpers::FClassFinder<APawn> PlayerPawnBPClass(TEXT(BP_PATH_CHARACTER));
 	if (PlayerPawnBPClass.Class != nullptr)	{
 		DefaultPawnClass = PlayerPawnBPClass.Class;
 	}
 
 	// set default controller to our Blueprinted controller
-	static ConstructorHelpers::FClassFinder<APlayerController> PlayerControllerBPClass(TEXT("/Game/TopDown/Blueprints/BP_TopDownPlayerController"));
+	static ConstructorHelpers::FClassFinder<APlayerController> PlayerControllerBPClass(TEXT(BP_PATH_CONTROLLER));
 	if (PlayerControllerBPClass.Class != NULL) {
 		PlayerControllerClass = PlayerControllerBPClass.Class;
 	}
@@ -49,7 +49,7 @@ void	AFiresThousandSunsGameMode::Init(
 	UPARAM(ref) AActor* MavenActor)
 {
 	this->Fires_GI = Cast<UFiresThousandSunsGameInstance>(this->GetGameInstance());// must be outside of ctor
-	if (UFuncLib::CheckObject(this->Fires_GI, FString(__func__).Append(" failed to get/cast game instance"))) {
+	if (UFuncLib::CheckObject(this->Fires_GI, FSIG_APPEND(" failed to get/cast game instance"))) {
 		this->bIsUber = this->Fires_GI->bUberMode;
 		this->bIsKrangled = this->Fires_GI->bKrangledWaves;
 	}
@@ -68,7 +68,7 @@ void	AFiresThousandSunsGameMode::Init(
 	FVector bottomRight = MaxPosition;
 	FVector bottomLeft = FVector(topleft.X, bottomRight.Y, topleft.Z);
 	FVector topRight = FVector(bottomRight.X, topleft.Y, topleft.Z);
-	
+
 	this->_SidePos1[CAST_NUM(Side::left)] = topleft;
 	this->_SidePos2[CAST_NUM(Side::left)] = bottomLeft;
 	this->_SidePos1[CAST_NUM(Side::right)] = topRight;
@@ -77,7 +77,7 @@ void	AFiresThousandSunsGameMode::Init(
 	this->_SidePos2[CAST_NUM(Side::top)] = topRight;
 	this->_SidePos1[CAST_NUM(Side::bottom)] = bottomLeft;
 	this->_SidePos2[CAST_NUM(Side::bottom)] = bottomRight;
-	
+
 	this->_SunExplosionSoundCue = LoadObject<USoundCue>(this->GetWorld(),
 		*FString("/Script/Engine.SoundCue'/Game/TopDown/Blueprints/Audio/fts-sun-explosion_Cue.fts-sun-explosion_Cue'"));
 	this->_MavenCancelSoundCue = LoadObject<USoundCue>(this->GetWorld(),
@@ -89,7 +89,7 @@ void	AFiresThousandSunsGameMode::Init(
 }
 
 FVector	AFiresThousandSunsGameMode::PlaceBackLocationOnNavSys(FVector Location) {
-	if (UFuncLib::CheckObject(this->NavSys, FString(__func__).Append(" NavSys not found"))) {
+	if (UFuncLib::CheckObject(this->NavSys, FString(__FUNCSIG__).Append(" NavSys not found"))) {
 		FNavLocation result;
 		this->NavSys->ProjectPointToNavigation(Location, result);
 		if (result.HasNodeRef()) {
@@ -110,7 +110,9 @@ bool	AFiresThousandSunsGameMode::TrySpawnWave() {
 			this->_PhasesSurvived++;
 			this->_WaveCounter = 0;
 			this->_WaitCounter = 0;
-			this->Fires_GI->Fires_SG->TryUnlockKrangledMode(this->_PhasesSurvived);
+			if (this->Fires_GI->Fires_SG) {
+				this->Fires_GI->Fires_SG->TryUnlockKrangledMode(this->_PhasesSurvived);
+			}
 		}
 	} else {
 		this->SpawnSunsRegular();

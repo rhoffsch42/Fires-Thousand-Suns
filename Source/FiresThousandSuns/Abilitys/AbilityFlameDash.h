@@ -22,6 +22,7 @@ class FIRESTHOUSANDSUNS_API UAbilityFlameDash : public UAbility
 public:
 	UAbilityFlameDash();
 	virtual void	PostInitProperties() override;
+
 	virtual bool	IsActivatable(FEffectParameters Parameters) override;
 	virtual bool	Activate(FEffectParameters Parameters, bool bCheckActivatable = false) override;
 

@@ -13,6 +13,7 @@ class FIRESTHOUSANDSUNS_API ULifeFlask : public UAbility
 public:
 	ULifeFlask();
 	virtual void	PostInitProperties() override;
+
 	virtual bool	Activate(FEffectParameters Parameters, bool bCheckActivatable = false) override;
 protected:
 	double	HealValue = 4000.0;

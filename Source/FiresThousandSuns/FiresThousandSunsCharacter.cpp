@@ -61,62 +61,84 @@ AFiresThousandSunsCharacter::AFiresThousandSunsCharacter() {
 	this->_InitPreBeginPlay();
 }
 
-void	AFiresThousandSunsCharacter::Debug_PlayerState() {
-	UFuncLib::CheckObject(this->CustomPlayerState, "AFiresThousandSunsCharacter::Debug_PlayerState() CustomPlayerState nullptr");
-	APlayerState* ps = this->GetPlayerState();
-	UFuncLib::CheckObject(ps, "AFiresThousandSunsCharacter::Debug_PlayerState() GetPlayerState() returned nullptr");
-	AFiresThousandSunsPlayerState* casted = Cast<AFiresThousandSunsPlayerState>(this->GetPlayerState());
-	UFuncLib::CheckObject(casted, "AFiresThousandSunsCharacter::Debug_PlayerState() Cast<Fires..PlayerState>() failed");
+void	AFiresThousandSunsCharacter::InitAllBuffActorClasses(
+	TSubclassOf<ABuffFortify> Fortify,
+	TSubclassOf<ABuffMoltenShell> MoltenShell,
+	TSubclassOf<ABuffVaalMoltenShell> VaalMoltenShell,
+	TSubclassOf<ABuffSteelskin> Steelskin)
+{
+	UAbilityManager* Manager = this->CustomPlayerState->AbilityManager;
+	UClass* ActorClasses[3] = { MoltenShell, VaalMoltenShell, Steelskin };
+	UGuardBase* Guards[3] = {
+		Cast<UGuardBase>(Manager->GetAbilityByClass(UAbilityMoltenShell::StaticClass())),
+		Cast<UGuardBase>(Manager->GetAbilityByClass(UAbilityVaalMoltenShell::StaticClass())),
+		Cast<UGuardBase>(Manager->GetAbilityByClass(UAbilitySteelskin::StaticClass()))
+	};
+	for (size_t i = 0; i < 3; i++) {
+		if (UFuncLib::CheckObject(Guards[i], FSIG_APPEND(" Couldn't Get/Cast Ability"))) {
+			Guards[i]->BuffGuardClass = ActorClasses[i];
+		}
+	}
+	this->BuffFortifyClass = Fortify;
 }
 
 void	AFiresThousandSunsCharacter::_InitPreBeginPlay() {
-	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, "AFiresThousandSunsCharacter::_InitPreBeginPlay()");
 	BuffFortifyClass = ABuffFortify::StaticClass();
 }
 
 void	AFiresThousandSunsCharacter::_InitPostBeginPlay() {
-	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, "AFiresThousandSunsCharacter::_InitPostBeginPlay()");
 	// PlayerState
 	APlayerState* ps = this->GetPlayerState();
-	UFuncLib::CheckObject(ps, "AFiresThousandSunsCharacter::_InitPostBeginPlay() GetPlayerState() returned nullptr");
+	UFuncLib::CheckObject(ps, FSIG_APPEND(" GetPlayerState() returned nullptr"));
 	this->CustomPlayerState = Cast<AFiresThousandSunsPlayerState>(this->GetPlayerState());
-	if (UFuncLib::CheckObject(this->CustomPlayerState, "AFiresThousandSunsCharacter::_InitPostBeginPlay() Cast<Fires..PlayerState>() failed")) {
-		//this->SetPlayerState(this->CustomPlayerState);
+	if (UFuncLib::CheckObject(this->CustomPlayerState, FSIG_APPEND(" Cast<Fires..PlayerState>() failed"))) {
+		//this->SetPlayerState(this->CustomPlayerState); // TODO: not working ?
 
-		UFiresThousandSunsGameInstance* FiresGI = Cast<UFiresThousandSunsGameInstance>(this->GetGameInstance());
-		if (UFuncLib::CheckObject(FiresGI, "AFiresThousandSunsCharacter  GetGameInstance() or Cast<>() failed")) {
-			this->UpdateStats(FiresGI->BaseStats);
+		UFiresThousandSunsGameInstance* Fires_GI = Cast<UFiresThousandSunsGameInstance>(this->GetGameInstance());
+		if (UFuncLib::CheckObject(Fires_GI, FSIG_APPEND(" GetGameInstance() or Cast<>() failed"))) {
+			this->UpdateStatistics(Fires_GI->BaseStats);
 		}
 
 		// Link HealthManager to Die();
 		FScriptDelegate delegateScript;
 		delegateScript.BindUFunction(this, "Die");
 		this->CustomPlayerState->HealthManager->HpEmpty.Add(delegateScript);
-
-		// Fortify Buff
-		if (this->CustomPlayerState->PlayerStatistics.FortifyEffect > 0) {
-			ABuffFortify* buff = UFuncLib::SafeSpawnActor<ABuffFortify>(this->GetWorld(), this->BuffFortifyClass);
-			if (UFuncLib::CheckObject(buff, "UAbilityMoltenShell::Activate() buff failed to create ")) {
-				buff->FortifyStacks = this->CustomPlayerState->PlayerStatistics.FortifyEffect;
-				buff->AttachToActor(this, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, false));
-				buff->ApplyTo(this->CustomPlayerState);
-			}
-		}
 	}
 }
 
 void	AFiresThousandSunsCharacter::BeginPlay() {
-	Super::BeginPlay();
-
-	this->_InitPostBeginPlay();
+	this->_InitPostBeginPlay();// important before Super::BeginPlay()
+	Super::BeginPlay();//this will call the BeginPlay of any blueprint inheriting this class, it's totally insane.
 }
 
 void AFiresThousandSunsCharacter::Tick(float DeltaSeconds) {
-    Super::Tick(DeltaSeconds);
+	Super::Tick(DeltaSeconds);
 	this->ApplyLifeRegen(DeltaSeconds);
 }
 
-void	AFiresThousandSunsCharacter::UpdateStats(const FPlayerStatistics& NewStats) {
+void	AFiresThousandSunsCharacter::Debug_PlayerState() {
+	UFuncLib::CheckObject(this->CustomPlayerState, FSIG_APPEND(" CustomPlayerState nullptr"));
+	APlayerState* ps = this->GetPlayerState();
+	UFuncLib::CheckObject(ps, FSIG_APPEND(" GetPlayerState() returned nullptr"));
+	AFiresThousandSunsPlayerState* casted = Cast<AFiresThousandSunsPlayerState>(this->GetPlayerState());
+	UFuncLib::CheckObject(casted, FSIG_APPEND(" Cast<Fires..PlayerState>() failed"));
+}
+
+void AFiresThousandSunsCharacter::SpawnFortifyBuff() {
+	if (UFuncLib::CheckObject(this->GetWorld(), FSIG_APPEND(" this->GetWorld() is null"))
+		&& UFuncLib::CheckObject(this->CustomPlayerState, FSIG_APPEND(" this->CustomPlayerState is null"))
+		&& this->CustomPlayerState->PlayerStatistics.FortifyEffect > 0)
+	{
+		ABuffFortify* buff = UFuncLib::SafeSpawnActor<ABuffFortify>(this->GetWorld(), this->BuffFortifyClass);
+		if (UFuncLib::CheckObject(buff, FSIG_APPEND(" buff failed to create"))) {
+			buff->FortifyStacks = this->CustomPlayerState->PlayerStatistics.FortifyEffect;
+			buff->AttachToActor(this, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, false));
+			buff->ApplyTo(this->CustomPlayerState);
+		}
+	}
+}
+
+void	AFiresThousandSunsCharacter::UpdateStatistics(const FPlayerStatistics& NewStats) {
 	//AFiresThousandSunsPlayerState* state = Cast<AFiresThousandSunsPlayerState>(this->GetPlayerState());
 	if (!UFuncLib::CheckObject(this->CustomPlayerState, "AFiresThousandSunsCharacter UpdateStats() CustomPlayerState is nullptr")) {
 		return;

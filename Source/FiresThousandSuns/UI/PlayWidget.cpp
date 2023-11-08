@@ -110,7 +110,7 @@ FPlayerStatistics	UPlayWidget::GeneratePlayerStatistics() const {
 }
 
 void	UPlayWidget::LoadArenaConfigFromSaveGame(UPARAM(ref) UFiresThousandSunsSaveGame* SaveGame) {
-	if (UFuncLib::CheckObject(SaveGame, FString(__func__).Append(" SaveGame is null"))) {
+	if (UFuncLib::CheckObject(SaveGame, FString(__FUNCSIG__).Append(" SaveGame is null"))) {
 		this->ApplyPlayerStatistics(SaveGame->PlayerStatistics);
 		this->AbilityBar->UI_Manager->SetLayout(SaveGame->AbilityLayout);
 		this->FlaskBar->UI_Manager->SetLayout(SaveGame->FlaskLayout, true);
@@ -119,7 +119,7 @@ void	UPlayWidget::LoadArenaConfigFromSaveGame(UPARAM(ref) UFiresThousandSunsSave
 
 
 void	UPlayWidget::SaveArenaConfig(UPARAM(ref) UFiresThousandSunsSaveGame* SaveGame) {
-	if (UFuncLib::CheckObject(SaveGame, FString(__func__).Append(" SaveGame is null"))) {
+	if (UFuncLib::CheckObject(SaveGame, FString(__FUNCSIG__).Append(" SaveGame is null"))) {
 		SaveGame->PlayerStatistics = this->GeneratePlayerStatistics();
 		SaveGame->AbilityLayout = this->AbilityBar->UI_Manager->GetLayoutAsAbilityType();
 		SaveGame->FlaskLayout = this->FlaskBar->UI_Manager->GetLayoutAsAbilityType();
@@ -130,7 +130,7 @@ void	UPlayWidget::SaveArenaConfig(UPARAM(ref) UFiresThousandSunsSaveGame* SaveGa
 // repetitive with SaveArenaConfig. Use SaveGame for all shared values and only transfer unsaved values ?
 void	UPlayWidget::TransferArenaConfigToGameInstance() {
 	UFiresThousandSunsGameInstance* Fires_GI = Cast<UFiresThousandSunsGameInstance>(this->GetGameInstance());
-	if (UFuncLib::CheckObject(Fires_GI, FString(__func__).Append(" Game instance is null or cast failed "))) {
+	if (UFuncLib::CheckObject(Fires_GI, FString(__FUNCSIG__).Append(" Game instance is null or cast failed "))) {
 		// shared with SaveGame
 		Fires_GI->BaseStats = this->GeneratePlayerStatistics();
 		Fires_GI->AbilityLayout = this->AbilityBar->UI_Manager->GetLayoutAsAbilityType();

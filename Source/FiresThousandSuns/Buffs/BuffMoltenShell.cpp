@@ -20,7 +20,7 @@ void ABuffGuard::OnConstruction(const FTransform& Transform) {
 		this->HealthManager->HpEmpty.Add(script);
 	}
 
-	UFuncLib::CheckObject(this->GetWorld(), FString(__func__).Append(" GetWorld() null"));
+	UFuncLib::CheckObject(this->GetWorld(), FString(__FUNCSIG__).Append(" GetWorld() null"));
 }
 
 FString	ABuffGuard::GetDisplayString() const {

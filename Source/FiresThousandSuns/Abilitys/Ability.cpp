@@ -55,7 +55,7 @@ bool	UAbility::StartCasting(FEffectParameters Parameters) {
 }
 
 bool	UAbility::Activate(FEffectParameters Parameters, bool CheckActivatable) {
-	// D(FString(__func__).Append(this->CastTime->ToString()));
+	// D(FString(__FUNCSIG__).Append(this->CastTime->ToString()));
 	this->Cooldown->Use();
 	this->CastTime->Use();
 	UGameplayStatics::PlaySound2D(this->Cooldown->World, this->ActivationSuccessSoundCue);

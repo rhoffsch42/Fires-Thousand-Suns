@@ -5,17 +5,19 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "FiresThousandSunsPlayerState.h"
 #include "FiresThousandSunsGameMode.h"
+#include "Engine.h"
 
 #include "FuncLib.generated.h"
 
 #define CAST_NUM(x)	static_cast<int>(x)
 //#define LOG(msg) UE_LOG(LogTemp, Warning, TEXT("[%s@line: %d] - %s"), TEXT(__FUNCTION__), __LINE__, *FString(msg))
-#define LOG(func, msg) UE_LOG(LogTemp, Warning, TEXT("[%s@line: %d] %s"), *FString(func), __LINE__, *FString(msg))
+#define LOG(msg) UE_LOG(LogTemp, Warning, TEXT("[%s@line: %d] %s"), *FString(__FUNCSIG__), __LINE__, *FString(msg))
 
-#define D_(x)		x
-#define D(x)		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, x)
-#define DKEY(k, x)	GEngine->AddOnScreenDebugMessage((int32)(int64)(k), 5.0f, FColor::Yellow, x)
-#define WHEREAMI(k)	DKEY(k, FString(__FUNCSIG__))
+#define D_(x)			x
+#define D(x)			if (GEngine){GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, x);}
+#define DKEY(k, x)		if (GEngine){GEngine->AddOnScreenDebugMessage((int32)(int64)(k), 5.0f, FColor::Yellow, x);}
+#define WHEREAMI(k)		DKEY(k, FString(__FUNCSIG__))
+#define FSIG_APPEND(x)	FString(__FUNCSIG__).Append(x)
 
 #define GEN_UNAME(x) MakeUniqueObjectName(x, x->StaticClass(), FName())
 
@@ -93,7 +95,6 @@ public:
 	TODO: check every NewObject(), they must have an Outer argument!
 
 	Fires :
-		- debug msg on logfiles
 		- refacto BP / c++
 		- refacto GI GM SG interactions
 		- refacto inputs: migrate in PlayerController

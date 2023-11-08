@@ -41,6 +41,7 @@ UAbilityFlameDash::UAbilityFlameDash() {
 
 void	UAbilityFlameDash::PostInitProperties() {
 	Super::PostInitProperties();
+
 	UFuncLib::CheckObject(this->GetWorld(), "UAbilityFlameDash()::PostInitProperties() this->GetWorld() is null");
 	UFuncLib::CheckObject(this->NiagaraSystem, FString("UAbilityFlameDash LoadObject<UNiagaraSystem>() failed"));
 	UFuncLib::CheckObject(this->ActivationSuccessSoundCue, "UAbilityFlameDash UAbilitySteelskin() failed to LoadObject() USoundCue");

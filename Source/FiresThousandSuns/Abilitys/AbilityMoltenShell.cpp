@@ -27,11 +27,6 @@ UGuardBase::UGuardBase() {
 	this->BuffGuardClass = ABuffGuard::StaticClass();
 }
 
-void	UGuardBase::PostInitProperties() {
-	Super::PostInitProperties();
-}
-
-
 bool	UGuardBase::Activate(FEffectParameters Parameters, bool bCheckActivatable) {
 	return this->UAbility::Activate(Parameters);
 }

@@ -10,7 +10,9 @@
 #include "GameFramework/GameModeBase.h"
 #include "FiresThousandSunsGameMode.generated.h"
 
-#define PARAMS_CATEGORY	"GameSettings"
+#define PARAMS_CATEGORY		"GameSettings"
+#define BP_PATH_CHARACTER	"/Game/TopDown/Blueprints/BP_Character"
+#define BP_PATH_CONTROLLER	"/Game/TopDown/Blueprints/BP_PlayerController"
 
 UENUM(BlueprintType)
 enum class Side : uint8 {

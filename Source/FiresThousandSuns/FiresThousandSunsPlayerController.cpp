@@ -75,7 +75,7 @@ void	AFiresThousandSunsPlayerController::DecrementBlockInputCounter() {
 	if (this->_BlockInputCounter == 0) {
 		this->bBlockInput = false;
 	} else if (this->_BlockInputCounter < 0) {
-		UFuncLib::CheckObject(nullptr, FString(__func__).Append(" BlockInputCounter is negative"));
+		UFuncLib::CheckObject(nullptr, FString(__FUNCSIG__).Append(" BlockInputCounter is negative"));
 	}
 }
 

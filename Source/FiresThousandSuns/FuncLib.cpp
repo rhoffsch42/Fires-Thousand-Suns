@@ -7,20 +7,25 @@ constexpr float D_LEN = 5.0f;
 
 bool	UFuncLib::CheckObject(UObject* obj, FString ErrorMsg) {
 	if (!obj) {
-		D_(GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, ErrorMsg));
+		if (GEngine) {
+			D_(GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, ErrorMsg));
+			LOG(ErrorMsg);
+		}
 		return false;
 	}
 	return true;
 }
 
 void	UFuncLib::PrintStats(const FPlayerStatistics& Stats) {
-	D_(GEngine->AddOnScreenDebugMessage(-1, D_LEN, FColor::Cyan, FString::Printf(TEXT("Fortify Stacks          : %lf"), Stats.FortifyEffect)));
-	D_(GEngine->AddOnScreenDebugMessage(-1, D_LEN, FColor::Cyan, FString::Printf(TEXT("Spell Supression Effect : %lf"), Stats.SpellSuppressionEffect)));
-	D_(GEngine->AddOnScreenDebugMessage(-1, D_LEN, FColor::Cyan, FString::Printf(TEXT("Spell Supression Chance : %lf"), Stats.SpellSuppressionChance)));
-	D_(GEngine->AddOnScreenDebugMessage(-1, D_LEN, FColor::Cyan, FString::Printf(TEXT("Fire Resistance         : %lf"), Stats.FireResistance)));
-	D_(GEngine->AddOnScreenDebugMessage(-1, D_LEN, FColor::Cyan, FString::Printf(TEXT("Life Regeneration       : %lf"), Stats.LifeRegeneration)));
-	D_(GEngine->AddOnScreenDebugMessage(-1, D_LEN, FColor::Cyan, FString::Printf(TEXT("Life                    : %lf"), Stats.Life)));
-	D_(GEngine->AddOnScreenDebugMessage(-1, D_LEN, FColor::Cyan, FString::Printf(TEXT("Movement Speed          : %lf"), Stats.MovementSpeed)));
+	if (GEngine) {
+		D_(GEngine->AddOnScreenDebugMessage(-1, D_LEN, FColor::Cyan, FString::Printf(TEXT("Fortify Stacks          : %lf"), Stats.FortifyEffect)));
+		D_(GEngine->AddOnScreenDebugMessage(-1, D_LEN, FColor::Cyan, FString::Printf(TEXT("Spell Supression Effect : %lf"), Stats.SpellSuppressionEffect)));
+		D_(GEngine->AddOnScreenDebugMessage(-1, D_LEN, FColor::Cyan, FString::Printf(TEXT("Spell Supression Chance : %lf"), Stats.SpellSuppressionChance)));
+		D_(GEngine->AddOnScreenDebugMessage(-1, D_LEN, FColor::Cyan, FString::Printf(TEXT("Fire Resistance         : %lf"), Stats.FireResistance)));
+		D_(GEngine->AddOnScreenDebugMessage(-1, D_LEN, FColor::Cyan, FString::Printf(TEXT("Life Regeneration       : %lf"), Stats.LifeRegeneration)));
+		D_(GEngine->AddOnScreenDebugMessage(-1, D_LEN, FColor::Cyan, FString::Printf(TEXT("Life                    : %lf"), Stats.Life)));
+		D_(GEngine->AddOnScreenDebugMessage(-1, D_LEN, FColor::Cyan, FString::Printf(TEXT("Movement Speed          : %lf"), Stats.MovementSpeed)));
+	}
 }
 
 void	UFuncLib::CopyToClipboard(FString Input) {
