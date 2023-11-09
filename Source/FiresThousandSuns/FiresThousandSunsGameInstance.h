@@ -19,12 +19,16 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void	InitSaveGame(FString SaveName, TSubclassOf<UFiresThousandSunsSaveGame> SaveGameClass);
+	UFUNCTION(BlueprintCallable)
+	void	AddDebugMessage(FString Message);
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	UFiresThousandSunsSaveGame* Fires_SG = nullptr;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	UUserWidget*	UserWidgetRef = nullptr;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	UUserWidget*	DebugWidget = nullptr;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	FPlayerStatistics	BaseStats;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)

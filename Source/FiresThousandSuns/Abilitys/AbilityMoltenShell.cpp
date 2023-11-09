@@ -28,7 +28,8 @@ UGuardBase::UGuardBase() {
 }
 
 bool	UGuardBase::Activate(FEffectParameters Parameters, bool bCheckActivatable) {
-	return this->UAbility::Activate(Parameters);
+	//return this->UAbility::Activate(Parameters);
+	return Super::Activate(Parameters);
 }
 
 ////////////////////////////////////
@@ -71,7 +72,8 @@ bool	UAbilityMoltenShell::Activate(FEffectParameters Parameters, bool bCheckActi
 		}
 	}
 
-	return this->UGuardBase::Activate(Parameters);
+	//return this->UGuardBase::Activate(Parameters);
+	return Super::Activate(Parameters);
 }
 
 ////////////////////////////////////
@@ -114,7 +116,8 @@ bool	UAbilityVaalMoltenShell::Activate(FEffectParameters Parameters, bool bCheck
 		}
 	}
 
-	return this->UGuardBase::Activate(Parameters);
+	return Super::Activate(Parameters);
+	//return this->UGuardBase::Activate(Parameters);
 }
 
 ////////////////////////////////////
@@ -157,5 +160,6 @@ bool	UAbilitySteelskin::Activate(FEffectParameters Parameters, bool bCheckActiva
 		}
 	}
 
-	return this->UGuardBase::Activate(Parameters);
+	return Super::Activate(Parameters);
+	//return this->UGuardBase::Activate(Parameters);
 }

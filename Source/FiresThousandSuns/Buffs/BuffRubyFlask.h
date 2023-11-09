@@ -16,6 +16,4 @@ public:
 
 	double	BonusFireResistance = 0.5;
 	double	LessFireDamage = 0.2;
-protected:
-private:
 };

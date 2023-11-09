@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -26,7 +25,6 @@ public:
 	double	Absorption = 0.75;
 protected:
 	APawn* _TargetPawn = nullptr;
-private:
 };
 
 UCLASS(Blueprintable)
@@ -35,8 +33,6 @@ class FIRESTHOUSANDSUNS_API ABuffMoltenShell : public ABuffGuard
 	GENERATED_BODY()
 public:
 	ABuffMoltenShell();
-private:
-
 };
 
 UCLASS(Blueprintable)
@@ -45,8 +41,6 @@ class FIRESTHOUSANDSUNS_API ABuffVaalMoltenShell : public ABuffGuard
 	GENERATED_BODY()
 public:
 	ABuffVaalMoltenShell();
-private:
-
 };
 
 UCLASS(Blueprintable)
@@ -57,6 +51,4 @@ public:
 	ABuffSteelskin();
 	virtual void	ApplyTo(AActor* Target) override;
 	virtual void	Remove() override;
-private:
-
 };

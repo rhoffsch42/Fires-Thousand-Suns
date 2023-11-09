@@ -30,7 +30,6 @@ class AFiresThousandSunsGameMode : public AGameModeBase
 public:
 	AFiresThousandSunsGameMode();
 
-
 	UFUNCTION(BlueprintCallable)
 	void	Init(UPARAM(ref) TSubclassOf<AActor> ActorClassForSuns, FVector MinPosition, FVector MaxPosition,
 		UPARAM(ref) AFiresThousandSunsCharacter* PlayerCharacter, UPARAM(ref) AActor* MavenActor);
@@ -109,5 +108,4 @@ private:
 	double	_ApplyGuardSkills(double damage) const;
 	void	_SelectSunsForMavenCancellation(TArray<ASun*>* wave) const;
 	TArray<int32> _GenerateDestinationIndexArray() const;
-
 };

@@ -1,7 +1,5 @@
-
 #include "LifeFlask.h"
 #include "../FiresThousandSunsPlayerState.h"
-#include "../Buffs/BuffRubyFlask.h"
 #include "../FuncLib.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -33,7 +31,8 @@ bool	ULifeFlask::Activate(FEffectParameters Parameters, bool bCheckActivatable) 
 		else { return false; }
 	}
 
-	return this->UAbility::Activate(Parameters);
+	return Super::Activate(Parameters);
+	//return this->UAbility::Activate(Parameters);
 }
 
 /////////////////////////////////
@@ -45,21 +44,29 @@ URubyFlask::URubyFlask() {
 	this->Cooldown->Reset();
 	this->TooltipName = "Ruby Flask";
 
+	ConstructorHelpers::FClassFinder<ABuffRubyFlask> BuffClass(TEXT(BP_PATH_BUFFRUBYFLASK));
+	if (UFuncLib::CheckObject(BuffClass.Class, FSIG_APPEND(" failed to get Actor class ").Append(BP_PATH_BUFFRUBYFLASK))) {
+		UFuncLib::CheckObject(BuffClass.Class, FSIG_APPEND(" BuffClass.Class is null"));
+		this->_BuffClass = BuffClass.Class;
+	} else {
+		this->_BuffClass = ABuffRubyFlask::StaticClass();
+	}
+
 	this->SetNewMaterial(this->GetWorld(), FString("/Script/Engine.Material'/Game/LevelPrototyping/Materials/flask-fire-transparent_100x100_UIMat.flask-fire-transparent_100x100_UIMat'"));
 	this->ActivationSuccessSoundCue = LoadObject<USoundCue>(this->GetWorld(),
 		*FString("/Script/Engine.SoundCue'/Game/TopDown/Blueprints/Audio/fts-flask_Cue.fts-flask_Cue'"));
-
 }
 
 void	URubyFlask::PostInitProperties() {
 	Super::PostInitProperties();
 
-	UFuncLib::CheckObject(this->ActivationSuccessSoundCue, "URubyFlask::URubyFlask() failed to LoadObject() USoundCue");
+	UFuncLib::CheckObject(this->ActivationSuccessSoundCue, FSIG_APPEND(" failed to LoadObject() USoundCue"));
+	UFuncLib::CheckObject(this->_BuffClass, FSIG_APPEND(" this->_BuffClass is null"));
 }
 
 bool	URubyFlask::Activate(FEffectParameters Parameters, bool bCheckActivatable) {
 	for (auto target : Parameters.Targets) {
-		ABuffRubyFlask* buff = UFuncLib::SafeSpawnActor<ABuffRubyFlask>(Parameters.World, ABuffRubyFlask::StaticClass());
+		ABuffRubyFlask* buff = UFuncLib::SafeSpawnActor<ABuffRubyFlask>(Parameters.World, this->_BuffClass);
 		if (UFuncLib::CheckObject(buff, "URubyFlask::Activate() buff failed to create ")) {
 			buff->SetBaseDuration(10.0);
 			//buff->AttachToActor(Parameters.ActorInstigator, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, false));
@@ -68,11 +75,12 @@ bool	URubyFlask::Activate(FEffectParameters Parameters, bool bCheckActivatable) 
 			/*
 				TODO: pb: target is the PlayerState (see BP Arena)
 					using a PlayerState as target is not possible for NPC...
-					how we we manage HP or any statistics without PlayerState ?
+					how do we manage HP or any statistics without PlayerState ?
 					how do we replicate NPC state/attributes ?
 			*/
 		}
 	}
 
-	return this->UAbility::Activate(Parameters);
+	return Super::Activate(Parameters);
+	//return this->UAbility::Activate(Parameters);
 }

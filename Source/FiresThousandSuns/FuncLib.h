@@ -4,7 +4,8 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "FiresThousandSunsPlayerState.h"
-#include "FiresThousandSunsGameMode.h"
+//#include "FiresThousandSunsGameMode.h"
+#include "FiresThousandSunsGameInstance.h"
 #include "Engine.h"
 
 #include "FuncLib.generated.h"
@@ -23,10 +24,11 @@
 
 UCLASS(Blueprintable)
 class FIRESTHOUSANDSUNS_API UFuncLib : public UBlueprintFunctionLibrary
-{
+{  
 	GENERATED_BODY()
 public:
-	//UFUNCTION(BlueprintCallable)
+	//UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	static UFiresThousandSunsGameInstance* Fires_GI;
 
 	UFUNCTION(BlueprintCallable)
 	static void SaveThumbnail(FString ObjectPath, FString OutputPath);
@@ -64,11 +66,11 @@ public:
 		APawn* Instigator = NULL
 	) {
 		if (!TheWorld) {
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString("UFuncLib::SpawnBP() error : TheWorld is null"));
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString("UFuncLib::SpawnBP() error : TheWorld is null"));
 			return nullptr;
 		}
 		if (!ActorClass) {
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString("UFuncLib::SpawnBP() error : ActorClass is null"));
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString("UFuncLib::SpawnBP() error : ActorClass is null"));
 			return nullptr;
 		}
 
@@ -79,7 +81,7 @@ public:
 		SpawnInfo.bDeferConstruction = false;
 		T* actor = TheWorld->SpawnActor<T>(ActorClass, Loc, Rot, SpawnInfo);
 		if (!actor) {
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString("UFuncLib::SpawnBP() error : failed to spawn Actor"));
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString("UFuncLib::SpawnBP() error : failed to spawn Actor"));
 			return nullptr;
 		}
 

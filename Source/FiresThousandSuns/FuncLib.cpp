@@ -2,14 +2,19 @@
 #include "FuncLib.h"
 #include "GenericPlatform/GenericPlatformMisc.h"
 //#include "Lumin/LuminPlatformApplicationMisc.h"
+#include "FiresThousandSunsGameInstance.h"
 
 constexpr float D_LEN = 5.0f;
+
+UFiresThousandSunsGameInstance* UFuncLib::Fires_GI = nullptr;
+
 
 bool	UFuncLib::CheckObject(UObject* obj, FString ErrorMsg) {
 	if (!obj) {
 		if (GEngine) {
 			D_(GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, ErrorMsg));
 			LOG(ErrorMsg);
+			if (UFuncLib::Fires_GI) { UFuncLib::Fires_GI->AddDebugMessage(ErrorMsg); }
 		}
 		return false;
 	}

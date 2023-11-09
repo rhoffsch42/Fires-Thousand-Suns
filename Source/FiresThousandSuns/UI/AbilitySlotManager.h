@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -17,9 +15,6 @@
 
 // todo : replace UAbility by any Widget ! rename this to ObjectManager / Inventory 
 
-/**
- * 
- */
 UINTERFACE(Blueprintable)
 class FIRESTHOUSANDSUNS_API UAbilitySlotManagerInterface : public UInterface
 {
