@@ -7,9 +7,14 @@ public class FiresThousandSunsTarget : TargetRules
 {
 	public FiresThousandSunsTarget(TargetInfo Target) : base(Target)
 	{
-		Type = TargetType.Game;
+        Type = TargetType.Game;
 		DefaultBuildSettings = BuildSettingsVersion.V2;
 		IncludeOrderVersion = EngineIncludeOrderVersion.Unreal5_1;
 		ExtraModuleNames.Add("FiresThousandSuns");
-	}
+
+        // Added lines
+        //BuildEnvironment = TargetBuildEnvironment.Unique;
+        //bUseLoggingInShipping = true;
+        //bOverrideBuildEnvironment = true;
+    }
 }

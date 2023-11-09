@@ -9,6 +9,8 @@
 
 #include "FiresThousandSunsCharacter.generated.h"
 
+#define BP_PATH_BUFFFORTIFY	"/Game/TopDown/Blueprints/Actors/A_BuffFortify"
+
 UDELEGATE(BlueprintCallable)
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FPlayerDied);
 
@@ -20,7 +22,7 @@ class AFiresThousandSunsCharacter : public ACharacter
 public:
 	AFiresThousandSunsCharacter();
 	UFUNCTION(BlueprintCallable)
-	void	InitAllBuffActorClasses(TSubclassOf<ABuffFortify> Fortify,
+	void	SetAllBuffActorClasses(TSubclassOf<ABuffFortify> Fortify,
 									TSubclassOf<ABuffMoltenShell> MoltenShell,
 									TSubclassOf<ABuffVaalMoltenShell> VaalMoltenShell,
 									TSubclassOf<ABuffSteelskin> Steelskin);

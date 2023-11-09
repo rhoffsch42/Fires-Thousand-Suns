@@ -8,6 +8,10 @@
 
 #include "AbilityMoltenShell.generated.h"
 
+#define BP_PATH_BUFFMOLTENSHELL		"/Game/TopDown/Blueprints/Actors/A_BuffMoltenShell"
+#define BP_PATH_BUFFVAALMOLTENSHELL	"/Game/TopDown/Blueprints/Actors/A_BuffVaalMoltenShell"
+#define BP_PATH_BUFFSTEELSKIN		"/Game/TopDown/Blueprints/Actors/A_BuffSteelskin"
+
 UCLASS()
 class FIRESTHOUSANDSUNS_API UGuardBase : public UAbility
 {

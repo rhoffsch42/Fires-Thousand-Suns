@@ -61,7 +61,7 @@ AFiresThousandSunsCharacter::AFiresThousandSunsCharacter() {
 	this->_InitPreBeginPlay();
 }
 
-void	AFiresThousandSunsCharacter::InitAllBuffActorClasses(
+void	AFiresThousandSunsCharacter::SetAllBuffActorClasses(
 	TSubclassOf<ABuffFortify> Fortify,
 	TSubclassOf<ABuffMoltenShell> MoltenShell,
 	TSubclassOf<ABuffVaalMoltenShell> VaalMoltenShell,
@@ -83,7 +83,12 @@ void	AFiresThousandSunsCharacter::InitAllBuffActorClasses(
 }
 
 void	AFiresThousandSunsCharacter::_InitPreBeginPlay() {
-	BuffFortifyClass = ABuffFortify::StaticClass();
+	ConstructorHelpers::FClassFinder<ABuffFortify> BuffClass(TEXT(BP_PATH_BUFFFORTIFY));
+	if (UFuncLib::CheckObject(BuffClass.Class, FSIG_APPEND(" failed to get Actor class ").Append(BP_PATH_BUFFFORTIFY))) {
+		this->BuffFortifyClass = BuffClass.Class;
+	} else {
+		this->BuffFortifyClass = ABuffFortify::StaticClass();
+	}
 }
 
 void	AFiresThousandSunsCharacter::_InitPostBeginPlay() {

@@ -44,9 +44,14 @@ UAbilityMoltenShell::UAbilityMoltenShell() {
 	this->Cooldown->Reset();
 	this->TooltipName = "Molten Shield";
 
+	ConstructorHelpers::FClassFinder<ABuffGuard> BuffClass(TEXT(BP_PATH_BUFFMOLTENSHELL));
+	if (UFuncLib::CheckObject(BuffClass.Class, FSIG_APPEND(" failed to get Actor class ").Append(BP_PATH_BUFFMOLTENSHELL))) {
+		this->BuffGuardClass = BuffClass.Class;
+	} else {
+		this->BuffGuardClass = ABuffMoltenShell::StaticClass();
+	}
 
 	this->SetNewMaterial(this->GetWorld(), FString("/Script/Engine.Material'/Game/LevelPrototyping/Materials/FireShield_01_50x50_UIMat.FireShield_01_50x50_UIMat'"));
-	this->BuffGuardClass = ABuffMoltenShell::StaticClass();
 	this->ActivationSuccessSoundCue = LoadObject<USoundCue>(this->GetWorld(), *FString("/Script/Engine.SoundCue'/Game/TopDown/Blueprints/Audio/fts-molten-shell_Cue.fts-molten-shell_Cue'"));
 
 	UFuncLib::CheckObject(this->ActivationSuccessSoundCue, "UAbilitySteelskin::UAbilityVaalMoltenShell() failed to LoadObject() USoundCue");
@@ -82,8 +87,14 @@ UAbilityVaalMoltenShell::UAbilityVaalMoltenShell() {
 	this->Cooldown->Reset();
 	this->TooltipName = "Lava Molten Shield";
 
+	ConstructorHelpers::FClassFinder<ABuffGuard> BuffClass(TEXT(BP_PATH_BUFFVAALMOLTENSHELL));
+	if (UFuncLib::CheckObject(BuffClass.Class, FSIG_APPEND(" failed to get Actor class ").Append(BP_PATH_BUFFVAALMOLTENSHELL))) {
+		this->BuffGuardClass = BuffClass.Class;
+	} else {
+		this->BuffGuardClass = ABuffVaalMoltenShell::StaticClass();
+	}
+
 	this->SetNewMaterial(this->GetWorld(), FString("/Script/Engine.Material'/Game/LevelPrototyping/Materials/FireShield_red_01_50x50_UIMat.FireShield_red_01_50x50_UIMat'"));
-	this->BuffGuardClass = ABuffVaalMoltenShell::StaticClass();
 	this->ActivationSuccessSoundCue = LoadObject<USoundCue>(this->GetWorld(), *FString("/Script/Engine.SoundCue'/Game/TopDown/Blueprints/Audio/fts-molten-shell_Cue.fts-molten-shell_Cue'"));
 
 	UFuncLib::CheckObject(this->ActivationSuccessSoundCue, "UAbilitySteelskin::UAbilityVaalMoltenShell() failed to LoadObject() USoundCue");
@@ -119,8 +130,14 @@ UAbilitySteelskin::UAbilitySteelskin() {
 	this->Cooldown->Reset();
 	this->TooltipName = "Iron Skin";
 
+	ConstructorHelpers::FClassFinder<ABuffGuard> BuffClass(TEXT(BP_PATH_BUFFSTEELSKIN));
+	if (UFuncLib::CheckObject(BuffClass.Class, FSIG_APPEND(" failed to get Actor class ").Append(BP_PATH_BUFFSTEELSKIN))) {
+		this->BuffGuardClass = BuffClass.Class;
+	} else {
+		this->BuffGuardClass = ABuffSteelskin::StaticClass();
+	}
+
 	this->SetNewMaterial(this->GetWorld(), FString("/Script/Engine.Material'/Game/LevelPrototyping/Materials/aura_100x100_UIMat.aura_100x100_UIMat'"));
-	this->BuffGuardClass = ABuffSteelskin::StaticClass();
 	this->ActivationSuccessSoundCue = LoadObject<USoundCue>(this->GetWorld(), *FString("/Script/Engine.SoundCue'/Game/TopDown/Blueprints/Audio/fts-steelskin_Cue.fts-steelskin_Cue'"));
 
 	UFuncLib::CheckObject(this->ActivationSuccessSoundCue, "UAbilitySteelskin::UAbilitySteelskin() failed to LoadObject() USoundCue");

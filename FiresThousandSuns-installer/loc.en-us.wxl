@@ -5,7 +5,7 @@
 	<String Id="ProductName_x64">The Fires of a Thousand Suns (64bit)</String>
 	<String Id="Language">1033</String>
 	<String Id="Company">rhoffsch42</String>
-	<String Id="DowngradeError">A newer version of !(loc.ProductName_$(var.Platform)) is already installed.</String>
+	<String Id="DowngradeError">A newer version is already installed.</String>
 
 	<String Id="Description">Training game for PoE</String>
 	<String Id="Comments">comment</String>

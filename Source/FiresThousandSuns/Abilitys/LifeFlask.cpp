@@ -63,8 +63,14 @@ bool	URubyFlask::Activate(FEffectParameters Parameters, bool bCheckActivatable) 
 		if (UFuncLib::CheckObject(buff, "URubyFlask::Activate() buff failed to create ")) {
 			buff->SetBaseDuration(10.0);
 			//buff->AttachToActor(Parameters.ActorInstigator, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, false));
-			buff->AttachToActor(target, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, false));
+			buff->AttachToActor(target->GetOwner(), FAttachmentTransformRules(EAttachmentRule::SnapToTarget, false));
 			buff->ApplyTo(target);
+			/*
+				TODO: pb: target is the PlayerState (see BP Arena)
+					using a PlayerState as target is not possible for NPC...
+					how we we manage HP or any statistics without PlayerState ?
+					how do we replicate NPC state/attributes ?
+			*/
 		}
 	}
 

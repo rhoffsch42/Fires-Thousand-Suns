@@ -95,6 +95,7 @@ public:
 	TODO: check every NewObject(), they must have an Outer argument!
 
 	Fires :
+		- check Editor warnings and errors
 		- refacto BP / c++
 		- refacto GI GM SG interactions
 		- refacto inputs: migrate in PlayerController
