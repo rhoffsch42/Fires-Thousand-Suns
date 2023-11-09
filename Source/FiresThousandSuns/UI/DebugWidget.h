@@ -9,8 +9,6 @@
 
 #include "DebugWidget.generated.h"
 
-
-
 UCLASS(Blueprintable)
 class FIRESTHOUSANDSUNS_API UDebugLine : public UUserWidget
 {

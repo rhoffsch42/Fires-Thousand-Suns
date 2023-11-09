@@ -14,9 +14,9 @@
 //#define LOG(msg) UE_LOG(LogTemp, Warning, TEXT("[%s@line: %d] - %s"), TEXT(__FUNCTION__), __LINE__, *FString(msg))
 #define LOG(msg) UE_LOG(LogTemp, Warning, TEXT("[%s@line: %d] %s"), *FString(__FUNCSIG__), __LINE__, *FString(msg))
 
-#define D_(x)			x
-#define D(x)			if (GEngine){GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, x);}
-#define DKEY(k, x)		if (GEngine){GEngine->AddOnScreenDebugMessage((int32)(int64)(k), 5.0f, FColor::Yellow, x);}
+#define D_(x)			;//x
+#define D(x)			;//if (GEngine){GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, x);}
+#define DKEY(k, x)		;//if (GEngine){GEngine->AddOnScreenDebugMessage((int32)(int64)(k), 5.0f, FColor::Yellow, x);}
 #define WHEREAMI(k)		DKEY(k, FString(__FUNCSIG__))
 #define FSIG_APPEND(x)	FString(__FUNCSIG__).Append(x)
 
@@ -65,12 +65,10 @@ public:
 		AActor* Owner = NULL,
 		APawn* Instigator = NULL
 	) {
-		if (!TheWorld) {
-			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString("UFuncLib::SpawnBP() error : TheWorld is null"));
+		if (!UFuncLib::CheckObject(TheWorld, FSIG_APPEND(" error : TheWorld is null"))) {
 			return nullptr;
 		}
-		if (!ActorClass) {
-			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString("UFuncLib::SpawnBP() error : ActorClass is null"));
+		if (!UFuncLib::CheckObject(ActorClass, FSIG_APPEND(" error : ActorClass is null"))) {
 			return nullptr;
 		}
 
@@ -80,8 +78,7 @@ public:
 		SpawnInfo.Instigator = Instigator;
 		SpawnInfo.bDeferConstruction = false;
 		T* actor = TheWorld->SpawnActor<T>(ActorClass, Loc, Rot, SpawnInfo);
-		if (!actor) {
-			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString("UFuncLib::SpawnBP() error : failed to spawn Actor"));
+		if (!UFuncLib::CheckObject(actor, FSIG_APPEND(" error : SpawnActor() failed"))) {
 			return nullptr;
 		}
 
