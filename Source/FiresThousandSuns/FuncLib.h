@@ -10,13 +10,14 @@
 
 #include "FuncLib.generated.h"
 
+#define PATH_LOGFILE_RUNTIMEERRORS	"runtime-errors.log"
+
 #define CAST_NUM(x)	static_cast<int>(x)
-//#define LOG(msg) UE_LOG(LogTemp, Warning, TEXT("[%s@line: %d] - %s"), TEXT(__FUNCTION__), __LINE__, *FString(msg))
 #define LOG(msg) UE_LOG(LogTemp, Warning, TEXT("[%s@line: %d] %s"), *FString(__FUNCSIG__), __LINE__, *FString(msg))
 
-#define D_(x)			;//x
-#define D(x)			;//if (GEngine){GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, x);}
-#define DKEY(k, x)		;//if (GEngine){GEngine->AddOnScreenDebugMessage((int32)(int64)(k), 5.0f, FColor::Yellow, x);}
+#define D_(x)			x
+#define D(x)			if (GEngine){GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, x);}
+#define DKEY(k, x)		if (GEngine){GEngine->AddOnScreenDebugMessage((int32)(int64)(k), 5.0f, FColor::Yellow, x);}
 #define WHEREAMI(k)		DKEY(k, FString(__FUNCSIG__))
 #define FSIG_APPEND(x)	FString(__FUNCSIG__).Append(x)
 
@@ -29,6 +30,7 @@ class FIRESTHOUSANDSUNS_API UFuncLib : public UBlueprintFunctionLibrary
 public:
 	//UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	static UFiresThousandSunsGameInstance* Fires_GI;
+	static FString LogFile;
 
 	UFUNCTION(BlueprintCallable)
 	static void SaveThumbnail(FString ObjectPath, FString OutputPath);
@@ -40,6 +42,11 @@ public:
 	static void	CopyToClipboard(FString Input);
 	UFUNCTION(BlueprintCallable)
 	static FString	GetFromClipboard();
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static FString	GetLogFilePath();
+	UFUNCTION(BlueprintCallable, BlueprintPure)
+	static FString	GetDirPaths();
+
 
 	template<typename T>
 	static void	ShuffleArray(TArray<T>* arr) {
@@ -101,13 +108,17 @@ public:
 		- real Widget for ability tooltips
 		- Better Maven hairs...
 		- visual feedback on hitting save button in settings
-		- make key binding save, currently bugged ?
 		~ arena UI : some background ?
 		~ player death : sound
 		~ trade message (with fish312/CONCESOHO ref ?)
 		~ infos message (quin is the first to enter fetid pool, ben is the first to kill, carn is the first to hit lv100, the realm is shutting down in 1min
 		x totem skills to block suns
 
+	Bugs:
+		- It is possible to have a free use of flame dash in some conditions.
+		- DebuffLockMovement on casted flame dash error.
+		- Key bindings don't save
+	
 	cast time :
 		some skills are instant and will not register for the casting
 		other skills will start a delayed action that locks the player, can only have 1
@@ -117,6 +128,5 @@ public:
 			- skills can be cancelled by player movement
 			? skills can be cancelled by another skill
 		anim cancel: same thing, but the action isn't cancelled, only the lock
-
-	skill queue ? max amount, or max cumulated cast time, or both
+		skill queue ? max amount, or max cumulated cast time, or both
 */

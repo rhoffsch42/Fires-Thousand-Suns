@@ -23,6 +23,8 @@ public:
 	void	AddDebugMessage(FString Message);
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	FString StartTime;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	UFiresThousandSunsSaveGame* Fires_SG = nullptr;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
