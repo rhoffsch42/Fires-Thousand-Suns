@@ -48,7 +48,18 @@ void	UAbilityFlameDash::PostInitProperties() {
 	UFuncLib::CheckObject(this->_NavSys, "UAbilityFlameDash()::PostInitProperties() could not get NavSys");
 }
 
-//DrawDebugLine(this->GetWorld(), instigatorLocation, Hit.Location, FColor::Red, false, 5.0f, 0, 1.0f);
+/*
+	TODO: fix flame dash
+	There is currently a bad design with this, it stores the precalculated destination in private variables
+	but if this ability is casted (non instant), and the player tries to reuse it during the cast,
+	the 2nd IsActivatable() will override the previous private variables,
+	even if it's not accepted by the caster or the ability isn't activatable,
+	making the first use having wrong data for the activation.
+
+	tmp fix: the caster force the recheck by using Activate(params, true);
+	real fix: store the precalculated data in the Parameters,
+		we need to inherit FEffectParameters and send a pointer to be dyncast in Activate()
+*/
 bool	UAbilityFlameDash::IsActivatable(FEffectParameters Parameters) {
 	FVector instigatorLocation = Parameters.ActorInstigator->GetActorLocation();
 	Parameters.CursorHitLocation.Z = instigatorLocation.Z;

@@ -34,6 +34,7 @@ void AFiresThousandSunsPlayerController::BeginPlay() {
 
 bool	AFiresThousandSunsPlayerController::SetCastedAbility(UAbility* Ability, const FEffectParameters& InParameters) {
 	if (this->_bIsCasting || !Ability) {
+		//DCOL(FColor::Purple, "SetCastedAbility() refused, already casting or supplied ability is null");
 		return false;
 	}
 
@@ -49,15 +50,16 @@ bool	AFiresThousandSunsPlayerController::SetCastedAbility(UAbility* Ability, con
 		InParameters.ActorInstigator->GetActorLocation(),
 		location);
 	InParameters.ActorInstigator->SetActorRotation(rot);
-	//D(FString::SanitizeFloat(this->_CastingRemaining).Append("s remaining until cast ends"));
+	//DCOL(FColor::Purple, FString::SanitizeFloat(Ability->CastTime->Remaining()).Append("s remaining until cast ends"));
 	UKismetSystemLibrary::Delay(this->GetWorld(), Ability->CastTime->Remaining(),
 		FLatentActionInfo(0, (int64)this, *FString("FinalizeCastedAbility"), this));
 	return true;
 }
 
 void	AFiresThousandSunsPlayerController::FinalizeCastedAbility() {
-	this->_CastedAbility->CastTime->Reset();// Delay() will not match perfectly the CastTime recharge, so we force reset
-	this->_CastedAbility->Activate(this->_Parameters);
+	this->_CastedAbility->CastTime->Reset();// Delay() will not match perfectly the CastTime recharge, so we force reset to update _lastUse
+	//DCOL(FColor::Purple, FString::SanitizeFloat(this->_CastedAbility->CastTime->Remaining()).Append(" (has just been reset by FinalizeCastedAbility())"));
+	this->_CastedAbility->Activate(this->_Parameters, true);// force the recheck because it might not be ativatable now
 	this->_CastedAbility = nullptr;
 	this->_bIsCasting = false;
 	this->DecrementBlockInputCounter();

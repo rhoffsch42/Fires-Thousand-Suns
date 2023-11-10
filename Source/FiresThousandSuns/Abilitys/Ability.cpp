@@ -26,15 +26,11 @@ void	UAbility::PostInitProperties() {
 
 bool	UAbility::TryActivate(FEffectParameters Parameters) {
 	if (this->Cooldown->IsReady() && this->IsActivatable(Parameters)) {
-		if (this->bIsInstant) {
-			return this->Activate(Parameters);
-		} else {
-			return this->StartCasting(Parameters);
-		}
+		return (this->bIsInstant ? this->Activate(Parameters) : this->StartCasting(Parameters));
 	} else {
 		UGameplayStatics::PlaySound2D(this->Cooldown->World, this->ActivationFailedSoundCue);
+		return false;
 	}
-	return false;
 }
 
 bool	UAbility::IsActivatable(FEffectParameters Parameters) {
@@ -55,7 +51,6 @@ bool	UAbility::StartCasting(FEffectParameters Parameters) {
 }
 
 bool	UAbility::Activate(FEffectParameters Parameters, bool CheckActivatable) {
-	// D(FString(__FUNCSIG__).Append(this->CastTime->ToString()));
 	this->Cooldown->Use();
 	this->CastTime->Use();
 	UGameplayStatics::PlaySound2D(this->Cooldown->World, this->ActivationSuccessSoundCue);
