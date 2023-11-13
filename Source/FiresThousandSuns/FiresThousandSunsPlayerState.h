@@ -4,10 +4,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerState.h"
 #include "Systems/HealthManager.h"
-#include "Abilitys/AbilityFlameDash.h"
-#include "Abilitys/AbilityMoltenShell.h"
-#include "Abilitys/AbilityManager.h"
 #include "Buffs/BuffManager.h"
+#include "Abilitys/AbilityManager.h"
 
 #include "FiresThousandSunsPlayerState.generated.h"
 
@@ -49,14 +47,13 @@ inline bool	operator==(const FPlayerStatistics& lhs, const FPlayerStatistics& rh
 inline bool operator!=(const FPlayerStatistics& lhs, const FPlayerStatistics& rhs) { return !(lhs == rhs); }
 
 
-/**
- *
- */
 UCLASS(Blueprintable)
 class FIRESTHOUSANDSUNS_API AFiresThousandSunsPlayerState : public APlayerState
 {
 	GENERATED_BODY()
 public:
+	UFUNCTION(BlueprintCallable)
+	static void	PrintStatistics(const FPlayerStatistics& Stats);
 	AFiresThousandSunsPlayerState();
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
@@ -86,8 +83,4 @@ protected:
 	void	_InitPostBeginPlay();
 	virtual void BeginPlay();
 private:
-	UAbilityFlameDash*			_FlameDash = nullptr;
-	UAbilityMoltenShell*		_MoltenShell = nullptr;
-	UAbilityVaalMoltenShell*	_VaalMoltenShell = nullptr;
-	UAbilitySteelskin*			_Steelskin = nullptr;
 };

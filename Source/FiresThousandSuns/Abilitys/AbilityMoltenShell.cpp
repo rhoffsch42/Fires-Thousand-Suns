@@ -27,7 +27,7 @@ UGuardBase::UGuardBase() {
 	this->BuffGuardClass = ABuffGuard::StaticClass();
 }
 
-bool	UGuardBase::Activate(FEffectParameters Parameters, bool bCheckActivatable) {
+bool	UGuardBase::Activate(FEffectParameters& Parameters) {
 	//return this->UAbility::Activate(Parameters);
 	return Super::Activate(Parameters);
 }
@@ -58,7 +58,7 @@ UAbilityMoltenShell::UAbilityMoltenShell() {
 	UFuncLib::CheckObject(this->ActivationSuccessSoundCue, "UAbilitySteelskin::UAbilityVaalMoltenShell() failed to LoadObject() USoundCue");
 }
 
-bool	UAbilityMoltenShell::Activate(FEffectParameters Parameters, bool bCheckActivatable) {
+bool	UAbilityMoltenShell::Activate(FEffectParameters& Parameters) {
 	for (auto target : Parameters.Targets) {
 		ABuffMoltenShell* buff = UFuncLib::SafeSpawnActor<ABuffMoltenShell>(Parameters.World, this->BuffGuardClass);
 		if (UFuncLib::CheckObject(buff, "UAbilityMoltenShell::Activate() buff failed to create ")) {
@@ -102,7 +102,7 @@ UAbilityVaalMoltenShell::UAbilityVaalMoltenShell() {
 	UFuncLib::CheckObject(this->ActivationSuccessSoundCue, "UAbilitySteelskin::UAbilityVaalMoltenShell() failed to LoadObject() USoundCue");
 }
 
-bool	UAbilityVaalMoltenShell::Activate(FEffectParameters Parameters, bool bCheckActivatable) {
+bool	UAbilityVaalMoltenShell::Activate(FEffectParameters& Parameters) {
 	for (auto target : Parameters.Targets) {
 		ABuffVaalMoltenShell* buff = UFuncLib::SafeSpawnActor<ABuffVaalMoltenShell>(Parameters.World, this->BuffGuardClass);
 		if (UFuncLib::CheckObject(buff, "UAbilityVaalMoltenShell::Activate() buff failed to create ")) {
@@ -146,7 +146,7 @@ UAbilitySteelskin::UAbilitySteelskin() {
 	UFuncLib::CheckObject(this->ActivationSuccessSoundCue, "UAbilitySteelskin::UAbilitySteelskin() failed to LoadObject() USoundCue");
 }
 
-bool	UAbilitySteelskin::Activate(FEffectParameters Parameters, bool bCheckActivatable) {
+bool	UAbilitySteelskin::Activate(FEffectParameters& Parameters) {
 	for (auto target : Parameters.Targets) {
 		ABuffSteelskin* buff = UFuncLib::SafeSpawnActor<ABuffSteelskin>(Parameters.World, this->BuffGuardClass);
 		if (UFuncLib::CheckObject(buff, "UAbilitySteelskin::Activate() buff failed to create ")) {

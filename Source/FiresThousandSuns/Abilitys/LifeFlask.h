@@ -16,7 +16,7 @@ public:
 	ULifeFlask();
 	virtual void	PostInitProperties() override;
 
-	virtual bool	Activate(FEffectParameters Parameters, bool bCheckActivatable = false) override;
+	virtual bool	Activate(FEffectParameters& Parameters) override;
 protected:
 	double	HealValue = 4000.0;
 };
@@ -28,7 +28,7 @@ class FIRESTHOUSANDSUNS_API URubyFlask : public UAbility
 public:
 	URubyFlask();
 	virtual void	PostInitProperties() override;
-	virtual bool	Activate(FEffectParameters Parameters, bool bCheckActivatable = false) override;
+	virtual bool	Activate(FEffectParameters& Parameters) override;
 protected:
 	double	LessFireDamage = 0.2;
 	double	FireResistance = 0.5;

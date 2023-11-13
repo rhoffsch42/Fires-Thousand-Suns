@@ -18,7 +18,7 @@ class FIRESTHOUSANDSUNS_API UGuardBase : public UAbility
 	GENERATED_BODY()
 public:
 	UGuardBase();
-	virtual bool	Activate(FEffectParameters Parameters, bool bCheckActivatable = false) override;
+	virtual bool	Activate(FEffectParameters& Parameters) override;
 
 	double	HP = 1000;
 	double	Absorbtion = 1.0;
@@ -34,7 +34,7 @@ class FIRESTHOUSANDSUNS_API UAbilityMoltenShell : public UGuardBase
 	GENERATED_BODY()
 public:
 	UAbilityMoltenShell();
-	virtual bool	Activate(FEffectParameters Parameters, bool bCheckActivatable = false) override;
+	virtual bool	Activate(FEffectParameters& Parameters) override;
 private:
 };
 
@@ -44,7 +44,7 @@ class FIRESTHOUSANDSUNS_API UAbilityVaalMoltenShell : public UGuardBase
 	GENERATED_BODY()
 public:
 	UAbilityVaalMoltenShell();
-	virtual bool	Activate(FEffectParameters Parameters, bool bCheckActivatable = false) override;
+	virtual bool	Activate(FEffectParameters& Parameters) override;
 private:
 };
 
@@ -54,6 +54,6 @@ class FIRESTHOUSANDSUNS_API UAbilitySteelskin : public UGuardBase
 	GENERATED_BODY()
 public:
 	UAbilitySteelskin();
-	virtual bool	Activate(FEffectParameters Parameters, bool bCheckActivatable = false) override;
+	virtual bool	Activate(FEffectParameters& Parameters) override;
 private:
 };

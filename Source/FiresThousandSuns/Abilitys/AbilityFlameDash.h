@@ -12,6 +12,17 @@
 
 
 UCLASS(Blueprintable)
+class FIRESTHOUSANDSUNS_API UGeneratedParametersFlameDash : public UGeneratedParameters
+{
+	GENERATED_BODY()
+public:
+	UGeneratedParametersFlameDash();
+	FVector	Direction;
+	double	Len = 0.0;
+	FVector	TargetDest;
+};
+
+UCLASS(Blueprintable)
 class FIRESTHOUSANDSUNS_API UAbilityFlameDash : public UAbility
 {
 	GENERATED_BODY()
@@ -19,8 +30,8 @@ public:
 	UAbilityFlameDash();
 	virtual void	PostInitProperties() override;
 
-	virtual bool	IsActivatable(FEffectParameters Parameters) override;
-	virtual bool	Activate(FEffectParameters Parameters, bool bCheckActivatable = false) override;
+	virtual bool	IsActivatable(FEffectParameters& Parameters) override;
+	virtual bool	Activate(FEffectParameters& Parameters) override;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	UNiagaraSystem* NiagaraSystem = nullptr;
@@ -29,10 +40,5 @@ protected:
 	double	_minRange = 250.0;
 	double	_lockMovementDuration = 0.12;
 private:
-	// calculated in IsActivatable(), used in Activate()
-	FVector	_direction;
-	double	_len;
-	FVector	_targetDest;
 	UNavigationSystemV1* _NavSys = nullptr;
-
 };

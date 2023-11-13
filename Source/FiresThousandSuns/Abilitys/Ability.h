@@ -9,11 +9,22 @@ typedef int32* EffectClassPtr;
 
 #include "Ability.generated.h"
 
+// Any additional parameters generated during Ability activation. This class has to be inherited and specialized.
+UCLASS(Blueprintable)
+class FIRESTHOUSANDSUNS_API UGeneratedParameters : public UObject
+{
+	GENERATED_BODY()
+public:
+	UGeneratedParameters();
+};
+
 USTRUCT(BlueprintType)
 struct FEffectParameters
 {
 	GENERATED_BODY()
 //public:
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	bool		bRecheckActivatableOnActivate = false;//this is for casted (delayed) abilitys
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	UWorld*		World = nullptr;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
@@ -24,6 +35,8 @@ struct FEffectParameters
 	FVector		CursorHitLocation;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	TArray<AActor*>	Targets;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	UGeneratedParameters* GeneratedParameters = nullptr;
 };
 
 UENUM(BlueprintType)
@@ -46,16 +59,29 @@ public:
 	virtual void	PostInitProperties() override;
 
 	UFUNCTION(BlueprintCallable)
-	bool	TryActivate(FEffectParameters Parameters);
+	bool	TryActivate(FEffectParameters Parameters);// not a ref, this is intentional
 	UFUNCTION(BlueprintCallable)
-	virtual bool	IsActivatable(FEffectParameters Parameters);
+	virtual bool	IsActivatable(FEffectParameters& Parameters);
 
 	UFUNCTION(BlueprintCallable)
-	bool	StartCasting(FEffectParameters Parameters);
+	bool	StartCasting(FEffectParameters& Parameters);
 	UFUNCTION(BlueprintCallable)
-	virtual bool	Activate(FEffectParameters Parameters, bool CheckActivatable = false);
+	virtual bool	Activate(FEffectParameters& Parameters);
 
 	void	SetNewMaterial(UObject* Outer, const FString MatPath);
+	template <class T>
+	T* PrepareGeneratedParameters(UGeneratedParameters* GeneratedParameters) {
+		T* GenParams = nullptr;
+
+		if (GeneratedParameters) {
+			GenParams = Cast<T>(GeneratedParameters);
+		}
+		if (!GenParams) {
+			GenParams = NewObject<T>(this, MakeUniqueObjectName(this, this->StaticClass(), FName()));
+		}
+
+		return GenParams;
+	}
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	UCooldown*	Cooldown = nullptr;
@@ -76,4 +102,6 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	FString			TooltipName = "Ability";
 private:
+
+	void	_ProxyCheck_PrepareGeneratedParameters(UObject* Object);
 };

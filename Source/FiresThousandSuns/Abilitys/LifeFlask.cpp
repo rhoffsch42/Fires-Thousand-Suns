@@ -22,7 +22,7 @@ void	ULifeFlask::PostInitProperties() {
 	UFuncLib::CheckObject(this->ActivationSuccessSoundCue, "ULifeFlask::ULifeFlask() failed to LoadObject() USoundCue");
 }
 
-bool	ULifeFlask::Activate(FEffectParameters Parameters, bool bCheckActivatable) {
+bool	ULifeFlask::Activate(FEffectParameters& Parameters) {
 	for (auto target : Parameters.Targets) {
 		AFiresThousandSunsPlayerState* state = Cast<AFiresThousandSunsPlayerState>(target);
 		if (UFuncLib::CheckObject(state, "ULifeFlask::Activate() target is not player state")) {
@@ -48,7 +48,8 @@ URubyFlask::URubyFlask() {
 	if (UFuncLib::CheckObject(BuffClass.Class, FSIG_APPEND(" failed to get Actor class ").Append(BP_PATH_BUFFRUBYFLASK))) {
 		UFuncLib::CheckObject(BuffClass.Class, FSIG_APPEND(" BuffClass.Class is null"));
 		this->_BuffClass = BuffClass.Class;
-	} else {
+	}
+	else {
 		this->_BuffClass = ABuffRubyFlask::StaticClass();
 	}
 
@@ -64,7 +65,7 @@ void	URubyFlask::PostInitProperties() {
 	UFuncLib::CheckObject(this->_BuffClass, FSIG_APPEND(" this->_BuffClass is null"));
 }
 
-bool	URubyFlask::Activate(FEffectParameters Parameters, bool bCheckActivatable) {
+bool	URubyFlask::Activate(FEffectParameters& Parameters) {
 	for (auto target : Parameters.Targets) {
 		ABuffRubyFlask* buff = UFuncLib::SafeSpawnActor<ABuffRubyFlask>(Parameters.World, this->_BuffClass);
 		if (UFuncLib::CheckObject(buff, "URubyFlask::Activate() buff failed to create ")) {

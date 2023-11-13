@@ -3,6 +3,8 @@
 #include "Kismet/GameplayStatics.h"
 #include "../FiresThousandSunsPlayerController.h"
 
+UGeneratedParameters::UGeneratedParameters() {}
+
 UAbility::UAbility() {
 	this->Cooldown = CreateDefaultSubobject<UCooldown>(GEN_UNAME(this));
 	this->CastTime = CreateDefaultSubobject<UCooldown>(GEN_UNAME(this));
@@ -33,11 +35,11 @@ bool	UAbility::TryActivate(FEffectParameters Parameters) {
 	}
 }
 
-bool	UAbility::IsActivatable(FEffectParameters Parameters) {
+bool	UAbility::IsActivatable(FEffectParameters& Parameters) {
 	return true;
 }
 
-bool	UAbility::StartCasting(FEffectParameters Parameters) {
+bool	UAbility::StartCasting(FEffectParameters& Parameters) {
 	if (this->CastTime->IsReady()) {
 		return this->Activate(Parameters);
 	} else {
@@ -50,7 +52,7 @@ bool	UAbility::StartCasting(FEffectParameters Parameters) {
 	}
 }
 
-bool	UAbility::Activate(FEffectParameters Parameters, bool CheckActivatable) {
+bool	UAbility::Activate(FEffectParameters& Parameters) {
 	this->Cooldown->Use();
 	this->CastTime->Use();
 	UGameplayStatics::PlaySound2D(this->Cooldown->World, this->ActivationSuccessSoundCue);
@@ -61,3 +63,18 @@ void	UAbility::SetNewMaterial(UObject* Outer, const FString MatPath) {
 	this->IconMaterial = LoadObject<UMaterial>(Outer, *MatPath);
 	UFuncLib::CheckObject(this->IconMaterial, FString("LoadObject<UMaterial>() failed : ").Append(MatPath));
 }
+
+//template <class T>
+//T* UAbility::PrepareGeneratedParameters(UGeneratedParameters* GeneratedParameters) {
+//	T* GenParams = nullptr;
+//
+//	if (GeneratedParameters) {
+//		GenParams = Cast<T>(GeneratedParameters);
+//		UFuncLib::CheckObject(GenParams, FSIG_APPEND(" failed to cast GeneratedParameters"));
+//	}
+//	if (!GenParams) {
+//		GenParams = NewObject<T>(this, GEN_UNAME(this));
+//	}
+//
+//	return GenParams;
+//}

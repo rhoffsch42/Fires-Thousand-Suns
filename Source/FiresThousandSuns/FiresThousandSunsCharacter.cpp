@@ -15,6 +15,7 @@
 #include "FuncLib.h"
 #include "FiresThousandSunsGameInstance.h"
 #include "FiresThousandSunsPlayerController.h"
+#include "Abilitys/AbilityMoltenShell.h"
 
 AFiresThousandSunsCharacter::AFiresThousandSunsCharacter() {
 	// Set size for player capsule, and change collision preset

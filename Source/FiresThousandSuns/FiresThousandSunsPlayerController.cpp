@@ -59,7 +59,7 @@ bool	AFiresThousandSunsPlayerController::SetCastedAbility(UAbility* Ability, con
 void	AFiresThousandSunsPlayerController::FinalizeCastedAbility() {
 	this->_CastedAbility->CastTime->Reset();// Delay() will not match perfectly the CastTime recharge, so we force reset to update _lastUse
 	//DCOL(FColor::Purple, FString::SanitizeFloat(this->_CastedAbility->CastTime->Remaining()).Append(" (has just been reset by FinalizeCastedAbility())"));
-	this->_CastedAbility->Activate(this->_Parameters, true);// force the recheck because it might not be ativatable now
+	this->_CastedAbility->Activate(this->_Parameters);
 	this->_CastedAbility = nullptr;
 	this->_bIsCasting = false;
 	this->DecrementBlockInputCounter();

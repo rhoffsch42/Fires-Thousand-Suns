@@ -3,8 +3,6 @@
 
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
-#include "FiresThousandSunsPlayerState.h"
-//#include "FiresThousandSunsGameMode.h"
 #include "FiresThousandSunsGameInstance.h"
 #include "Engine.h"
 
@@ -37,8 +35,6 @@ public:
 	static void SaveThumbnail(FString ObjectPath, FString OutputPath);
 	UFUNCTION(BlueprintCallable)
 	static bool	CheckObject(UObject* obj, FString ErrorMsg);
-	UFUNCTION(BlueprintCallable)
-	static void	PrintStats(const FPlayerStatistics& Stats);
 	UFUNCTION(BlueprintCallable)
 	static void	CopyToClipboard(FString Input);
 	UFUNCTION(BlueprintCallable)
@@ -99,7 +95,6 @@ public:
 		- check with the BP W_Play, if we can make a func UAbilityBar::UpdatePickerPosition()
 			handy way is to bind it with OnVisibilityChanged(), but it might not be the ideal way in some other context
 	TODO: check actors useless tick(). PrimaryComponentTick.bCanEverTick PrimaryComponentTick.SetTickFunctionEnable(true)
-	TODO: check every NewObject(), they must have an Outer argument!
 
 	Fires :
 		- check Editor warnings and errors
@@ -116,8 +111,6 @@ public:
 		x totem skills to block suns
 
 	Bugs:
-		- Flame dash can be retargeted while his is being casted. IsActivatable() is overriding old calculated destination
-		- DebuffLockMovement on casted flame dash error.
 		- Key bindings don't save
 	
 	cast time :
