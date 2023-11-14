@@ -63,18 +63,3 @@ void	UAbility::SetNewMaterial(UObject* Outer, const FString MatPath) {
 	this->IconMaterial = LoadObject<UMaterial>(Outer, *MatPath);
 	UFuncLib::CheckObject(this->IconMaterial, FString("LoadObject<UMaterial>() failed : ").Append(MatPath));
 }
-
-//template <class T>
-//T* UAbility::PrepareGeneratedParameters(UGeneratedParameters* GeneratedParameters) {
-//	T* GenParams = nullptr;
-//
-//	if (GeneratedParameters) {
-//		GenParams = Cast<T>(GeneratedParameters);
-//		UFuncLib::CheckObject(GenParams, FSIG_APPEND(" failed to cast GeneratedParameters"));
-//	}
-//	if (!GenParams) {
-//		GenParams = NewObject<T>(this, GEN_UNAME(this));
-//	}
-//
-//	return GenParams;
-//}

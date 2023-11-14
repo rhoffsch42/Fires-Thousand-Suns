@@ -102,6 +102,4 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	FString			TooltipName = "Ability";
 private:
-
-	void	_ProxyCheck_PrepareGeneratedParameters(UObject* Object);
 };

@@ -19,20 +19,18 @@ ULifeFlask::ULifeFlask() {
 void	ULifeFlask::PostInitProperties() {
 	Super::PostInitProperties();
 
-	UFuncLib::CheckObject(this->ActivationSuccessSoundCue, "ULifeFlask::ULifeFlask() failed to LoadObject() USoundCue");
+	UFuncLib::CheckObject(this->ActivationSuccessSoundCue, FSIG_APPEND(" failed to LoadObject() USoundCue"));
 }
 
 bool	ULifeFlask::Activate(FEffectParameters& Parameters) {
 	for (auto target : Parameters.Targets) {
 		AFiresThousandSunsPlayerState* state = Cast<AFiresThousandSunsPlayerState>(target);
-		if (UFuncLib::CheckObject(state, "ULifeFlask::Activate() target is not player state")) {
+		if (UFuncLib::CheckObject(state, FSIG_APPEND(" failed to cast target as Fires..PlayerState"))) {
 			state->HealthManager->AddHP(this->HealValue);
 		}
-		else { return false; }
 	}
 
 	return Super::Activate(Parameters);
-	//return this->UAbility::Activate(Parameters);
 }
 
 /////////////////////////////////
@@ -68,9 +66,8 @@ void	URubyFlask::PostInitProperties() {
 bool	URubyFlask::Activate(FEffectParameters& Parameters) {
 	for (auto target : Parameters.Targets) {
 		ABuffRubyFlask* buff = UFuncLib::SafeSpawnActor<ABuffRubyFlask>(Parameters.World, this->_BuffClass);
-		if (UFuncLib::CheckObject(buff, "URubyFlask::Activate() buff failed to create ")) {
+		if (UFuncLib::CheckObject(buff, FSIG_APPEND(" failed to create buff with SafeSpawnActor()"))) {
 			buff->SetBaseDuration(10.0);
-			//buff->AttachToActor(Parameters.ActorInstigator, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, false));
 			buff->AttachToActor(target->GetOwner(), FAttachmentTransformRules(EAttachmentRule::SnapToTarget, false));
 			buff->ApplyTo(target);
 			/*
@@ -83,5 +80,4 @@ bool	URubyFlask::Activate(FEffectParameters& Parameters) {
 	}
 
 	return Super::Activate(Parameters);
-	//return this->UAbility::Activate(Parameters);
 }

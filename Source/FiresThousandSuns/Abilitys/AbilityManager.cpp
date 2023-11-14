@@ -15,37 +15,21 @@ void	UAbilityManager::SetAbilityAmount(int Amount) {
 }
 
 bool	UAbilityManager::SetAbility(int Index, UAbility* Ability) {
-	if (Index < this->_Abilitys.Num()) {
-		this->_Abilitys[Index] = Ability;
-		return true;
-	} else {
+	if (Index >= this->_Abilitys.Num()) {
 		return false;
 	}
+	this->_Abilitys[Index] = Ability;
+	return true;
 }
 
 UAbility* UAbilityManager::GetAbility(int Index) const {
-	if (Index < this->_Abilitys.Num()) {
-		return this->_Abilitys[Index];
-	}
-	else {
+	if (Index >= this->_Abilitys.Num()) {
 		return nullptr;
 	}
+	return this->_Abilitys[Index];
 }
 
-//template <class T>
-//UAbility* UAbilityManager::GetAbility() const {
-//	for (auto ability : this->_Abilitys) {
-//		T* spe = Cast<T>(ability);
-//		if (spe) {
-//			return spe;
-//		}
-//	}
-//	return nullptr;
-//}
-
 UAbility* UAbilityManager::GetAbilityByClass(const TSubclassOf<UAbility> AbilityClass) const {
-	UAbility* FoundAbility = nullptr;
-
 	if (UClass* TargetClass = AbilityClass.Get()) {
 		for (UAbility* Ability : this->_Abilitys) {
 			if (Ability && Ability->IsA(TargetClass)) {
@@ -53,13 +37,10 @@ UAbility* UAbilityManager::GetAbilityByClass(const TSubclassOf<UAbility> Ability
 			}
 		}
 	}
-
-	return FoundAbility;
+	return nullptr;
 }
 
 UAbility* UAbilityManager::GetAbilityByType(const EAbilityType Type) const {
-	UAbility* FoundAbility = nullptr;
-
 	if (Type != EAbilityType::None) {
 		for (UAbility* Ability : this->_Abilitys) {
 			if (Ability && Ability->AbilityType == Type) {
@@ -67,8 +48,7 @@ UAbility* UAbilityManager::GetAbilityByType(const EAbilityType Type) const {
 			}
 		}
 	}
-
-	return FoundAbility;
+	return nullptr;
 }
 
 int32		UAbilityManager::GetAbilityAmount() const { return this->_Abilitys.Num(); }

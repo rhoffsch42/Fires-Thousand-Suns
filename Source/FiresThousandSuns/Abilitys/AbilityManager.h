@@ -16,10 +16,7 @@ class FIRESTHOUSANDSUNS_API UAbilityManager : public UObject
 	GENERATED_BODY()
 
 public:	
-	// Sets default values for this component's properties
 	UAbilityManager();
-	// Called every frame
-	//virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	UFUNCTION(BlueprintCallable)
 	void		AddAbility(UAbility* NewAbility);

@@ -81,15 +81,14 @@ bool	UAbilityFlameDash::IsActivatable(FEffectParameters& Parameters) {
 	}
 
 	// place back the targetDest in the navSys
-	if (UFuncLib::CheckObject(this->_NavSys, "UAbilityFlameDash::Activate() NavSys not found")) {
+	if (UFuncLib::CheckObject(this->_NavSys, FSIG_APPEND(" NavSys not found"))) {
 		FNavLocation result;
 		this->_NavSys->ProjectPointToNavigation(GenParams->TargetDest, result);
 		if (result.HasNodeRef()) {
 			GenParams->TargetDest = result.Location;
 			GenParams->TargetDest.Z = instigatorLocation.Z;
-		}
-		else {
-			D(FString("UAbilityFlameDash::Activate() NavSys: no location found"));
+		} else {
+			D(FString(FSIG_APPEND(" NavSys: no location found")));
 			return false;
 		}
 	}
@@ -101,6 +100,7 @@ bool	UAbilityFlameDash::Activate(FEffectParameters& Parameters) {
 	if (Parameters.bRecheckActivatableOnActivate && !this->IsActivatable(Parameters)) { return false; }
 	auto GenParams = this->PrepareGeneratedParameters<UGeneratedParametersFlameDash>(Parameters.GeneratedParameters);
 	if (!UFuncLib::CheckObject(GenParams, FSIG_APPEND(" failed to prepare parameters"))) { return false; }
+
 	Parameters.GeneratedParameters = GenParams;
 	FVector instigatorLocation = Parameters.ActorInstigator->GetActorLocation();
 	Parameters.CursorHitLocation.Z = instigatorLocation.Z;
@@ -110,27 +110,30 @@ bool	UAbilityFlameDash::Activate(FEffectParameters& Parameters) {
 	FRotator rot = UKismetMathLibrary::FindLookAtRotation(instigatorLocation, Parameters.CursorHitLocation);
 	Parameters.ActorInstigator->SetActorRotation(rot);
 	UPlayer* owner = Parameters.ActorInstigator->GetNetOwningPlayer();
-	if (!UFuncLib::CheckObject(owner, "[AbilityFlameDash] failed to get owner")) { return false; }
-	AFiresThousandSunsPlayerController* playerCtrl = Cast<AFiresThousandSunsPlayerController>(owner->GetPlayerController(0));
-	if (UFuncLib::CheckObject(playerCtrl, "[AbilityFlameDash] PlayerController is null or cast failed.")) {
-		playerCtrl->StopMovement();
+	if (UFuncLib::CheckObject(owner, FSIG_APPEND(" failed to get owner"))) {
+		AFiresThousandSunsPlayerController* playerCtrl = Cast<AFiresThousandSunsPlayerController>(owner->GetPlayerController(0));
+		if (UFuncLib::CheckObject(playerCtrl, FSIG_APPEND(" PlayerController is null or cast failed."))) {
+			playerCtrl->StopMovement();
+		}
 	}
 
 	// Movement debuff
-	ADebuffLockedMovement* buff = UFuncLib::SafeSpawnActor<ADebuffLockedMovement>(Parameters.World, ADebuffLockedMovement::StaticClass());
-	if (!UFuncLib::CheckObject(buff, " [AbilityFlameDash] buff is null")) { return false; }
-	buff->SetBaseDuration(this->_lockMovementDuration);
-	buff->AttachToActor(Parameters.ActorInstigator, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, false));
-	buff->ApplyTo(Parameters.ActorInstigator);
+	auto buff = UFuncLib::SafeSpawnActor<ADebuffLockedMovement>(Parameters.World, ADebuffLockedMovement::StaticClass());
+	if (UFuncLib::CheckObject(buff, FSIG_APPEND(" failed to create buff with SafeSpawnActor()"))) {
+		buff->SetBaseDuration(this->_lockMovementDuration);
+		buff->AttachToActor(Parameters.ActorInstigator, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, false));
+		buff->ApplyTo(Parameters.ActorInstigator);
+	}
 	
 	// Niagara visual effect
 	UNiagaraComponent* Ncomp = UNiagaraFunctionLibrary::SpawnSystemAtLocation(
 		Parameters.ActorInstigator->GetWorld(), this->NiagaraSystem,
 		instigatorLocation + GenParams->Len * 0.5 * GenParams->Direction);
-	if (UFuncLib::CheckObject(Ncomp, "[UAbilityFlameDash] Niagara SpawnSystemAtLocation() failed ")) {
+	if (UFuncLib::CheckObject(Ncomp, FSIG_APPEND(" Niagara SpawnSystemAtLocation() failed "))) {
 		Ncomp->SetVariableVec2("InSpriteScale", FVector2D(GenParams->Len * 0.95, 580));
 		Ncomp->SetVectorParameter("InSprite1FacingVector", GenParams->Direction.Cross(FVector(0, 0, 1)));
 		Ncomp->SetVectorParameter("InSprite2AlignVector", GenParams->Direction.Cross(FVector(0, 0, -1)));
+		// todo: use the built-in system in Niagara to add multiple sprites
 	}
 
 	return Super::Activate(Parameters);

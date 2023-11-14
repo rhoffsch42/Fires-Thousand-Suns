@@ -56,16 +56,15 @@ protected:
 	virtual void Tick(float DeltaSeconds) override;
 
 private:
-	//UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
 	TObjectPtr<USceneComponent> _DefaultSceneRoot;
-	FVector	_spawnLocation;
-	FVector	_destination;
-	double	_totalTravelDistance = 1.0;
-	double	_timeBeforeMoving = 2.0;
-	double	_speed = 360.0;
-	double	_damage = 17355.0;//uber //16557.0 normal
-	double	_explosionRadius = 300.0;
-	double	_mavenCancellationDistanceThreshold = 0.15; // relative proportion of _travelDistance [0:1]
+	FVector	_SpawnLocation;
+	FVector	_Destination;
+	double	_TotalTravelDistance = 1.0;
+	double	_TimeBeforeMoving = 2.0;
+	double	_Speed = 360.0;
+	double	_Damage = 17355.0;//uber //16557.0 normal
+	double	_ExplosionRadius = 300.0;
+	double	_MavenCancellationDistanceThreshold = 0.15; // relative proportion of _travelDistance [0:1]
 
 	void	_initComponents();
 };

@@ -1,6 +1,5 @@
 
 #include "AbilityMoltenShell.h"
-//#include "../FiresThousandSunsCharacter.h"
 #include "../Buffs/BuffMoltenShell.h"
 #include "../FuncLib.h"
 
@@ -28,7 +27,6 @@ UGuardBase::UGuardBase() {
 }
 
 bool	UGuardBase::Activate(FEffectParameters& Parameters) {
-	//return this->UAbility::Activate(Parameters);
 	return Super::Activate(Parameters);
 }
 
@@ -55,13 +53,13 @@ UAbilityMoltenShell::UAbilityMoltenShell() {
 	this->SetNewMaterial(this->GetWorld(), FString("/Script/Engine.Material'/Game/LevelPrototyping/Materials/FireShield_01_50x50_UIMat.FireShield_01_50x50_UIMat'"));
 	this->ActivationSuccessSoundCue = LoadObject<USoundCue>(this->GetWorld(), *FString("/Script/Engine.SoundCue'/Game/TopDown/Blueprints/Audio/fts-molten-shell_Cue.fts-molten-shell_Cue'"));
 
-	UFuncLib::CheckObject(this->ActivationSuccessSoundCue, "UAbilitySteelskin::UAbilityVaalMoltenShell() failed to LoadObject() USoundCue");
+	UFuncLib::CheckObject(this->ActivationSuccessSoundCue, FSIG_APPEND(" failed to LoadObject() USoundCue"));
 }
 
 bool	UAbilityMoltenShell::Activate(FEffectParameters& Parameters) {
 	for (auto target : Parameters.Targets) {
 		ABuffMoltenShell* buff = UFuncLib::SafeSpawnActor<ABuffMoltenShell>(Parameters.World, this->BuffGuardClass);
-		if (UFuncLib::CheckObject(buff, "UAbilityMoltenShell::Activate() buff failed to create ")) {
+		if (UFuncLib::CheckObject(buff, FSIG_APPEND(" failed to create buff with SafeSpawnActor()"))) {
 			buff->Absorption = this->Absorbtion;
 			buff->HealthManager->SetMaxHP(this->HP);
 			buff->HealthManager->SetHP(this->HP);
@@ -72,7 +70,6 @@ bool	UAbilityMoltenShell::Activate(FEffectParameters& Parameters) {
 		}
 	}
 
-	//return this->UGuardBase::Activate(Parameters);
 	return Super::Activate(Parameters);
 }
 
@@ -99,13 +96,13 @@ UAbilityVaalMoltenShell::UAbilityVaalMoltenShell() {
 	this->SetNewMaterial(this->GetWorld(), FString("/Script/Engine.Material'/Game/LevelPrototyping/Materials/FireShield_red_01_50x50_UIMat.FireShield_red_01_50x50_UIMat'"));
 	this->ActivationSuccessSoundCue = LoadObject<USoundCue>(this->GetWorld(), *FString("/Script/Engine.SoundCue'/Game/TopDown/Blueprints/Audio/fts-molten-shell_Cue.fts-molten-shell_Cue'"));
 
-	UFuncLib::CheckObject(this->ActivationSuccessSoundCue, "UAbilitySteelskin::UAbilityVaalMoltenShell() failed to LoadObject() USoundCue");
+	UFuncLib::CheckObject(this->ActivationSuccessSoundCue, FSIG_APPEND(" failed to LoadObject() USoundCue"));
 }
 
 bool	UAbilityVaalMoltenShell::Activate(FEffectParameters& Parameters) {
 	for (auto target : Parameters.Targets) {
 		ABuffVaalMoltenShell* buff = UFuncLib::SafeSpawnActor<ABuffVaalMoltenShell>(Parameters.World, this->BuffGuardClass);
-		if (UFuncLib::CheckObject(buff, "UAbilityVaalMoltenShell::Activate() buff failed to create ")) {
+		if (UFuncLib::CheckObject(buff, FSIG_APPEND(" failed to create buff with SafeSpawnActor()"))) {
 			buff->Absorption = this->Absorbtion;
 			buff->HealthManager->SetMaxHP(this->HP);
 			buff->HealthManager->SetHP(this->HP);
@@ -117,7 +114,6 @@ bool	UAbilityVaalMoltenShell::Activate(FEffectParameters& Parameters) {
 	}
 
 	return Super::Activate(Parameters);
-	//return this->UGuardBase::Activate(Parameters);
 }
 
 ////////////////////////////////////
@@ -143,13 +139,13 @@ UAbilitySteelskin::UAbilitySteelskin() {
 	this->SetNewMaterial(this->GetWorld(), FString("/Script/Engine.Material'/Game/LevelPrototyping/Materials/aura_100x100_UIMat.aura_100x100_UIMat'"));
 	this->ActivationSuccessSoundCue = LoadObject<USoundCue>(this->GetWorld(), *FString("/Script/Engine.SoundCue'/Game/TopDown/Blueprints/Audio/fts-steelskin_Cue.fts-steelskin_Cue'"));
 
-	UFuncLib::CheckObject(this->ActivationSuccessSoundCue, "UAbilitySteelskin::UAbilitySteelskin() failed to LoadObject() USoundCue");
+	UFuncLib::CheckObject(this->ActivationSuccessSoundCue, FSIG_APPEND(" failed to LoadObject() USoundCue"));
 }
 
 bool	UAbilitySteelskin::Activate(FEffectParameters& Parameters) {
 	for (auto target : Parameters.Targets) {
 		ABuffSteelskin* buff = UFuncLib::SafeSpawnActor<ABuffSteelskin>(Parameters.World, this->BuffGuardClass);
-		if (UFuncLib::CheckObject(buff, "UAbilitySteelskin::Activate() buff failed to create ")) {
+		if (UFuncLib::CheckObject(buff, FSIG_APPEND(" failed to create buff with SafeSpawnActor()"))) {
 			buff->Absorption = this->Absorbtion;
 			buff->HealthManager->SetMaxHP(this->HP);
 			buff->HealthManager->SetHP(this->HP);
@@ -161,5 +157,4 @@ bool	UAbilitySteelskin::Activate(FEffectParameters& Parameters) {
 	}
 
 	return Super::Activate(Parameters);
-	//return this->UGuardBase::Activate(Parameters);
 }
