@@ -37,8 +37,8 @@ inline bool	operator==(const FPlayerStatistics& lhs, const FPlayerStatistics& rh
 		&& (lhs.Life == rhs.Life)
 		&& (lhs.LifeRegeneration == rhs.LifeRegeneration)
 		&& (lhs.FireResistance == rhs.FireResistance)
-		&& (lhs.SpellSuppressionChance == rhs.SpellSuppressionChance)
-		&& (lhs.SpellSuppressionEffect == rhs.SpellSuppressionEffect)
+		//&& (lhs.SpellSuppressionChance == rhs.SpellSuppressionChance)
+		//&& (lhs.SpellSuppressionEffect == rhs.SpellSuppressionEffect)
 		&& (lhs.FortifyEffect == rhs.FortifyEffect)
 		);
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, FString(__func__).Append(res ? " True" : " False"));

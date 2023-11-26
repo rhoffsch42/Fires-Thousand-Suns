@@ -53,26 +53,39 @@ public:
 	UFUNCTION(BlueprintCallable)
 	int32	GetPhasesSurvived() const;
 
+	// https://poedb.tw/us/The_Searing_Exarch#TheSearingExarchCleansingBoss
+
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
 	bool bIsUber = true;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
 	bool bIsKrangled = false;
+
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
-	double WavesDelayNormal = 1.5;
+	double	Normal_WavesDelay = 1.5;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
-	double WavesDelayUber = 1.0;
+	double	Uber_WavesDelay = 1.0;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
-	double	UberDamage = 17355.0;
+	double	Normal_DamageMin = 12264.0;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
-	double	Normaldamage = 16557.0;
+	double	Normal_DamageMax = 18396.0;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
-	int32 WavesPerPhase = 17;//13 for normal mode
+	double	Uber_DamageMin = 12871.0;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
-	int32 MavenCancelledSuns = 7;
+	double	Uber_DamageMax = 19306.0;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
-	int32	_SunsPerSide = 20;
+	int32	Normal_WavesPerPhase = 13;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
-	int32	WavesSkippedBetweenPhases = 7;//4 for normal mode
+	int32	Uber_WavesPerPhase = 17;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
+	int32	Normal_WavesSkippedBetweenPhases = 4;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
+	int32	Uber_WavesSkippedBetweenPhases = 7;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
+	int32	MavenCancelledSuns = 7;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
+	int32	SunsPerSide = 20;
+
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
 	TSubclassOf<ASun>  SunActorClass;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = PARAMS_CATEGORY)
@@ -95,6 +108,12 @@ protected:
 	int32	_WaveCounter = 0;
 	int32	_PhasesSurvived = 0;
 	int32	_WaitCounter = 0;
+
+	double	_WavesDelay;
+	double	_DamageMin;
+	double	_DamageMax;
+	int32	_WavesPerPhase;
+	int32	_WavesSkippedBetweenPhases;
 
 	UNavigationSystemV1* NavSys = nullptr;
 	UFiresThousandSunsGameInstance* Fires_GI = nullptr;

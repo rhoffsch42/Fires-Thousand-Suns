@@ -16,7 +16,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE(FSunMavenCancelled);
 /*
 	sphere collision radius 45,0
 	sphere mesh scale 1,2275
-	ratation rate Y -137,5
+	rotation rate Y -137,5
 */
 UCLASS(Blueprintable)
 class FIRESTHOUSANDSUNS_API ASun : public AActor

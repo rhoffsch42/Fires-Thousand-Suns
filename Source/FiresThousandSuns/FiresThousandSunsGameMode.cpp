@@ -32,8 +32,7 @@ AFiresThousandSunsGameMode::AFiresThousandSunsGameMode() {
 	if (PlayerControllerBPClass.Class != NULL) {
 		PlayerControllerClass = PlayerControllerBPClass.Class;
 	}
-
-
+	 
 	this->World = this->GetWorld();
 	this->NavSys = UNavigationSystemV1::GetCurrent(this->GetWorld());
 }
@@ -53,9 +52,18 @@ void	AFiresThousandSunsGameMode::Init(
 		this->bIsUber = this->Fires_GI->bUberMode;
 		this->bIsKrangled = this->Fires_GI->bKrangledWaves;
 	}
-	if (!this->bIsUber) {
-		this->WavesPerPhase = 13;
-		this->WavesSkippedBetweenPhases = 4;
+	if (this->bIsUber) {
+		this->_WavesDelay = this->Uber_WavesDelay;
+		this->_DamageMin = this->Uber_DamageMin;
+		this->_DamageMax= this->Uber_DamageMax;
+		this->_WavesPerPhase = this->Uber_WavesPerPhase;
+		this->_WavesSkippedBetweenPhases = this->Uber_WavesSkippedBetweenPhases;
+	} else {
+		this->_WavesDelay = this->Normal_WavesDelay;
+		this->_DamageMin = this->Normal_DamageMin;
+		this->_DamageMax = this->Normal_DamageMax;
+		this->_WavesPerPhase = this->Normal_WavesPerPhase;
+		this->_WavesSkippedBetweenPhases = this->Normal_WavesSkippedBetweenPhases;
 	}
 
 	this->Player = PlayerCharacter;
@@ -103,8 +111,9 @@ FVector	AFiresThousandSunsGameMode::PlaceBackLocationOnNavSys(FVector Location) 
 
 bool	AFiresThousandSunsGameMode::TrySpawnWave() {
 	if (!this->_bIsInit) { return false; }
-	if (this->_WaveCounter == this->WavesPerPhase) {
-		if (this->_WaitCounter < this->WavesSkippedBetweenPhases) {
+
+	if (this->_WaveCounter == this->_WavesPerPhase) {
+		if (this->_WaitCounter < this->_WavesSkippedBetweenPhases) {
 			this->_WaitCounter++;
 		} else {
 			this->_PhasesSurvived++;
@@ -145,8 +154,6 @@ void	AFiresThousandSunsGameMode::SpawnSunsRegular() {
 	this->_LastSpawnSideCounter = r;
 }
 
-//constexpr static int SideConvToInt(Side side)  { return CAST_NUM(side); }
-
 #define OFFSET 5.0f
 void	AFiresThousandSunsGameMode::SpawnSunsSides(Side Start, Side End) {
 	if (!this->_bIsInit) {
@@ -155,7 +162,7 @@ void	AFiresThousandSunsGameMode::SpawnSunsSides(Side Start, Side End) {
 	}
 
 	this->_WaveCounter++;
-	FVector offsets[4] = {// a little offsets to avoid perfect mirrors suns, leading to disturbing effects for the player
+	FVector offsets[4] = {// a little offsets to avoid mirrored meating suns, leading to disturbing effects for the player
 		FVector(0, -OFFSET, 0),
 		FVector(0, OFFSET, 0),
 		FVector(-OFFSET, 0, 0),
@@ -173,16 +180,19 @@ void	AFiresThousandSunsGameMode::SpawnSunsSides(Side Start, Side End) {
 
 	TArray<int32>	destIndex = this->_GenerateDestinationIndexArray();
 	TArray<ASun*>	wave;
-	wave.Reserve(this->_SunsPerSide);
+	wave.Reserve(this->SunsPerSide);
 
 	FActorSpawnParameters spawnInfo;
 	FRotator rotation(0.0f, 0.0f, 0.0f);
-	for (int32 i = 0; i < this->_SunsPerSide; i++) {
-		FVector spawnPos = spawn1 + sideVecSpawn * (double(i) / (double)(this->_SunsPerSide - 1));// -1 because we will have suns-1 "segments" with 1 sun on each sides, starting at 0
-		FVector destPos = dest1 + sideVecDest * (double(destIndex[i]) / (double)(this->_SunsPerSide - 1));// -1 because we will have suns-1 "segments" with 1 sun on each sides, starting at 0
+	for (int32 i = 0; i < this->SunsPerSide; i++) {
+		// - 1 because we will have suns-1 "segments" with 1 sun on each sides, starting at 0
+		FVector spawnPos = spawn1 + sideVecSpawn * (double(i) / (double)(this->SunsPerSide - 1));
+		FVector destPos = dest1 + sideVecDest * (double(destIndex[i]) / (double)(this->SunsPerSide - 1));
+
 		ASun* sun = Cast<ASun>(this->GetWorld()->SpawnActor<AActor>(this->SunActorClass, spawnPos, rotation, spawnInfo));
 		if (UFuncLib::CheckObject(sun, FString::Printf(TEXT("[Fires..GameMode] Failed to spawn ASun %d"), i))) {
-			sun->SetDamage(this->bIsUber ? this->UberDamage : this->Normaldamage);
+			double dmg = FMath::Lerp(this->_DamageMin, this->_DamageMax, FMath::RandRange(0.0f, 1.0f));
+			sun->SetDamage(dmg);
 			wave.Add(sun);
 			sun->SetDestination(destPos);
 			sun->bIsMoving = false;
@@ -192,7 +202,6 @@ void	AFiresThousandSunsGameMode::SpawnSunsSides(Side Start, Side End) {
 		}
 	}
 	this->_SelectSunsForMavenCancellation(&wave);
-	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("Spawned %d Suns"), this->_SunsPerSide));
 }
 
 #include "DrawDebugHelpers.h"
@@ -244,8 +253,8 @@ int32	AFiresThousandSunsGameMode::GetPhasesSurvived() const { return this->_Phas
 
 TArray<int32>	AFiresThousandSunsGameMode::_GenerateDestinationIndexArray() const {
 	TArray<int32>	destIndex;
-	destIndex.SetNum(this->_SunsPerSide);
-	for (int32 i = 0; i < this->_SunsPerSide; ++i) {
+	destIndex.SetNum(this->SunsPerSide);
+	for (int32 i = 0; i < this->SunsPerSide; ++i) {
 		destIndex[i] = i;
 	}
 	if (this->bIsKrangled) {
@@ -289,7 +298,7 @@ double	AFiresThousandSunsGameMode::_ApplyMitigation(double damage) const {
 
 	FRandomStream RandomStream;
 	RandomStream.GenerateNewSeed();
-	double suppRand = FMath::RandRange(0.0f, 1.0f);
+	//double suppRand = FMath::RandRange(0.0f, 1.0f);
 	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Cyan, FString::FormatAsNumber(suppRand*100));
 
 	FPlayerStatistics	Statistics = Fires_State->PlayerStatistics;
@@ -302,11 +311,11 @@ double	AFiresThousandSunsGameMode::_ApplyMitigation(double damage) const {
 	);
 	double rubyFlaskLess = RubyFlaskBuff ? RubyFlaskBuff->LessFireDamage : 0.0;
 	double fortifyLess = FortifyBuff ? FortifyBuff->FortifyStacks / 100.0 : 0.0;
-	double supressLess = (suppRand <= (Statistics.SpellSuppressionChance / 100.0) ? 1.0 : 0.0) * (Statistics.SpellSuppressionEffect / 100.0);
+	//double supressLess = (suppRand <= (Statistics.SpellSuppressionChance / 100.0) ? 1.0 : 0.0) * (Statistics.SpellSuppressionEffect / 100.0);
 	return damage
 		* (1.0 - finalFireRes)
 		* (1.0 - rubyFlaskLess)
-		* (1.0 - supressLess)
+		//* (1.0 - supressLess) // cannot be blocked or dodged or suppressed
 		* (1.0 - fortifyLess)
 		;
 }
