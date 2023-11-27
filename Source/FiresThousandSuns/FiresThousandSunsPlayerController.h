@@ -69,5 +69,6 @@ private:
 
 	UAbility* _CastedAbility;
 	FEffectParameters _Parameters;
-	bool _bIsCasting = false;
+	bool	_bIsCasting = false;
+	double	_MinimumDistanceToMove = 100.0;// this is the distance between the center of mass of the character and the point on the floor, they dont have the same Z
 };

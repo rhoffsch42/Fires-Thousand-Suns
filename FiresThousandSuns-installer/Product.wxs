@@ -10,13 +10,13 @@
 
 	<!-- Give package a unique ID per platform -->
 	<?if $(var.Platform) = x64?>
-	<?define ProductCode = "{F8FBA84D-459E-4B5D-80FC-0134DE6B613D}"?>
+	<?define ProductCode = "{34240C23-73FC-431B-A973-37DF3CC36291}"?>
 	<?else?>
-	<?define ProductCode = "{1171215A-F433-4FEA-A8B3-730F73EDF0ED}"?>
+	<?define ProductCode = "{CCCA7608-6F7F-4BFC-8302-2C2F207D0E9C}"?>
 	<?endif?>
 
 	<!-- Can be defined in the project file (GetAssemblyIdentity). -->
-	<?define BuildVersion = 1.1.1.0 ?>
+	<?define BuildVersion = 1.1.2.0 ?>
 
 	<!-- Main product -->
 	<Product

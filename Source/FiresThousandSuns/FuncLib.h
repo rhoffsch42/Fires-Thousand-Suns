@@ -15,7 +15,7 @@
 
 #define D_(x)			x
 #define D(x)			if (GEngine){GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, x);}
-#define DCOL(c, x)			if (GEngine){GEngine->AddOnScreenDebugMessage(-1, 5.0f, c, x);}
+#define DCOL(c, x)		if (GEngine){GEngine->AddOnScreenDebugMessage(-1, 5.0f, c, x);}
 #define DKEY(k, x)		if (GEngine){GEngine->AddOnScreenDebugMessage((int32)(int64)(k), 5.0f, FColor::Yellow, x);}
 #define WHEREAMI(k)		DKEY(k, FString(__FUNCSIG__))
 #define FSIG_APPEND(x)	FString(__FUNCSIG__).Append(x)

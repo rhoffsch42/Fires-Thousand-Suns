@@ -144,7 +144,7 @@ void AFiresThousandSunsPlayerController::OnSetDestinationTriggered() {
 	if (ControlledPawn != nullptr) {
 		FVector	distance = CachedDestination - ControlledPawn->GetActorLocation();
 		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("dist: %f"), distance.Length()));
-		if (distance.Length() >= 110) {
+		if (distance.Length() >= this->_MinimumDistanceToMove) {
 			FVector WorldDirection = (CachedDestination - ControlledPawn->GetActorLocation()).GetSafeNormal();
 			ControlledPawn->AddMovementInput(WorldDirection, 1.0, false);
 		}
