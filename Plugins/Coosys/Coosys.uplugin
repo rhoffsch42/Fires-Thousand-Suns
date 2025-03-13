@@ -1,0 +1,24 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "Coosys",
+	"Description": "Game systems",
+	"Category": "Other",
+	"CreatedBy": "Coosys",
+	"CreatedByURL": "https://rhoffsch42.github.io/",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"SupportURL": "",
+	"CanContainContent": true,
+	"IsBetaVersion": true,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "Coosys",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	]
+}
