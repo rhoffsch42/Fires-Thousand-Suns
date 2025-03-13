@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "Modules/ModuleManager.h"
 
+#define COOSYS_GEN_UNAME(x) MakeUniqueObjectName(x, x->StaticClass(), FName())
+
 class FCoosysModule : public IModuleInterface
 {
 public:

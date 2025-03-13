@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -10,7 +8,7 @@
 #include "CommonTextBlock.h"
 #include "InputMappingContext.h"
 #include "InputAction.h"
-#include "../Abilitys/Ability.h"
+#include "Abilitys/Ability.h"
 
 #include "AbilitySlot.generated.h"
 

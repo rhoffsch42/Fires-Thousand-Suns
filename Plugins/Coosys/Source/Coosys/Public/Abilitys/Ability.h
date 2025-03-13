@@ -6,12 +6,16 @@
 #include "Systems/Cooldown.h"
 typedef int32* EffectClassPtr;
 #include "Sound/SoundCue.h"
+//#include "AbilityManager.h"
 
 #include "Ability.generated.h"
 
+class UAbilityManager;
+
+
 // Any additional parameters generated during Ability activation. This class has to be inherited and specialized.
 UCLASS(Blueprintable)
-class FIRESTHOUSANDSUNS_API UGeneratedParameters : public UObject
+class COOSYS_API UGeneratedParameters : public UObject
 {
 	GENERATED_BODY()
 public:
@@ -51,7 +55,7 @@ enum class EAbilityType : uint8 {
 };
 
 UCLASS(Blueprintable)
-class FIRESTHOUSANDSUNS_API UAbility : public UObject
+class COOSYS_API UAbility : public UObject
 {
 	GENERATED_BODY()
 public:
@@ -101,5 +105,8 @@ public:
 	EAbilityType	AbilityType = EAbilityType::None;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	FString			TooltipName = "Ability";
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	UAbilityManager* AbilityManager = nullptr; // TMP
 private:
 };

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Ability.h"
+#include "Abilitys/Ability.h"
 #include "Systems/HealthManager.h"
 #include "../Buffs/BuffMoltenShell.h"
 

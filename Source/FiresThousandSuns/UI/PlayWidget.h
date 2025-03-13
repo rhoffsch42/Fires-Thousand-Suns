@@ -8,7 +8,7 @@
 #include "Components/Button.h"
 #include "Components/CheckBox.h"
 #include "../FiresThousandSunsPlayerState.h"
-#include "../Abilitys/AbilityManager.h"
+#include "Abilitys/AbilityManager.h"
 #include "MenuContent.h"
 #include "AbilitySlotManager.h"
 #include "AbilityBar.h"

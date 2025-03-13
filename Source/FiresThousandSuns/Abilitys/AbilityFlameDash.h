@@ -1,7 +1,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Ability.h"
+#include "Abilitys/Ability.h"
 #include "NiagaraFunctionLibrary.h"
 #include "NiagaraComponent.h"
 #include "NiagaraSystem.h"
@@ -9,7 +9,6 @@
 #include "NavigationSystem.h"
 
 #include "AbilityFlameDash.generated.h"
-
 
 UCLASS(Blueprintable)
 class FIRESTHOUSANDSUNS_API UGeneratedParametersFlameDash : public UGeneratedParameters

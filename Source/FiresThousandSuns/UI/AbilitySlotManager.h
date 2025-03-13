@@ -3,7 +3,7 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "AbilitySlot.h"
-#include "../Abilitys/AbilityManager.h"
+#include "Abilitys/AbilityManager.h"
 #include "Components/Widget.h"
 #include "Components/HorizontalBox.h"
 
