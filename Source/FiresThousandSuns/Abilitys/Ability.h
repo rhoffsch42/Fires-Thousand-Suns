@@ -3,7 +3,7 @@
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
 #include "Materials/Material.h"
-#include "../Systems/Cooldown.h"
+#include "Systems/Cooldown.h"
 typedef int32* EffectClassPtr;
 #include "Sound/SoundCue.h"
 

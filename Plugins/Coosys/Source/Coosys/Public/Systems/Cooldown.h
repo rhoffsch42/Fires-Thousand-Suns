@@ -11,7 +11,7 @@
  * 
  */
 UCLASS(Blueprintable)
-class FIRESTHOUSANDSUNS_API UCooldown : public UObject
+class COOSYS_API UCooldown : public UObject
 {
 	GENERATED_BODY()
 public:

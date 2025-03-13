@@ -2,7 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "Buff.h"
-#include "../Systems/HealthManager.h"
+#include "Systems/HealthManager.h"
 #include "BuffMoltenShell.generated.h"
 
 UCLASS(Blueprintable)

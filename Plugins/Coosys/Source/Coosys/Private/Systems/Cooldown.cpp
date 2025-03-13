@@ -1,4 +1,4 @@
-#include "../Systems/Cooldown.h"
+#include "Systems/Cooldown.h"
 #include "Kismet/GameplayStatics.h"
 
 UCooldown::UCooldown() {}

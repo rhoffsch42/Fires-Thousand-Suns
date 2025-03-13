@@ -8,7 +8,7 @@ public class FiresThousandSuns : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
-        PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "HeadMountedDisplay", "NavigationSystem", "AIModule", "Niagara", "EnhancedInput", "Slate", "AudioWidgets", "SlateCore", "CommonUI", "ImageWrapper", "AssetRegistry", "ApplicationCore"
+        PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "HeadMountedDisplay", "NavigationSystem", "AIModule", "Niagara", "EnhancedInput", "Slate", "AudioWidgets", "SlateCore", "CommonUI", "ImageWrapper", "AssetRegistry", "ApplicationCore", "Coosys"
         });
 		/*PublicIncludePaths.Add(Path.Combine(ModuleDirectory, "Niagara"));*/
 		//PublicIncludePaths.Add("Coosys/Public");

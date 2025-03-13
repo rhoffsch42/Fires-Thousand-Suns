@@ -13,7 +13,7 @@ UDELEGATE(BlueprintCallable)
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FHpEmpty);
 
 UCLASS(Blueprintable)
-class FIRESTHOUSANDSUNS_API UHealthManager : public UObject
+class COOSYS_API UHealthManager : public UObject
 {
 	GENERATED_BODY()
 public:	
