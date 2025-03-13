@@ -20,7 +20,6 @@ template ADebuffLockedMovement* UFuncLib::SafeSpawnActor<ADebuffLockedMovement>(
 
 template UGeneratedParametersFlameDash* UAbility::PrepareGeneratedParameters<UGeneratedParametersFlameDash>(UGeneratedParameters* GeneratedParameters);
 
-
 UGeneratedParametersFlameDash::UGeneratedParametersFlameDash() {}
 
 UAbilityFlameDash::UAbilityFlameDash() {
@@ -58,6 +57,7 @@ bool	UAbilityFlameDash::IsActivatable(FEffectParameters& Parameters) {
 	if (!UFuncLib::CheckObject(GenParams, FSIG_APPEND(" failed to prepare parameters"))) { return false; }
 	Parameters.GeneratedParameters = GenParams;
 
+	// calculate the target destination and direction
 	FVector instigatorLocation = Parameters.ActorInstigator->GetActorLocation();
 	Parameters.CursorHitLocation.Z = instigatorLocation.Z;
 	GenParams->Direction = Parameters.CursorHitLocation - instigatorLocation;
@@ -74,8 +74,9 @@ bool	UAbilityFlameDash::IsActivatable(FEffectParameters& Parameters) {
 
 	if (Hit.bBlockingHit) {
 		double hitlen = (Hit.Location - instigatorLocation).Length();
-		if (hitlen < this->_minRange / 4.0)//too close from a wall
+		if (hitlen < this->_minRange / 4.0) { // too close from a wall
 			return false;
+		}
 		GenParams->Len = std::min(GenParams->Len, hitlen);
 		GenParams->TargetDest = instigatorLocation + GenParams->Direction * GenParams->Len;
 	}
@@ -95,7 +96,7 @@ bool	UAbilityFlameDash::IsActivatable(FEffectParameters& Parameters) {
 	return true;
 }
 
-// currently cannot flame dash through static even if maxrange allows it.
+// currently cannot flame dash through ECC_WorldStatic objects even if maxrange allows it.
 bool	UAbilityFlameDash::Activate(FEffectParameters& Parameters) {
 	if (Parameters.bRecheckActivatableOnActivate && !this->IsActivatable(Parameters)) { return false; }
 	auto GenParams = this->PrepareGeneratedParameters<UGeneratedParametersFlameDash>(Parameters.GeneratedParameters);
@@ -133,7 +134,7 @@ bool	UAbilityFlameDash::Activate(FEffectParameters& Parameters) {
 		Ncomp->SetVariableVec2("InSpriteScale", FVector2D(GenParams->Len * 0.95, 580));
 		Ncomp->SetVectorParameter("InSprite1FacingVector", GenParams->Direction.Cross(FVector(0, 0, 1)));
 		Ncomp->SetVectorParameter("InSprite2AlignVector", GenParams->Direction.Cross(FVector(0, 0, -1)));
-		// todo: use the built-in system in Niagara to add multiple sprites
+		// TODO: use the built-in system in Niagara to add multiple sprites
 	}
 
 	return Super::Activate(Parameters);

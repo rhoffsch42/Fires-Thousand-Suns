@@ -1,6 +1,7 @@
 
 #include "FuncLib.h"
-#include "GenericPlatform/GenericPlatformMisc.h"
+//#include "GenericPlatform/GenericPlatformMisc.h"
+#include "GenericPlatform/GenericPlatformApplicationMisc.h"
 //#include "Lumin/LuminPlatformApplicationMisc.h"
 #include "FiresThousandSunsGameInstance.h"
 #include "Misc/FileHelper.h"
@@ -31,12 +32,15 @@ bool	UFuncLib::CheckObject(UObject* obj, FString ErrorMsg) {
 
 void	UFuncLib::CopyToClipboard(FString Input) {
 	// FGenericPlatformMisc FPlatformApplicationMisc
-	FGenericPlatformMisc::ClipboardCopy(*Input);
+	//FGenericPlatformMisc::ClipboardCopy(*Input);
+	//FPlatformApplicationMisc::ClipboardCopy(*Input);
+	FGenericPlatformApplicationMisc::ClipboardCopy(*Input);
 }
 
 FString	UFuncLib::GetFromClipboard() {
 	FString res;
-	FGenericPlatformMisc::ClipboardPaste(res);
+	//FGenericPlatformMisc::ClipboardPaste(res);
+	FGenericPlatformApplicationMisc::ClipboardPaste(res);
 	return res;
 }
 

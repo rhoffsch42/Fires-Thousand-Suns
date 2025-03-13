@@ -5,7 +5,7 @@
 #include "../FuncLib.h"
 
 ABuff::ABuff() {
-	//WHEREAMI(this);
+	// WHEREAMI(this);
 	PrimaryActorTick.bCanEverTick = false;
 
 	this->_DefaultSceneRoot = CreateDefaultSubobject<USceneComponent>(TEXT("Default"));
@@ -27,6 +27,7 @@ void	ABuff::Tick(float DeltaSeconds) {
 	Super::Tick(DeltaSeconds);
 }
 
+// string to display in UI (eg: buff stacks, power, state, etc...)
 FString	ABuff::GetDisplayString() const {
 	return FString("");
 }
@@ -34,7 +35,7 @@ FString	ABuff::GetDisplayString() const {
 
 void	ABuff::ApplyTo(AActor* Target) {
 	this->_Target = Target;
-	UBuffManager* bm = this->_Target->GetComponentByClass<UBuffManager>();// not mandatory
+	UBuffManager* bm = this->_Target->GetComponentByClass<UBuffManager>(); // not mandatory
 	if (bm) {
 		bm->AddBuff(this);
 	}
@@ -43,7 +44,7 @@ void	ABuff::ApplyTo(AActor* Target) {
 
 void	ABuff::Remove() {
 	if (this->_Target) {
-		UBuffManager* bm = this->_Target->GetComponentByClass<UBuffManager>();// not mandatory
+		UBuffManager* bm = this->_Target->GetComponentByClass<UBuffManager>(); // not mandatory
 		if (bm) {
 			bm->RemoveBuff(this);
 		}
@@ -51,8 +52,8 @@ void	ABuff::Remove() {
 }
 
 void	ABuff::SetBaseDuration(double NewDuration) {
-	this->_baseDuration = NewDuration;// save
-	this->InitialLifeSpan = NewDuration;
+	this->_baseDuration = NewDuration; // save it
+	this->InitialLifeSpan = NewDuration; // because SetLifeSpan() will override it
 }
 
 void	ABuff::AddDuration(double Duration) {
@@ -66,7 +67,7 @@ void	ABuff::RemoveDuration(double Duration) {
 		this->_UpdateDuration(this->GetLifeSpan() - Duration);
 	} else { // puting negative value will set no/infinite lifespan, we don't want that.
 		// this->_UpdateDuration(0.001);
-		//this->EndPlay(EEndPlayReason::Destroyed);
+		// this->EndPlay(EEndPlayReason::Destroyed);
 		this->Destroy();
 	}
 }

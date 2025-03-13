@@ -24,7 +24,7 @@ struct FEffectParameters
 	GENERATED_BODY()
 //public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	bool		bRecheckActivatableOnActivate = false;//this is for casted (delayed) abilitys
+	bool		bRecheckActivatableOnActivate = false; // this is for casted (delayed) abilitys
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	UWorld*		World = nullptr;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
@@ -42,7 +42,7 @@ struct FEffectParameters
 UENUM(BlueprintType)
 enum class EAbilityType : uint8 {
 	None = 0 UMETA(DisplayName = "None"),
-	FlameDash UMETA(DisplayName = "MoltenShell"),
+	FlameDash UMETA(DisplayName = "FlameDash"),
 	MoltenShell UMETA(DisplayName = "MoltenShell"),
 	VaalMoltenShell UMETA(DisplayName = "VaalMoltenShell"),
 	Steelskin UMETA(DisplayName = "Steelskin"),

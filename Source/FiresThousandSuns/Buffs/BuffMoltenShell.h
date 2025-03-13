@@ -5,14 +5,13 @@
 #include "../Systems/HealthManager.h"
 #include "BuffMoltenShell.generated.h"
 
-
 UCLASS(Blueprintable)
 class FIRESTHOUSANDSUNS_API ABuffGuard : public ABuff
 {
 	GENERATED_BODY()
 public:
 	ABuffGuard();
-	virtual void	OnConstruction(const FTransform& Transform) override;// todo check every UObject that need to constructs UObjects in ctor
+	virtual void	OnConstruction(const FTransform& Transform) override;// TODO: check every UObjects that need to construct UObjects in ctor
 	virtual FString	GetDisplayString() const override;
 	virtual void	ApplyTo(AActor* Target) override;
 
@@ -22,7 +21,7 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	UHealthManager* HealthManager = nullptr;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	double	Absorption = 0.75;
+	double	Absorption = 0.75; // coef
 protected:
 	APawn* _TargetPawn = nullptr;
 };

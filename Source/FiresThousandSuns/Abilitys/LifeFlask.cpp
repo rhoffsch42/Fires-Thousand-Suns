@@ -46,8 +46,7 @@ URubyFlask::URubyFlask() {
 	if (UFuncLib::CheckObject(BuffClass.Class, FSIG_APPEND(" failed to get Actor class ").Append(BP_PATH_BUFFRUBYFLASK))) {
 		UFuncLib::CheckObject(BuffClass.Class, FSIG_APPEND(" BuffClass.Class is null"));
 		this->_BuffClass = BuffClass.Class;
-	}
-	else {
+	} else {
 		this->_BuffClass = ABuffRubyFlask::StaticClass();
 	}
 

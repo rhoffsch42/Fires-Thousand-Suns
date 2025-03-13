@@ -24,10 +24,10 @@ void	UBuffManager::AddBuff(ABuff* Buff) {
 		this->_buffs[enumVal] = Buff;
 	} else {
 		// merging with one ot these:
-		this->_buffs[enumVal]->Destroy(); // ie replace
+		this->_buffs[enumVal]->Destroy(); // ie replace/refresh
 		this->_buffs[enumVal] = Buff;
-		//this->_buffs[enumVal]->Absorb(Buff);
-		//this->_buffs[enumVal]->Stack(Buff); // list ?
+		// this->_buffs[enumVal]->Absorb(Buff);
+		// this->_buffs[enumVal]->Stack(Buff); // list ?
 		/*
 			a buff can be stronger than another one but expire sooner
 			we need to stack them, and display only the strongest at the current time
@@ -40,12 +40,14 @@ void	UBuffManager::RemoveBuff(ABuff* Buff) {
 	int32	enumVal = CAST_NUM(Buff->BuffType);
 	if (!this->_buffs[enumVal]) {
 		// should not happen
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("UBuffManager::RemoveBuff() error: trying to remove an unregistered buff : %d"), Buff));
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red,
+			FString::Printf(TEXT("UBuffManager::RemoveBuff() error: trying to remove an unregistered buff : %d | class name: %s | name: %s"), Buff, *Buff->GetClass()->GetName(), *Buff->GetName())
+		);
 	} else {
 		// unmerging with one ot these:
 		this->_buffs[enumVal] = nullptr;
-		//this->_buffs[enumVal]->Absorb(Buff); // obsolete, original buff was absorbed and a special EndPlay/destruction should have been called
-		//this->_buffs[enumVal]->UnStack(Buff); // list ?
+		// this->_buffs[enumVal]->Absorb(Buff); // noneed, original buff was absorbed and a special EndPlay/destruction should have been called
+		// this->_buffs[enumVal]->UnStack(Buff); // list ?
 	}
 }
 

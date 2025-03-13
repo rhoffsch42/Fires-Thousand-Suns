@@ -1,6 +1,5 @@
-#include "Cooldown.h"
+#include "../Systems/Cooldown.h"
 #include "Kismet/GameplayStatics.h"
-#include "../FuncLib.h"
 
 UCooldown::UCooldown() {}
 UCooldown::UCooldown(UObject* WorldObject) : World(WorldObject) {}
@@ -98,7 +97,7 @@ FString	UCooldown::ToString() {
 
 double	UCooldown::_safeGetTimeSeconds() const {
 	if (!this->World) {
-		D_(GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString("Cooldown::World is nullptr! Abort.")));
+		if (GEngine) { GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString("Cooldown::World is nullptr! Abort.")); }
 		return -2;
 	} else {
 		return UGameplayStatics::GetTimeSeconds(this->World);

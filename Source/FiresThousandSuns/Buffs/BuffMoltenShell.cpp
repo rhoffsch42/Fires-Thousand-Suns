@@ -11,7 +11,7 @@ void ABuffGuard::OnConstruction(const FTransform& Transform) {
 	Super::OnConstruction(Transform);
 	this->HealthManager = NewObject<UHealthManager>(this, GEN_UNAME(this)); // TODO: check all NewObject outers
 
-	if (UFuncLib::CheckObject(this->HealthManager, "ABuffGuard() failed to create HealthManager")) {
+	if (UFuncLib::CheckObject(this->HealthManager, FString(__FUNCSIG__).Append(" failed to create HealthManager"))) {
 		this->HealthManager->SetMaxHP(100);
 		this->HealthManager->SetHP(100);
 

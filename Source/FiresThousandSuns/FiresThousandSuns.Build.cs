@@ -10,6 +10,7 @@ public class FiresThousandSuns : ModuleRules
 
         PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "HeadMountedDisplay", "NavigationSystem", "AIModule", "Niagara", "EnhancedInput", "Slate", "AudioWidgets", "SlateCore", "CommonUI", "ImageWrapper", "AssetRegistry", "ApplicationCore"
         });
-        /*PublicIncludePaths.Add(Path.Combine(ModuleDirectory, "Niagara"));*/
+		/*PublicIncludePaths.Add(Path.Combine(ModuleDirectory, "Niagara"));*/
+		//PublicIncludePaths.Add("Coosys/Public");
 	}
 }

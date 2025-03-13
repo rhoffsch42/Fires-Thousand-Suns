@@ -96,7 +96,7 @@ public:
 			handy way is to bind it with OnVisibilityChanged(), but it might not be the ideal way in some other context
 	TODO: check actors useless tick(). PrimaryComponentTick.bCanEverTick PrimaryComponentTick.SetTickFunctionEnable(true)
 
-	Fires :
+	FTS :
 		- check Editor warnings and errors
 		- refacto BP / c++
 		- refacto GI GM SG interactions

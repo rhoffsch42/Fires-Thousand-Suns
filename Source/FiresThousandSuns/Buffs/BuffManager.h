@@ -32,6 +32,6 @@ public:
 protected:
 	virtual void BeginPlay() override;
 private:
-	// Maximum 256 different buffs (Unreal Enum size being 1bytes)
+	// Maximum 256 different buffs EBuffType (Unreal Enum size being 1bytes)
 	TArray<ABuff*>	_buffs;
 };
