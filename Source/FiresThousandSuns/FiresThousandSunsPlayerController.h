@@ -17,17 +17,6 @@ class AFiresThousandSunsPlayerController : public APlayerController
 	GENERATED_BODY()
 public:
 	AFiresThousandSunsPlayerController();
-	UFUNCTION(BlueprintCallable)
-	bool	SetCastedAbility(UAbility* Ability, const FEffectParameters& InParameters);
-	UFUNCTION(BlueprintCallable)
-	void	FinalizeCastedAbility();
-	UFUNCTION(BlueprintCallable)
-	void	IncrementBlockInputCounter();
-	UFUNCTION(BlueprintCallable)
-	void	DecrementBlockInputCounter();
-
-	UFUNCTION(BlueprintCallable)
-	bool	GetIsCasting() const;
 
 	/** Time Threshold to know if it was a short press */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
@@ -65,10 +54,5 @@ private:
 	FVector	CachedDestination;
 	bool	bIsTouch; // Is it a touch device
 	float	FollowTime; // For how long it has been pressed
-	int32	_BlockInputCounter = 0;
-
-	UAbility* _CastedAbility;
-	FEffectParameters _Parameters;
-	bool	_bIsCasting = false;
 	double	_MinimumDistanceToMove = 100.0;// this is the distance between the center of mass of the character and the point on the floor, they dont have the same Z
 };

@@ -7,11 +7,9 @@
 typedef int32* EffectClassPtr;
 #include "Sound/SoundCue.h"
 //#include "AbilityManager.h"
-
-#include "Ability.generated.h"
-
 class UAbilityManager;
 
+#include "Ability.generated.h"
 
 // Any additional parameters generated during Ability activation. This class has to be inherited and specialized.
 UCLASS(Blueprintable)

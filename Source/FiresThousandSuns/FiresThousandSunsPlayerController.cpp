@@ -32,58 +32,6 @@ void AFiresThousandSunsPlayerController::BeginPlay() {
 	}
 }
 
-bool	AFiresThousandSunsPlayerController::SetCastedAbility(UAbility* Ability, const FEffectParameters& InParameters) {
-	if (this->_bIsCasting || !Ability) {
-		//DCOL(FColor::Purple, "SetCastedAbility() refused, already casting or supplied ability is null");
-		return false;
-	}
-
-	this->_CastedAbility = Ability;
-	this->_Parameters = InParameters;
-	this->_bIsCasting = true;
-	this->IncrementBlockInputCounter();
-	this->StopMovement();
-
-	FVector	location = InParameters.CursorHitLocation;
-	location.Z = InParameters.ActorInstigator->GetActorLocation().Z;
-	FRotator rot = UKismetMathLibrary::FindLookAtRotation(
-		InParameters.ActorInstigator->GetActorLocation(),
-		location);
-	InParameters.ActorInstigator->SetActorRotation(rot);
-	//DCOL(FColor::Purple, FString::SanitizeFloat(Ability->CastTime->Remaining()).Append("s remaining until cast ends"));
-	UKismetSystemLibrary::Delay(this->GetWorld(), Ability->CastTime->Remaining(),
-		FLatentActionInfo(0, (int64)this, *FString("FinalizeCastedAbility"), this));
-	return true;
-}
-
-void	AFiresThousandSunsPlayerController::FinalizeCastedAbility() {
-	this->_CastedAbility->CastTime->Reset();// Delay() will not match perfectly the CastTime recharge, so we force reset to update _lastUse
-	//DCOL(FColor::Purple, FString::SanitizeFloat(this->_CastedAbility->CastTime->Remaining()).Append(" (has just been reset by FinalizeCastedAbility())"));
-	this->_CastedAbility->Activate(this->_Parameters);
-	this->_CastedAbility = nullptr;
-	this->_bIsCasting = false;
-	this->DecrementBlockInputCounter();
-}
-
-void	AFiresThousandSunsPlayerController::IncrementBlockInputCounter() {
-	this->_BlockInputCounter++;
-	if (this->_BlockInputCounter > 0) {
-		this->bBlockInput = true;
-	}
-}
-
-void	AFiresThousandSunsPlayerController::DecrementBlockInputCounter() {
-	this->_BlockInputCounter--;
-	if (this->_BlockInputCounter == 0) {
-		this->bBlockInput = false;
-	} else if (this->_BlockInputCounter < 0) {
-		UFuncLib::CheckObject(nullptr, FString(__FUNCSIG__).Append(" BlockInputCounter is negative"));
-	}
-}
-
-bool	AFiresThousandSunsPlayerController::GetIsCasting() const { return this->_bIsCasting; }
-
-
 ////////////////////////// protected ////////////////////
 
 void AFiresThousandSunsPlayerController::SetupInputComponent() {
