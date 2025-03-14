@@ -35,12 +35,10 @@ UAbilityFlameDash::UAbilityFlameDash() {
 	this->CastTime->SetDuration(0.8);
 	this->CastTime->Reset();
 
-
 	this->SetNewMaterial(this, FString("/Game/LevelPrototyping/Materials/fire-dash_UIMat.fire-dash_UIMat"));
 	this->NiagaraSystem = LoadObject<UNiagaraSystem>(this, *FString("/Script/Niagara.NiagaraSystem'/Game/LevelPrototyping/Particles/NS_FlameDash.NS_FlameDash'"));
 	this->ActivationSuccessSoundCue = LoadObject<USoundCue>(this, *FString("/Script/Engine.SoundCue'/Game/TopDown/Blueprints/Audio/fts-flame-dash_Cue.fts-flame-dash_Cue'"));
 	this->_NavSys = UNavigationSystemV1::GetCurrent(this->GetWorld());
-
 }
 
 void	UAbilityFlameDash::PostInitProperties() {

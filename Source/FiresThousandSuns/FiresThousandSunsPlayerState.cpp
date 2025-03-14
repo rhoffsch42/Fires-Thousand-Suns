@@ -50,7 +50,6 @@ void	AFiresThousandSunsPlayerState::_InitPreBeginPlay() {
 	auto VaalMoltenShell = NewObject<UAbilityVaalMoltenShell>(this, GEN_UNAME(this));
 	auto Steelskin = NewObject<UAbilitySteelskin>(this, GEN_UNAME(this));
 
-
 	this->AbilityManager = NewObject<UAbilityManager>(this, GEN_UNAME(this));
 	this->AbilityManager->SetAbilityAmount(5);
 	this->AbilityManager->SetAbility(0, nullptr); // used as a 'slot clearer'

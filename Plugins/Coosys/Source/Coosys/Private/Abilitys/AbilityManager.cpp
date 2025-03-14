@@ -22,7 +22,9 @@ bool	UAbilityManager::SetAbility(int Index, UAbility* Ability) {
 		return false;
 	}
 	this->_Abilitys[Index] = Ability;
-	Ability->AbilityManager = this;
+	if (Ability) {
+		Ability->AbilityManager = this;
+	}
 	return true;
 }
 
